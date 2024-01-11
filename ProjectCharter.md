@@ -65,14 +65,16 @@ Here's the breakdown of the RACI roles:
 
 | Task | CUREL Clémentine | DELILLE Elone | PLANCHARD Thomas | LASSELIN Alexis | NAMIR Salaheddine | BAVAROIS Séréna |
 |-|-|-|-|-|-|-|
-|Project Brief | X | X | X | X | X | X |
-|Project Charter | X | X | X | X | X | X |
-|Functional Specifications | X | X | X | X | X | X |
-|Technical Specifications | X | X | X | X | X | X |
-|Test Plan | X | X | X | X | X | X |
-|Working Prototype | X | X | X | X | X | X |
-|Final Product | X | X | X | X | X | X |
-|Presentation | X | X | X | X | X | X |
+|Project Charter | A | R | C | I | I | I |
+|Functional Specifications | A | R/A | C | I | I | I |
+|Technical Specifications | A | C | R/A | C | C | I |
+|Architecture Diagram | A | C | R/A | C | C | I |
+|Test Plan | A | I | C | C | C | R/A |
+|Database of Bug | A | I | C | C | R/A |
+|Unit Tests | A | C | C | R/A | R/A | C |
+|Working Prototype | A | C | C | R/A | R/A | C |
+|Final Product | A | C | C | R/A | R/A | C |
+|Presentation | R/A | R/A | R/A | R/A | R/A | R/A |
 
 ## Stakeholders
 
@@ -112,6 +114,10 @@ And we have to present the project to the client, Mr. Franck Jeannin, on the 1st
 
 There is no financial budget for this project because we only use free software and free resources.
 However, we have a **manpower**[^15] budget of 6 persons for 8 weeks. Each person works 14 hours per week, so we have a total of 672 hours of work.
+
+## Work management environment
+
+
 
 # Glossary
 [^1]: **Virtual Processor**: A virtual processor refers to a simulated or emulated computing unit designed to execute instructions and perform operations, typically in a software environment. It mimics the behavior of a physical processor, allowing for testing and development without the need for actual hardware.
