@@ -61,16 +61,14 @@ Here's the breakdown of the RACI roles:
 - **C** stands for `Consulted` meaning individuals who provide input and expertise but are not directly responsible for the task's completion.
 - **I** stands for `Informed` indicating individuals that need to be informed about task progress but have no direct responsibility for it.
 
-> The letter **X** means that we have not yet determined who will be assigned to the task.
-
 | Task | CUREL Clémentine | DELILLE Elone | PLANCHARD Thomas | LASSELIN Alexis | NAMIR Salaheddine | BAVAROIS Séréna |
 |-|-|-|-|-|-|-|
 |Project Charter | A | R | C | I | I | I |
-|Functional Specifications | A | R/A | C | I | I | I |
-|Technical Specifications | A | C | R/A | C | C | I |
-|Architecture Diagram | A | C | R/A | C | C | I |
+|Functional Specifications | A | R/A | C | I | I | C |
+|Technical Specifications | A | C | R/A | C | C | C |
+|Architecture Diagram | A | C | R/A | C | C | C |
 |Test Plan | A | I | C | C | C | R/A |
-|Database of Bug | A | I | C | C | R/A |
+|Database of Bug | A | I | C | C | C | R/A |
 |Unit Tests | A | C | C | R/A | R/A | C |
 |Working Prototype | A | C | C | R/A | R/A | C |
 |Final Product | A | C | C | R/A | R/A | C |
