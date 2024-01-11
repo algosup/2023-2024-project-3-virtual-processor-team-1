@@ -3,8 +3,6 @@
 | **Document Name**  | Project Charter           |
 |--------------------|---------------------------|
 | **Document Owner** | DELILLE Elone             |
-| **Creation Date**  | Monday, 8 January, 2024   |
-| **Last Update**    | Monday, 8 January, 2024   |
 
 ## Table of content
 - [Project Charter - Virtual Processor](#project-charter---virtual-processor-team-1)
@@ -20,7 +18,7 @@
 - [Glossary](#glossary)
 
 ## Project Overview
-The aim of the project is to design both a **virtual processor**[^1] and an **interpreter**[^2] capable of executing **assembly code**[^3], coded by us during the project. It will be developed in pure, portable **C language**[^4], relying solely on standard C **libraries**[^5], to the exclusion of any external **dependencies**[^6].
+The aim of the project is to design both a **virtual processor**[^1] and an **interpreter**[^2] capable of executing **assembly code**[^3], coded by us during the project. It will be developed in pure, portable **C language**[^4], relying solely on [standard C](https://en.wikipedia.org/wiki/C_standard_library) **libraries**[^5], to the exclusion of any external **dependencies**[^6].
 
 ## Project Scope
 The project begins on Monday, January 8, 2024, and ends on Friday, February 23, 2024. We must recreate in C language, a virtual processor as well as a code interpreter in which we will have to run Assembler code with the rules imposed by the client.
@@ -103,6 +101,9 @@ As written in the milestones, we have to deliver the following deliverables :
 - Functional Specifications
 - Technical Specifications
 - Test Plan
+- Database of Bug
+- Unit Tests
+- Architecture Diagram
 - Weekly Reports and Management Planning
 
 And we have to present the project to the client, Mr. Franck Jeannin, on the 1st of March 2024 at 9am.
