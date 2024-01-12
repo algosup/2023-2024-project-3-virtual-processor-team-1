@@ -4,9 +4,6 @@ In this document, you will find multiple link to a Jira project, which we use fo
 
 <br>
 
-<button style="background:green"> Done</button><button style="background:purple"> Waiting for approbation </button><button style="background:blue"> In progress </button><button style="background:orange"> Delay </button><button style="background:red"> Abandon </button>
-
-<br>
 
 # Week 1 - 01/08/2024 - 01/12/2024
 
@@ -24,7 +21,7 @@ In this document, you will find multiple link to a Jira project, which we use fo
 
 ## Project Meeting
 
-### Meeting preparation <button style="background:green"> Done</button>
+### Meeting preparation - Done
 
 The meeting preparation includes the preparation of the meeting as well as the sharing of the agenda with the team.
 
@@ -34,7 +31,7 @@ The meeting preparation includes the preparation of the meeting as well as the s
 | --- | --- | --- |
 | 1h  | 1h30 | 01/09/2024 |
 
-### Meeting <button style="background:green"> Done</button>
+### Meeting - Done
 
 As it’s the team's first meeting, the objective is to put the team on the same level of knowledge about the project and share the rules.
 
@@ -44,7 +41,7 @@ As it’s the team's first meeting, the objective is to put the team on the same
 | --- | --- | --- |
 | 45 min | 40 min | 01/11/2024 |
 
-### Meeting report <button style="background:green"> Done</button>
+### Meeting report - Done
 
 The meeting report will serve as proof that people had attended the meeting and will provide the conduct of the meeting. On the report, you can see all the decisions made and the actions to take.
 
@@ -58,7 +55,7 @@ The meeting report will serve as proof that people had attended the meeting and 
 
 ## Project Charter
 
-### Writing of the document <button style="background:blue"> Written </button> <button style="background:purple"> Waiting for approbation </button>
+### Writing of the document - Written & Waiting for approbation
 
 The project charter consists of putting the major information of the project in one document.
 
@@ -74,7 +71,7 @@ This will allow us to check if the team have the same understanding of the proje
 
 ## GitHub Setup
 
-### Setup of the GitHub Repository <button style="background:green"> Done</button>
+### Setup of the GitHub Repository - Done
 
 This task includes the publication of the repository as well as its initialisation.
 
@@ -86,7 +83,7 @@ The initialisation of the repository takes into account the creation of the bran
 | --- | --- | --- |
 | 1h  | 15 min | 01/19/2024 |
 
-### Protection of the repository <button style="background:green"> Done</button>
+### Protection of the repository - Done
 
 This task has for objective of protecting GitHub from any kind of push from someone who is not part of the team, as well as protecting the repository from a push not controlled.
 
@@ -98,7 +95,7 @@ The access to GitHub has been managed, and the pull requests have been made obli
 | --- | --- | --- |
 | 1h  | 15 min | 01/12/2024 |
 
-### Upload file WAITING FOR APPROVAL
+### Upload file - Waiting for approbation
 
 The upload of the project charter also includes the first review from the team as well as its first modification. The next step is to have to approval of the client.
 
@@ -112,7 +109,7 @@ The upload of the project charter also includes the first review from the team a
 
 ## Slack Setup
 
-### Creation of the Slack server <button style="background:green"> Done</button>
+### Creation of the Slack server - Done
 
 The Slack server is going to be used as a platform for communication inside the team. This includes the creation of various channels and the invitation of the team.
 
@@ -122,7 +119,7 @@ The Slack server is going to be used as a platform for communication inside the 
 | --- | --- | --- |
 | 20 min | 10 min | 01/08/2024 |
 
-### The initialisation of the server <button style="background:green"> Done</button>
+### The initialisation of the server - Done
 
 For the initialisation, we decided to link the GitHub and the Jira project to Slack so that for every action, the team will be informed. We also shared the documents made about the management.
 
@@ -134,7 +131,7 @@ For the initialisation, we decided to link the GitHub and the Jira project to Sl
 
 ## Jira Setup
 
-### Creation of the Jira project <button style="background:green"> Done</button> <button style="background:purple"> Waiting for approbation </button>
+### Creation of the Jira project - Done & Waiting for approbation
 
 Jira is a Work Management Environment that allows the team to have a list of their tasks with the deadlines. It also allows the display of a timeline and shows the progress of the team.
 
@@ -150,7 +147,7 @@ At the moment, every management document is on the Jira project.
 | --- | --- | --- |
 | 2h  | 2h  | 01/08/2024 |
 
-### Task allocation </button><button style="background:blue"> In progress </button>
+### Task allocation - In progress
 
 This week, the tasks that have been allocated are the main ones, which you can see on our Jira.
 
@@ -164,7 +161,7 @@ This week, the tasks that have been allocated are the main ones, which you can s
 
 ## Functional Specifications
 
-### Writing the functional specifications document </button><button style="background:blue"> In progress </button>
+### Writing the functional specifications document - In progress
 
 The functional specification takes as input the requirements of the client and will be used by the tech lead as input for the technical, and will also be used by the rest of the team to ensure that the team has the same understanding as the client.
 
@@ -174,7 +171,7 @@ The functional specification takes as input the requirements of the client and w
 | --- | --- | --- |
 | 15h | 30 min | 01/26/2024 |
 
-### Functional research </button><button style="background:blue"> In progress </button>
+### Functional research - In progress
 
 These researches are based on the understanding of the project.
 
@@ -186,7 +183,7 @@ These researches are based on the understanding of the project.
 
 ## Technical Specifications
 
-### Writing the technical specifications document </button><button style="background:blue"> In progress </button>
+### Writing the technical specifications document - In progress
 
 The technical specification takes as input the functional specifications and will be used by the developers to help their work.
 
@@ -196,7 +193,7 @@ The technical specification takes as input the functional specifications and wil
 | --- | --- | --- |
 | 15h | 30 min | 02/02/2024 |
 
-### Technical research </button><button style="background:blue"> In progress </button>
+### Technical research - In progress
 
 The results of these researches are available on the channel “virtual-processor” on the Slack server.
 
@@ -208,7 +205,7 @@ The results of these researches are available on the channel “virtual-processo
 
 ## Management Documents
 
-### Project rules <button style="background:green"> Done</button>
+### Project rules - Done
 
 The project rules are here to contribute to a positive and productive work environment.
 
@@ -222,7 +219,7 @@ The project rules are here to contribute to a positive and productive work envir
 | --- | --- | --- |
 | 3h  | 2h30 | 01/10/2024 |
 
-### Meeting rules <button style="background:green"> Done</button>
+### Meeting rules - Done
 
 These documents are here to ensure the good execution of the meeting with the client.
 
@@ -236,7 +233,7 @@ A template for the report is also available, with the important information on i
 | --- | --- | --- |
 | 2h  | 1h  | 01/10/2024 |
 
-### Syntax rules </button><button style="background:blue"> In progress </button>
+### Syntax rules - In progress
 
 The syntax document is here to ensure the consistency of the documents. The syntax of the folders, files, lists and even the titles are taken into account.
 
@@ -248,7 +245,7 @@ The syntax document is here to ensure the consistency of the documents. The synt
 | --- | --- | --- |
 | 1h  | 30 min | 01/11/2024 |
 
-### Quality assurance rules <button style="background:green"> Done</button>
+### Quality assurance rules - Done
 
 These documents are here to ensure the security of the documents and the code.
 
@@ -262,7 +259,7 @@ These documents are here to ensure the security of the documents and the code.
 | --- | --- | --- |
 | 1h  | 30 min | 01/10/2024 |
 
-### Handover document </button><button style="background:blue"> In progress </button>
+### Handover document - In progress
 
 This document will be used in case of the project change of owner or to allow people to know what happens during the project.
 
@@ -276,7 +273,7 @@ The document has only been created at the moment.
 | --- | --- | --- |
 | 5h  | 2 min | 03/01/2024 |
 
-### Troubleshooting template <button style="background:green"> Done</button>
+### Troubleshooting template - Done
 
 This document is a template for the 8D method that is used to resolve conflicts and problems during a project.
 
@@ -290,7 +287,7 @@ This document is a template for the 8D method that is used to resolve conflicts 
 | --- | --- | --- |
 | 1h  | 1h  | 01/12/2024 |
 
-### Communication preferences <button style="background:red"> Abandon </button>
+### Communication preferences - Abandon
 
 This document was supposed to be used to get the information of the team on how they want and don’t want the other to communicate with them, and how they want or don’t want to communicate with the other.
 
@@ -304,7 +301,7 @@ This document was supposed to be used to get the information of the team on how 
 | --- | --- | --- |
 | 1h  | 10 min | 01/08/2024 |
 
-### Summary of the documents </button><button style="background:blue"> In progress </button>
+### Summary of the documents - In progress
 
 This is a summary of all the documents that have been created for this project with links to them.
 
@@ -318,7 +315,7 @@ This is a summary of all the documents that have been created for this project w
 | --- | --- | --- |
 | 1h  | 10 min | 03/01/2024 |
 
-### Weekly report - Week 1 <button style="background:green"> Done</button>
+### Weekly report - Week 1 - Done
 
 This weekly report is the summary of what happened during the first week of the project. It includes the tasks, the priority of the next week, and also the decision-making.
 
@@ -330,7 +327,7 @@ This weekly report is the summary of what happened during the first week of the 
 | --- | --- | --- |
 | 3h  | 6h  | 01/12/2024 |
 
-### RACI matrix <button style="background:green"> Done</button>
+### RACI matrix - Done
 
 The RACI matrix is here to inform on which person is responsible, accountable, consulted or informed for each deliverable, and their subtasks.
 
@@ -344,7 +341,7 @@ The RACI matrix is here to inform on which person is responsible, accountable, c
 
 ## Meeting with the client
 
-### Preparation of the meeting <button style="background:green"> Done</button>
+### Preparation of the meeting - Done
 
 This task includes the creation of the report as well as the agenda.
 
@@ -358,7 +355,7 @@ This task includes the creation of the report as well as the agenda.
 | --- | --- | --- |
 | 30 min | 30 min | 01/11/2024 |
 
-### Contact with the client IN PROGRESS
+### Contact with the client - In progress
 
 The objective of this task is to send a mail to make an appointment with the client to discuss the project requirements, and the project charter, and to ask for more information.
 
@@ -371,7 +368,7 @@ The objective of this task is to send a mail to make an appointment with the cli
 
 ## Key Performance Indicators / Key Process Indicators
 
-### KPIs <button style="background:green"> Done</button>
+### KPIs - Done
 
 The KPIs are quantifiable measures of performance over time for a specific objective. Two types of KPIs will be present: main ones, and specific ones.
 
