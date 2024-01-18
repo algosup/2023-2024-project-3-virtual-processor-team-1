@@ -123,7 +123,7 @@ Moreover, if the function should return nothing; you should use the keyword **vo
 
 ### 3. Naming
 
-- **`#definine`:** constants should be in all CAPS
+- **`#define`:** constants should be in all CAPS
 - **Enum constants**: are in all CAPS
 - **Function**, **typedef**, and **variable names**, as well as **struct**, **union**, and **enum tag names**, should be in camelCase
 - **Macro "functions"** are in all CAPS
