@@ -1,6 +1,10 @@
 MOV R0, 5
+DISP R0     ; expected 5
 MOV R1, 7
+DISP R1     ; expected 7
 ADD R0, R1
+DISP R0     ; expected 12
 SUB R1, 3
+DISP R1     ; 4
 
 ; expected --> R0 = 5, R1 = 7, R0 = 12, R1 = 4
