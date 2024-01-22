@@ -12,12 +12,16 @@ int main(void)
     // Define the program
     Instruction program[] = {
     {MOV, R0, 0x05, 1},  // MOV R0, 5
+    {DISP, R0, 0, 0},    // DISP R0
     {MOV, R1, 0x07, 1},  // MOV R1, 7
+    {DISP, R1, 0, 0},    // DISP R1
     {ADD, R0, R1, 0},    // ADD R0, R1
-    {SUB, R1, 0x03, 1}   // SUB R1, 3
+    {DISP, R0, 0, 0},    // DISP R0
+    {SUB, R1, 0x03, 1},   // SUB R1, 3
+    {DISP, R1, 0, 0},     // DISP R1
     };
     // Define the program length
-    int programLength = 4;
+    int programLength = sizeof(program) / sizeof(program[0]);
     // Execute the program
     while (instructionPointer < programLength) 
     {
@@ -28,12 +32,6 @@ int main(void)
         // Increment the instruction pointer
         instructionPointer++;
     }
-    // Print the registers
-    printf("Registers:\n");
-    printf("R0: %d\n", registers[R0]);
-    printf("R1: %d\n", registers[R1]);
-    printf("R2: %d\n", registers[R2]);
-    printf("R3: %d\n", registers[R3]);
 
     return 0;
 }

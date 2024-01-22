@@ -19,6 +19,7 @@
 #define MOV 0x00
 #define ADD 0x01
 #define SUB 0x02
+#define DISP 0x03
 
 //Define register names
 #define R0 0x0A
@@ -74,6 +75,18 @@ void executeInstruction(Instruction instruction, int* registers)
             {
                 // If operand2 is a register, subtract its value from the register specified by operand1
                 registers[instruction.operand1] -= registers[instruction.operand2];
+            }
+            break;
+        case DISP:
+            // DISP instruction: Display the value in the register or the immediate value specified by operand1
+            if (instruction.isImmediate) 
+            {
+                // If operand1 is an immediate value, display it
+                printf("%d\n", instruction.operand1);
+            } else 
+            {
+                // If operand1 is a register, display its value
+                printf("%d\n", registers[instruction.operand1]);
             }
             break;
         default:
