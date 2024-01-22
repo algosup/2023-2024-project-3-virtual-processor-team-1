@@ -63,6 +63,7 @@ void executeInstruction(Instruction instruction, int* registers)
                 // If operand2 is a register, add its value to the register specified by operand1
                 registers[instruction.operand1] += registers[instruction.operand2];
             }
+            break;
         case SUB:
             // SUB instruction: Subtract the value in the register specified by operand2 from the value in the register specified by operand1, and store the result in the register specified by operand1
             if (instruction.isImmediate) 
@@ -74,6 +75,7 @@ void executeInstruction(Instruction instruction, int* registers)
                 // If operand2 is a register, subtract its value from the register specified by operand1
                 registers[instruction.operand1] -= registers[instruction.operand2];
             }
+            break;
         default:
             printf("Error: Invalid opcode %d\n", instruction.opcode);
             break;
