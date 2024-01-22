@@ -3,6 +3,16 @@
 int main(int argc, char *argv[])
 {
     C_version();
+
+    // Read a file from the one passed in as an argument
+    FILE *file = fopen(argv[1], "r");
+    // Check if the file exists
+    if (file == NULL)
+    {
+        printf("Error: File does not exist\n");
+        return 1;
+    }
+    
     // Define the registers
     int registers[4] = {0, 0, 0, 0};
     // Define the instruction pointer
