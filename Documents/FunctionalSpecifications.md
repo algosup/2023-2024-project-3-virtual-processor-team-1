@@ -137,7 +137,8 @@ The project owner has designated external project reviewers to meticulously exam
 <!-- constraints : language c, only native lib,
 assumptions : no technical issue with computers -->
 ## III. Functional Requirements
-We need to create our own assembler. To do this, we'll base ourselves on most existing assembler code, with the simple exception that we'll use different names for certain actions. Our assembler will be 32-bit based, which is easily adaptable to today's computers.
+We need to create our own assembler. To do this, we'll base ourselves on most existing assembler code, with the simple exception that we'll use different names for certain actions. Our assembler will be 32-bit based, which is easily adaptable to today's computers.<br>
+We won't be using the entire x86 architecture, as we don't need as much memory space for this project. Also, the 32-bit architecture is easily usable on any of today's computers, and is more suitable for this project.
 
 ### 1. Registers
 #### 1.1 <u>General registers</u>
@@ -224,7 +225,7 @@ You can also divide the value of one register by another, provided that both reg
 Imagine that our `RA` register contains the string "Hello, World!" and our `RC` register contains the value 20. You cannot use the "DIV" instruction in this case, as the program will attempt to interpret "Hello, World!" as a numerical value.<br>
 You'll get a compilation error.
 
-Attempting to divide by zero (0) is not allowed. If you attempt to divide any value by zero, including a constant or the content of a register, it will result in an error or undefined behavior in most programming languages and assembly instructions. For example, DIV RA, 0 where RA contains any value will result in an error or an exception, and the program may crash or behave unpredictably. It's important to ensure that the divisor (the value after the "DIV" instruction) is not zero to avoid such issues.
+Attempting to divide by zero (0) is not allowed. If you attempt to divide any value by zero, including a constant or the content of a register, it will result in an error or undefined behavior in most programming languages and assembly instructions. For example, `DIV RA, 0` where RA contains any value will result in an error or an exception, and the program may crash or behave unpredictably. It's important to ensure that the divisor (the value after the "DIV" instruction) is not zero to avoid such issues.
 
 ### 3. Functions
 
@@ -263,24 +264,29 @@ In this example, `add_numbers` is the function name, and it takes one parameter 
 
 ### 4. Subroutines
 
-Subroutines in assembly are similar to functions, but they are often used for smaller, reusable tasks within a larger program. They typically don't have their own return values but can modify existing variables or registers. Here's a general structure for defining subroutines in assembly:
+Subroutines in assembly are similar to functions, but they are often used for smaller, reusable tasks within a larger program. They typically don't have their own return values but can modify existing variables or registers.<br>
+> `CALL subroutineName;`
+
+Here's a general structure for defining subroutines in assembly:
 
 ```assembly
 function:
     ; Some context and description of the function
     ; OPERANDS Setup: DESTINATION, SOURCE
 
-    _subroutineName:
-        ; Some context and description of the subroutine
-        ; OPERANDS Setup: DESTINATION, SOURCE (if needed)
-
-        ; Subroutine body (code that performs a specific task)
-
-        RET ; Return to the calling code
+    CALL subroutineName;  ; Call the subroutine
 
     ; More code for the main function
 
 end;
+
+subroutineName:
+    ; Some context and description of the subroutine
+    ; OPERANDS Setup: DESTINATION, SOURCE (if needed)
+
+    ; Subroutine body (code that performs a specific task)
+
+    RET ; Return to the calling code
 ```
 
 **Example of a Subroutine:**
@@ -322,7 +328,81 @@ end;
 
 In this example, `calculate_square` is the main function, and it uses the `multiply_numbers` subroutine to calculate the square of a number. The `multiply_numbers` subroutine performs the multiplication and returns the result in `DESTINATION`. The main function then continues with its code after calling `calculate_square`.
 
-### 5. Printing Values
+## 5. Variables
+
+In our assembly language, you can declare variables using different instructions specific to each variable type. The basic syntax for declaring variables is as follows:
+
+```assembly
+variableName defineVariableType value
+```
+
+Here's how to declare variables of different types:
+
+### 5.1. DVI (Define Variable Integer)
+
+The "DVI" instruction is used to declare integer variables. It follows this syntax:
+```assembly
+variableName dvi 1
+```
+- `variableName` is the variable name.
+- `dvi` specifies the integer variable type.
+- `1` is the initial value of the integer variable.
+
+Example:
+```assembly
+; Declare an integer variable with an initial value of 1
+myIntegerVariable dvi 1
+```
+
+### 5.2. DVC (Define Variable Char)
+
+The "DVC" instruction is used to declare character variables. It follows this syntax:
+```assembly
+variableName2 dvc "World! Hello."
+```
+- `variableName2` is the variable name.
+- `dvc` specifies the character variable type.
+- `"World! Hello."` is the initial value of the character variable.
+
+Example:
+```assembly
+; Declare a character variable with an initial value of "World! Hello."
+myCharVariable dvc "World! Hello."
+```
+
+### 5.3. DVN (Define Variable Negative)
+
+The "DVN" instruction is used to declare integer variables with negative values. It follows this syntax:
+```assembly
+variableName3 dvn -6
+```
+- `variableName3` is the variable name.
+- `dvn` specifies the integer variable type with a negative value.
+- `-6` is the initial value of the integer variable with a negative value.
+
+Example:
+```assembly
+; Declare an integer variable with a negative initial value of -6
+myNegativeVariable dvn -6
+```
+
+These instructions allow you to define variables of different types to store data in your assembly language program.
+
+Example usage:
+```assembly
+; Variable declarations
+myIntegerVariable dvi 1
+myCharVariable dvc "World! Hello."
+myNegativeVariable dvn -6
+
+; Using the variables in the code
+...
+```
+
+This allows you to define variables of different types to store data in your assembly language program.
+
+
+### 6. Printing Values
 
 In assembly language, printing values to the output or display is a common task. How you print a value depends on whether it's a string, a number, or a register. We use different methods for each:
 
@@ -356,7 +436,99 @@ In assembly language, printing values to the output or display is a common task.
 
    If the value in register RB is 100, this code will display the number 100 to the output.
 
-These examples illustrate how to use the `DISP` instruction to print strings, numbers, or the contents of registers in assembly language.
+### 7. Instructions
+
+In this section, we will look at the instructions that we have decided to implement in our Assembly language. These instructions are used to manipulate registers.
+
+#### 7.1 <u>Instruction MOV</u>
+The "MOV" (Move) instruction is used to copy the value from one register to another. It's commonly used for data transfer between registers. The syntax for the "MOV" instruction is as follows:
+> `MOV DESTINATION, SOURCE`<br>
+> `DESTINATION` represents the location where the result of the division will be stored
+> <br>`SOURCE` represents the value by which the destination will be divided
+
+Certainly, let's explain each of the "MOV" instruction examples one by one:
+
+#### 7.1.1 `MOV RA, RC`
+
+The instruction `MOV RA, RC` is used to copy the value from register RC to register RA.
+
+- `RA` is the destination register where the value will be copied.
+- `RC` is the source register from which the value is taken.
+
+Example:
+```assembly
+MOV RA, RC
+```
+
+In this example, the value currently stored in register RC is copied into register RA. This instruction performs a straightforward data transfer between registers.
+
+#### 7.1.2 `MOV RD, #2`
+
+The instruction `MOV RD, #2` is used to directly load the value `2` into register RD.
+
+- `RD` is the destination register where the value will be placed.
+- `#2` represents the immediate value `2` that is loaded directly into RD.
+
+Example:
+```assembly
+MOV RD, #2
+```
+
+In this example, the value `2` is immediately loaded into register RD. This instruction does not involve copying from another register but directly assigns the value.
+
+#### 7.1.3 `MOV RA, "WORLD ! Hello."`
+
+The instruction `MOV RA, "WORLD ! Hello."` is used to load a string, in this case, `"WORLD ! Hello."`, into register RA.
+
+- `RA` is the destination register where the string will be stored.
+- `"WORLD ! Hello."` is the string value that will be placed in RA.
+
+Example:
+```assembly
+MOV RA, "WORLD ! Hello."
+```
+
+In this example, the string `"WORLD ! Hello."` is stored in register RA. This instruction is used for initializing a register with a string value.
+
+Certainly, I'll add the additional "MOV" instruction examples and the message regarding what not to do. Here's the updated section:
+
+#### 7.1.4 `MOV myTextVariable, "My text"`
+
+The instruction `MOV myTextVariable, "My text"` is used to load a string, in this case, `"My text"`, into the variable `myTextVariable`. 
+
+- `myTextVariable` is the destination variable where the string will be stored.
+- `"My text"` is the string value that will be placed in `myTextVariable`.
+
+Example:
+```assembly
+MOV myTextVariable, "My text"
+```
+
+In this example, the string `"My text"` is stored in the variable `myTextVariable`. This is a common way to initialize a string variable.
+
+#### 7.1.5 `MOV myIntegerVariable, 12`
+
+The instruction `MOV myIntegerVariable, 12` is used to assign the integer value `12` to the variable `myIntegerVariable`.
+
+- `myIntegerVariable` is the destination variable where the integer value will be stored.
+- `12` is the immediate integer value that will be placed in `myIntegerVariable`.
+
+Example:
+```assembly
+MOV myIntegerVariable, 12
+```
+
+In this example, the integer value `12` is assigned to the variable `myIntegerVariable`. This is a common way to initialize an integer variable.
+
+#### 7.1.6 What Not to Do
+
+It's important to follow proper syntax and conventions when using the "MOV" instruction. Avoid the following incorrect usage:
+
+```assembly
+MOV 2, "My text"
+```
+
+In this incorrect example, the instruction attempts to move a string into the value `2`, which is not a valid variable name or destination. It's crucial to specify a valid destination, such as a register or a named variable, when using the "MOV" instruction. Trying to move data into an invalid destination can result in compilation errors or unexpected behavior.
 
 ## IV. Non-Functional Requirements
 <!-- run -->
