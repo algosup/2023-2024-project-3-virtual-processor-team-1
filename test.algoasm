@@ -1,6 +1,6 @@
 MOV RA, 5
 DISP RA     ; expected 5
-MOV RB, 7
+MOV RB, 7   ; Test comment
 
 DISP RB     ; expected 7
 ADD RA, RB

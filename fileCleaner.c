@@ -11,9 +11,11 @@ void removeCommentsAndEmptyLines(char *str) {
                 str[i] = '\0';  // Terminate the string at the end of the comment line
             }
         } else {
+            // Check if the current character is the start of a comment line (;), and if yes, change the line for a line without the comment
             if (str[i] == ';') {
-                str[i] = '\0';
-                break;
+                inCommentLine = 1;
+                str[i] = '\n';
+                str[i + 1] = '\0';  // Terminate the string at the end of the comment line
             }
         } 
     }
