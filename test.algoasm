@@ -1,6 +1,7 @@
 MOV RA, 5
 DISP RA     ; expected 5
 MOV RB, 7
+
 DISP RB     ; expected 7
 ADD RA, RB
 DISP RA     ; expected 12
