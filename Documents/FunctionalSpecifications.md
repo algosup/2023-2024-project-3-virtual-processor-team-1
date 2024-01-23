@@ -13,18 +13,36 @@
       - [2.2 Objectives](#22-uobjectivesu)
       - [2.3 Scope](#23-uscopeu)
       - [2.4 Deliverables](#24-udeliverablesu)
+      - [2.5 Personas](#25-upersonasu)
     - [3. Project Organisation](#3-uproject-organisationu)
       - [3.1 Project representation](#31-uproject-representationu)
       - [3.2 Stakeholders](#32-ustakeholdersu)
       - [3.3 Project roles](#33-uproject-rolesu)
       - [3.4 Project reviewers](#34-uproject-reviewersu)
     - [4. Project Plan](#4-project-plan)
-      - [4.1 Retroplanning](#41-uretroplanningu)
-      - [4.2 Milestones](#42-umilestonesu)
-      - [4.3 Dependencies](#43-udependenciesu)
-      - [4.4 Resources/Financial plan](#44-uresourcesfinancial-planu)
-      - [4.5 Assumptions/Constraints](#45-uassumptionsconstraintsu)
+      - [4.1 Milestones](#41-umilestonesu)
+      - [4.2 Dependencies](#42-udependenciesu)
+      - [4.3 Resources/Financial plan](#43-uresourcesfinancial-planu)
+      - [4.4 Assumptions/Constraints](#44-uassumptionsconstraintsu)
   - [III. Functional Requirements](#iii-functional-requirements)
+    - [1. Registers](#1-registers)
+      - [1.1 General registers](#11-ugeneral-registersu)
+      - [1.2 Address registers](#12-uaddress-registersu)
+    - [2. Operands](#2-operands)
+      - [2.1 Addition - ADD](#21-uaddition---addu)
+      - [2.2 Subtraction - SUB](#22-usubtraction---subu)
+      - [2.3 Multiplication - MUL](#23-umultiplication---mulu)
+      - [2.4 Division - DIV](#24-udivision---divu)
+    - [3. Functions](#3-functions)
+    - [4. Subroutines](#4-subroutines)
+    - [5. Variables](#5-variables)
+      - [5.1. DVI (Define Variable Integer)](#51-udvi-define-variable-integeru)
+      - [5.2. DVC (Define Variable Char)](#52-udvc-define-variable-charu)
+      - [5.3. DVN (Define Variable Negative)](#53-udvn-define-variable-negativeu)
+    - [6. Printing Values](#6-printing-values)
+    - [7. Instructions](#7-instructions)
+      - [7.1 Instruction MOV](#71-uinstruction-movu)
+    - [8. Comparing Values](#8-comparing-values)
   - [IV. Non-Functional Requirements](#iv-non-functional-requirements)
   - [V. Glossary](#v-glossary)
 
@@ -94,6 +112,9 @@ The aim of the project is to design both a **virtual processor**[^1] and an **in
 | Database of Bug           | Document (Markdown) | 16 February 2024 | Link                   |
 | Unit Tests                | Program             | 22 February 2024 | Link                   |
 | Final Product             | Program             | 23 February 2024 | Link                   |
+
+#### 2.5 <u>Personas</u>
+
 ### 3. <u>Project Organisation</u>
 
 #### 3.1 <u>Project representation</u>
@@ -338,7 +359,7 @@ variableName defineVariableType value
 
 Here's how to declare variables of different types:
 
-### 5.1. DVI (Define Variable Integer)
+### 5.1. <u>DVI (Define Variable Integer)</u>
 
 The "DVI" instruction is used to declare integer variables. It follows this syntax:
 ```assembly
@@ -354,7 +375,7 @@ Example:
 myIntegerVariable dvi 1
 ```
 
-### 5.2. DVC (Define Variable Char)
+### 5.2. <u>DVC (Define Variable Char)</u>
 
 The "DVC" instruction is used to declare character variables. It follows this syntax:
 ```assembly
@@ -370,7 +391,7 @@ Example:
 myCharVariable dvc "World! Hello."
 ```
 
-### 5.3. DVN (Define Variable Negative)
+### 5.3. <u>DVN (Define Variable Negative)</u>
 
 The "DVN" instruction is used to declare integer variables with negative values. It follows this syntax:
 ```assembly
@@ -529,6 +550,67 @@ MOV 2, "My text"
 ```
 
 In this incorrect example, the instruction attempts to move a string into the value `2`, which is not a valid variable name or destination. It's crucial to specify a valid destination, such as a register or a named variable, when using the "MOV" instruction. Trying to move data into an invalid destination can result in compilation errors or unexpected behavior.
+
+### 8. Comparing Values
+The "CMP" (Compare) instruction is used to compare two values. It's essential for making decisions in your program based on the result of the comparison. The "CMP" instruction doesn't alter the values in the operands.
+
+Here are the different forms of the "CMP" instruction:
+
+- `CMP Registre, Variable` : This form compares the contents of a register with the value stored in a memory variable.
+
+- `CMP Variable, Variable `: In this case, two memory variables are compared.
+
+- `CMP Registre, Registre` : You can compare the contents of two registers using this form.
+
+- `CMP DirectValue, DirectValue` : It's also possible to compare two immediate values directly.
+
+**Example Usage:**
+
+1. Comparing a Register with a Memory Variable:
+   ```assembly
+   MOV RA, 42       ; Load value 42 into register RA
+   CMP RA, variable1   ; Compare the value in RA with the content of memory variable variable1
+   ```
+   The CMP is therefore stored in RAM until it is used. You can therefore perform a conditional jump at any time in the program, which will use this value (if no other CMP has been performed in the meantime in the program).
+
+2. Comparing Two Memory Variables:
+   ```assembly
+   CMP variable2, variable3   ; Compare the contents of memory variables variable2 and variable2
+   ```
+   The "CMP" instruction compares the values in variable1 and variable2.
+
+3. Comparing Two Registers:
+   ```assembly
+   MOV RA, 10       ; Load value 10 into register RA
+   MOV RB, 20       ; Load value 20 into register RB
+   CMP RA, RB       ; Compare the values in registers RA and RB
+   ```
+
+4. Comparing Immediate Values:
+   ```assembly
+   CMP 5, 10         ; Compare the immediate values 5 and 10
+   ```
+   The "CMP" instruction can directly compare two constants.
+
+Example usage:
+```assembly
+myAge dvi 18           ; Declare a variable named myAge with an initial value of 18
+myNewAge dvi 16        ; Declare a variable named myNewAge with an initial value of 16
+myName dvc "Jean-Charles" ; Declare a variable named myName with a string value "Jean-Charles"
+myFamilyName dvc "DUPONT" ; Declare a variable named myFamilyName with a string value "DUPONT"
+actualYear dvi 2023     ; Declare a variable named actualYear with an initial value of 2023
+
+randomFunction:
+    ADD myNewAge, 2     ; Add 2 to the value of myNewAge
+    CMP myAge, actualYear ; Compare the value of myAge with actualYear
+    ; Here you can perform a conditional jump
+    RET                 ; Return from the function (subroutine)
+
+main:
+    CALL randomFunction ; Call the randomFunction subroutine
+    ; Here you can perform a conditional jump
+end;    
+```
 
 ## IV. Non-Functional Requirements
 <!-- run -->
