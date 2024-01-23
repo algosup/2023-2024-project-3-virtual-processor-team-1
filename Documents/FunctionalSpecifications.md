@@ -46,45 +46,71 @@
 
 ## II. Introduction
 ### 1. Project Overview
-The aim of the project is to design both a **virtual processor**[^1] and an **interpreter** capable of executing **assembly code**, coded by us during the project. It will be developed in pure, portable **C language**, relying solely on [standard C](https://en.wikipedia.org/wiki/C_standard_library) **libraries**, to the exclusion of any external **dependencies**.
+The aim of the project is to design both a **virtual processor**[^1] and an **interpreter**[^2] capable of executing **assembly code**[^3], coded by us during the project. It will be developed in pure, portable **C language**[^4], relying solely on [standard C](https://en.wikipedia.org/wiki/C_standard_library) **libraries**[^5], to the exclusion of any external **dependencies**[^6].
 
 ### 2. Project Definition
 #### 2.1 <u>Our vision</u>
-  - 
-
+- We have to create our own assembly language and run it using a code interpreter that we will create in the C programming language. We must be able to run a programme that meets the requirements of the customer, JEANNIN Franck.
 #### 2.2 <u>Objectives</u>
-  - 
 
 #### 2.3 <u>Scope</u>
 
-| **In scope** |
-|---|
-|  |
+| **In scope**                                                                                                |
+|-------------------------------------------------------------------------------------------------------------|
+| Storing an immediate value in a register.                                                                   |
+| Copying the contents of one register to another.                                                            |
+| Reading memory data from the address stored in a register and placing it in another register.               |
+| Storing the value from a register into memory using the address in another register.                        |
+| Comparing the contents of registers.                                                                        |
+| Performing an unconditional jump to a labeled instruction.                                                  |
+| Performing a conditional jump to a labeled instruction.                                                     |
+| Executing a subroutine call.                                                                                |
+| Returning from a subroutine.                                                                                |
+| Performing the four fundamental arithmetic operations: addition, subtraction, multiplication, and division. |
+| Performing the four fundamental logical operations: OR, AND, XOR, and NOT.                                  |
 
-| **Out of scope** |
-|---|
-|  |
+| **Out of scope**                                                                                |
+|-------------------------------------------------------------------------------------------------|
+| Shift operations are out of scope as they involve bitwise manipulation which is not covered     |                                                                                                |
+| Malloc and memory management are beyond the scope, as they pertain to dynamic memory allocation |
+| Complex data structure management is not included as it goes beyond the basic operations listed |
+
+| Nice to have         |
+|----------------------|
+| Debugger             |
+| PUSH, POP            |
+| Increment, Decrement |
+| LEAQ                 |
+
 
 #### 2.4 <u>Deliverables</u>
-| Deliverables | Type         | Deadline | Access to the document |
-|--|--------------|----------|----------------------|
-| | | | |
-
+| Deliverables              | Type                | Deadline         | Access to the document |
+|---------------------------|---------------------|------------------|------------------------|
+| Weekly Reports            | Document (Markdown) | Every Friday     | Link                   |
+| Functional Specifications | Document (Markdown) | 30 January 2024  | Link                   |
+| Technical Specifications  | Document (Markdown) | 9 February 2024  | Link                   |
+| Architecture Diagram      | Document            | 9 February 2024  | Link                   |
+| Test Plan                 | Document (Markdown) | 16 February 2024 | Link                   |
+| Database of Bug           | Document (Markdown) | 16 February 2024 | Link                   |
+| Unit Tests                | Program             | 22 February 2024 | Link                   |
+| Final Product             | Program             | 23 February 2024 | Link                   |
 ### 3. <u>Project Organisation</u>
 
 #### 3.1 <u>Project representation</u>
 
-| **Project Owner**    | **Represented by**                                 |
-|----------------------|----------------------------------------------------|
-| **JEANNIN Franck**   | Represented by himself                             |
-| **CUREL Clémentine** | Represented by **DELILLE Elone** (Program Manager) |
+| **Project Owner** | **Represented by**                                 |
+|----------------|----------------------------------------------------|
+| JEANNIN Franck | Represented by himself                             |
+| CUREL Clémentine | Represented by **DELILLE Elone** (Program Manager) |
+
+
 
 #### 3.2 <u>Stakeholders</u>
 
-| **Stakeholder**      | **Might have/find an interest in...** |
-|----------------------|---------------------------------------|
-| **JEANNIN Franck**   |                                 |
-| **ALGOSUP Students** |                                 |
+| **Stakeholder**      | **Might have/find an interest in...**                                                    |
+|----------------------|------------------------------------------------------------------------------------------|
+| **JEANNIN Franck**   | Having students learning C, the operation of an interpreter and a virtual processor      |
+| **ALGOSUP Students** | Learn C, understand how a code interpreter and a virtual processor work, gain experience |
 
 #### 3.3 <u>Project roles</u>
 | **Name**          | **Role**                              | **Description**                                                                                                                                                                         |
@@ -99,19 +125,246 @@ The aim of the project is to design both a **virtual processor**[^1] and an **in
 The project owner has designated external project reviewers to meticulously examine our specifications and furnish us with constructive feedback.
 
 ### 4. Project Plan
-#### 4.1 <u>Retroplanning</u>
 
-#### 4.2 <u>Milestones</u>
+#### 4.1 <u>Milestones</u>
 
-#### 4.3 <u>Dependencies</u>
 
-#### 4.4 <u>Resources/Financial Plan</u>
+#### 4.2 <u>Dependencies</u>
 
-#### 4.5 <u>Assumptions/Constraints</u>
+#### 4.3 <u>Resources/Financial Plan</u>
 
+#### 4.4 <u>Assumptions/Constraints</u>
+<!-- constraints : language c, only native lib,
+assumptions : no technical issue with computers -->
 ## III. Functional Requirements
+We need to create our own assembler. To do this, we'll base ourselves on most existing assembler code, with the simple exception that we'll use different names for certain actions. Our assembler will be 32-bit based, which is easily adaptable to today's computers.
+
+### 1. Registers
+#### 1.1 <u>General registers</u>
+We use 4 general registers to store data. These are 32-bit general-purpose registers.<br>
+`RA`, `RB`, `RC`, `RD`
+
+#### 1.2 <u>Address registers</u>
+Address registers, are essential components of a processor, each capable of storing the memory address of another general-purpose register. These address registers enable the processor to efficiently access different areas of memory using the addresses stored in these registers, thus facilitating data management and the execution of operations in a computing environment.<br>
+`RAA`, `RAB`, `RAC`, `RAD`
+
+### 2. Operands
+#### 2.1 <u>Addition - ADD</u>
+The "ADD" (Addition) instruction is used in programming languages to add two values, or to add a value to a specified destination. In our assembly code, the "ADD" operation instruction uses the syntax :<br>
+> `ADD DESTINATION, SOURCE`<br>
+`DESTINATION` represents the location where the result of the addition will be stored.<br>
+`SOURCE` represents the value to be added to the final destination.
+
+**Applications:**<br>
+Let's assume that the `RA` general register has a value of 10. We therefore add the value 15 to this register. To carry out this operation, we can proceed as follows:<br>
+`ADD RA, 15` | Here, we `ADD` to `RA`, the value `15`.<br>
+`Result : RA = 25`
+
+We can also add the value of one register to another, provided that both registers contain the same data types. We have `RC`, which contains the value 5 and `RD`, which contains the value 25. We want `RD` to add the value of `RC` to the value already assigned to it. We must therefore indicate `RD` as `DESTINATION` and `RC` as `SOURCE`. To carry out this operation, we can proceed as follows: <br>
+`ADD RD, RC` | Here, we `ADD` to `RD`, the value of `RC`<br>
+`Result : RD = 30`
+
+**What not to do:**<br>
+Let's imagine that our `RA` register contains the string "Hello, World!" and that our `RC` register contains the value 20. You can't do an `ADD`, as the program will try to understand that "Hello, World!" is a numerical value.<br>
+You'll get a compilation error.
+
+#### 2.2 <u>Subtraction - SUB</u>
+The "SUB" (Subtraction) instruction is used in programming languages to subtract one value from another, or to subtract a value from a specified destination. In our assembly code, the "SUB" operation instruction uses the following syntax:<br>
+> `SUB DESTINATION, SOURCE`<br>
+`DESTINATION` represents the location where the result of the subtraction will be stored.<br>
+`SOURCE` represents the value to be subtracted from the destination.
+
+**Applications:**<br>
+Let's assume that the general register `RA` contains a value of 20. We want to subtract the value 8 from this register. To perform this operation, we can proceed as follows:<br>
+`SUB RA, 8` | Here, we use the `SUB` instruction to subtract `8` from `RA`.<br>
+`Result : RA = 12`
+
+We can also subtract the value of one register from another, provided that both registers contain the same data type. Imagine we have `RC`, which contains the value 10, and `RD`, which contains the value 4. We want `RD` to subtract the value of `RC` from the value already assigned to it. To perform this operation, we can proceed as follows:<br>
+`SUB RD, RC` | Here, we use the `SUB` instruction to subtract the value of `RC` from `RD`.<br>
+`Result : RD = 6`
+
+**What not to do:**<br>
+Imagine that our register `RA` contains the string "Hello, World!" and our register `RC` contains the value 5. You cannot use the "SUB" instruction in this case, as the program will attempt to interpret "Hello, World!" as a numerical value. <br>This will result in a compilation error.
+
+#### 2.3 <u>Multiplication - MUL</u>
+The "MUL" (Multiplication) instruction is used in programming languages to multiply two values together, or to multiply a value by another and store the result in a specified destination. In our assembly code, the "MUL" operation instruction uses the following syntax:<br>
+> `MUL DESTINATION, SOURCE`<br>
+`DESTINATION` represents the location where the result of the multiplication will be stored.<br>
+`SOURCE` represents the value to be multiplied with the destination.
+
+**Applications:**<br>
+Let's assume that the `RA` general register contains a value of 10. We want to multiply this value by 5 and store the result in `RA`. To perform this operation, we can proceed as follows:<br>
+`MUL RA, 5` | Here, we use the "MUL" instruction to multiply the value in `RA` by 5.<br>
+`Result : RA = 50`
+
+You can also multiply the value of one register by another, provided that both registers contain the same data types. Imagine we have `RC`, which contains the value 6, and `RD`, which contains the value 8. We want `RD` to multiply the value of `RC` and store the result in `RD`. To perform this operation, we can proceed as follows:<br>
+`MUL RD, RC` | Here, we use the "MUL" instruction to multiply the value in `RC` by the value in `RD` and store the result in `RD`.<br>
+`Result : RD = 48`
+
+**What not to do:**<br>
+Imagine that our `RA` register contains the string "Hello, World!" and our `RC` register contains the value 20. You cannot use the "MUL" instruction in this case, as the program will attempt to interpret "Hello, World!" as a numerical value.<br>
+You'll get a compilation error.
+
+#### 2.4 <u>Division - DIV</u>
+The "DIV" (Division) instruction is used in programming languages to divide one value by another, or to divide a value by another and store the result in a specified destination. In our assembly code, the "DIV" operation instruction uses the following syntax:<br>
+> `DIV DESTINATION, SOURCE`<br>
+`DESTINATION` represents the location where the result of the division will be stored.<br>
+`SOURCE` represents the value by which the destination will be divided.
+
+**Applications:**<br>
+Let's assume that the `RA` general register contains a value of 50. We want to divide this value by 5 and store the result in `RA`. To perform this operation, we can proceed as follows:<br>
+`DIV RA, 5` | Here, we use the "DIV" instruction to divide the value in `RA` by 5.<br>
+`Result : RA = 10`
+
+You can also divide the value of one register by another, provided that both registers contain the same data types. Imagine we have `RC`, which contains the value 40, and `RD`, which contains the value 8. We want `RD` to divide the value of `RC` and store the result in `RD`. To perform this operation, we can proceed as follows:<br>
+`DIV RD, RC` | Here, we use the "DIV" instruction to divide the value in `RC` by the value in `RD` and store the result in `RD`.<br>
+`Result : RD = 5`
+
+**What not to do:**<br>
+Imagine that our `RA` register contains the string "Hello, World!" and our `RC` register contains the value 20. You cannot use the "DIV" instruction in this case, as the program will attempt to interpret "Hello, World!" as a numerical value.<br>
+You'll get a compilation error.
+
+Attempting to divide by zero (0) is not allowed. If you attempt to divide any value by zero, including a constant or the content of a register, it will result in an error or undefined behavior in most programming languages and assembly instructions. For example, DIV RA, 0 where RA contains any value will result in an error or an exception, and the program may crash or behave unpredictably. It's important to ensure that the divisor (the value after the "DIV" instruction) is not zero to avoid such issues.
+
+### 3. Functions
+
+Functions in assembly language serve as blocks of code that can be called upon to perform specific tasks. They allow for modular and structured programming. Here's a general structure for defining functions in assembly:
+
+```assembly
+function:
+    ; Some context and description of the function
+    ; OPERANDS Setup: DESTINATION, SOURCE
+
+    ; Function body (code that performs the task)
+    
+    ; Return value (if any)
+    
+end;
+```
+
+**Example of a Function:**
+
+Let's say we want to create a function that adds two numbers and returns the result.
+
+```assembly
+add_numbers:
+    ; Description: Adds two numbers and returns the result
+    ; Input:      OPERANDS Setup: DESTINATION, SOURCE (values to be added)
+
+    ; Code to add the two numbers
+    ADD DESTINATION, SOURCE
+    
+    ; Return to the calling code
+    RET
+end;
+```
+
+In this example, `add_numbers` is the function name, and it takes one parameter (`SOURCE`) as input. It calculates the sum of this parameter and stores the result in `DESTINATION`.
+
+### 4. Subroutines
+
+Subroutines in assembly are similar to functions, but they are often used for smaller, reusable tasks within a larger program. They typically don't have their own return values but can modify existing variables or registers. Here's a general structure for defining subroutines in assembly:
+
+```assembly
+function:
+    ; Some context and description of the function
+    ; OPERANDS Setup: DESTINATION, SOURCE
+
+    _subroutineName:
+        ; Some context and description of the subroutine
+        ; OPERANDS Setup: DESTINATION, SOURCE (if needed)
+
+        ; Subroutine body (code that performs a specific task)
+
+        RET ; Return to the calling code
+
+    ; More code for the main function
+
+end;
+```
+
+**Example of a Subroutine:**
+
+Let's say we have a main function that calculates the square of a number and a separate subroutine that multiplies two numbers. Here's how it could be structured:
+
+```assembly
+calculate_square:
+    ; Description: Calculates the square of a number
+    ; Input:      OPERANDS Setup: DESTINATION, SOURCE (the number to be squared)
+
+    ; Code to calculate the square using a subroutine
+    CALL multiply_numbers ; Call the multiply_numbers subroutine
+    MOV DESTINATION, ReturnValue ; Store the result in DESTINATION
+    
+    ; Return to the calling code
+    RET
+
+multiply_numbers:
+    ; Description: Multiplies two numbers
+    ; Input:      OPERANDS Setup: DESTINATION, SOURCE (values to be multiplied)
+
+    ; Code to multiply the two numbers
+    MUL DESTINATION, SOURCE
+    
+    ; Return to the calling code
+    RET
+
+main:
+    ; Main function code
+
+    ; Call the calculate_square function
+    CALL calculate_square
+    
+    ; Continue with the main function code
+
+end;
+```
+
+In this example, `calculate_square` is the main function, and it uses the `multiply_numbers` subroutine to calculate the square of a number. The `multiply_numbers` subroutine performs the multiplication and returns the result in `DESTINATION`. The main function then continues with its code after calling `calculate_square`.
+
+### 5. Printing Values
+
+In assembly language, printing values to the output or display is a common task. How you print a value depends on whether it's a string, a number, or a register. We use different methods for each:
+
+- To print a **string**, you can use the `DISP "VALUE"` instruction, where `"VALUE"` represents the string you want to display.
+
+- To print a **number**, you can use the `DISP VALUE` instruction, where `VALUE` is the numerical value you want to display.
+
+- To print the **contents of a register**, you can use the `DISP REGISTERNAME` instruction, where `REGISTERNAME` is the name of the register you want to display.
+
+**Examples:**
+
+1. Printing a String:
+   ```assembly
+   DISP "Hello, World!"
+   ```
+
+   This code will display the string "Hello, World!" to the output.
+
+2. Printing a Number:
+   ```assembly
+   DISP 42       ; Display the value 42
+   ```
+
+   This code will display the number 42 to the output.
+
+3. Printing the Contents of a Register:
+   ```assembly
+   MOV RB, 100   ; Load a value into register RB
+   DISP RB       ; Display the contents of register RB
+   ```
+
+   If the value in register RB is 100, this code will display the number 100 to the output.
+
+These examples illustrate how to use the `DISP` instruction to print strings, numbers, or the contents of registers in assembly language.
 
 ## IV. Non-Functional Requirements
+<!-- run -->
 
 ## V. Glossary
 [^1]: **Virtual Processor**: A virtual processor refers to a simulated or emulated computing unit designed to execute instructions and perform operations, typically in a software environment. It mimics the behavior of a physical processor, allowing for testing and development without the need for actual hardware.
+[^2]: **Interpreter**: An interpreter is a software component that reads and executes source code or scripts in real-time, without the need for prior compilation. It translates and executes the code line by line, making it suitable for scripting languages and dynamic environments.
+[^3]: **Assembly Code**: Assembly code, also known as assembly language, is a low-level programming language that represents instructions in a human-readable form, closely resembling the architecture of a computer's central processing unit (CPU). It is used for direct hardware manipulation and optimization.
+[^4]: **C Language**: The C language is a high-level, general-purpose programming language renowned for its efficiency, portability, and expressive power. It serves as a versatile tool for software development and system programming.
+[^5]: **Libraries**: Libraries are collections of pre-written code modules or functions that provide reusable and standardized functionality to simplify software development. They are commonly used to extend the capabilities of a programming language.
+[^6]: **Dependencies**: Dependencies are external software components or libraries that a program relies on to function correctly. They must be present and correctly configured for the program to operate as intended.
