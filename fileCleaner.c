@@ -17,7 +17,7 @@ void removeCommentsAndEmptyLines(char *str) {
             if (str[i] == ';') {
                 inCommentLine = 1;
                 // Trim trailing whitespace before the comment marker
-                while (i > 0 && isspace(str[i - 1])) {
+                while (i > 0 && isblank(str[i - 1])) {
                     i--;
                 }
                 str[i] = '\n';  // Replace the comment with a newline character
