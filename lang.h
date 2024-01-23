@@ -8,6 +8,9 @@
 // Define the file extention name
 #define FILE_EXTENTION ".algoasm"
 
+// Define the maximal size of a program file
+#define MAX_PROGRAM_SIZE 100
+
 // Define separator characters
 #define SEPARATOR ','
 #define COMMENT ';'
@@ -22,10 +25,10 @@
 #define DISP 0x03
 
 //Define register names
-#define R0 0x0A
-#define R1 0x0B
-#define R2 0x0C
-#define R3 0x0D
+#define RA 0x0A
+#define RB 0x0B
+#define RC 0x0C
+#define RD 0x0D
 
 // Define the structure for an instruction
 typedef struct 

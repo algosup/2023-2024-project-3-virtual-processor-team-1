@@ -1,10 +1,10 @@
-MOV R0, 5
-DISP R0     ; expected 5
-MOV R1, 7
-DISP R1     ; expected 7
-ADD R0, R1
-DISP R0     ; expected 12
-SUB R1, 3
-DISP R1     ; 4
+MOV RA, 5
+DISP RA     ; expected 5
+MOV RB, 7
+DISP RB     ; expected 7
+ADD RA, RB
+DISP RA     ; expected 12
+SUB RB, 3
+DISP RB     ; 4
 
-; expected --> R0 = 5, R1 = 7, R0 = 12, R1 = 4
+; expected --> RA = 5, RB = 7, RA = 12, RB = 4

@@ -21,14 +21,14 @@ int main(int argc, char *argv[])
     Instruction instructionRegister;
     // Define the program
     Instruction program[] = {
-    {MOV, R0, 0x05, 1},  // MOV R0, 5
-    {DISP, R0, 0, 0},    // DISP R0
-    {MOV, R1, 0x07, 1},  // MOV R1, 7
-    {DISP, R1, 0, 0},    // DISP R1
-    {ADD, R0, R1, 0},    // ADD R0, R1
-    {DISP, R0, 0, 0},    // DISP R0
-    {SUB, R1, 0x03, 1},   // SUB R1, 3
-    {DISP, R1, 0, 0},     // DISP R1
+    {MOV, RA, 0x05, 1},  // MOV RA, 5
+    {DISP, RA, 0, 0},    // DISP RA
+    {MOV, RB, 0x07, 1},  // MOV RB, 7
+    {DISP, RB, 0, 0},    // DISP RB
+    {ADD, RA, RB, 0},    // ADD RA, RB
+    {DISP, RA, 0, 0},    // DISP RA
+    {SUB, RB, 0x03, 1},   // SUB RB, 3
+    {DISP, RB, 0, 0},     // DISP RB
     };
     // Define the program length
     int programLength = sizeof(program) / sizeof(program[0]);
