@@ -6,58 +6,59 @@
 <br>
 
 - [Functional Specifications](#functional-specifications)
-  - [Table of content](#functional-specifications)
-  - [I. Document control](#i-document-control)
-    - [1. Document information](#1-document-information)
-    - [2. Document approval](#2-document-approval)
-  - [II. Introduction](#ii-introduction)
-    - [1. Project Overview](#1-project-overview)
-    - [2. Project Definition](#2-project-definition)
-      - [2.1 Our vision](#21-our-vision)
-      - [2.2 Scope](#22-scope)
-      - [2.3 Deliverables](#23-deliverables)
-      - [2.4 Personas](#24-personas)
-      - [2.5 Test Cases](#25-test-cases)
-    - [3. Project Organisation](#3-project-organisation)
-      - [3.1 Project representation](#31-project-representation)
-      - [3.2 Stakeholders](#32-stakeholders)
-      - [3.3 Project roles](#33-project-roles)
-      - [3.4 Project reviewers](#34-project-reviewers)
-    - [4. Project Plan](#4-project-plan)
-      - [4.1 Resources/Financial plan](#41-resourcesfinancial-plan)
-      - [4.2 Assumptions/Constraints](#42-assumptionsconstraints)
-  - [III. Functional Requirements](#iii-functional-requirements)
-    - [1. Registers](#1-registers)
-      - [1.1 General registers](#11-general-registers)
-      - [1.2 Address registers](#12-address-registers)
-    - [2. Operands](#2-operands)
-      - [2.1 Addition - ADD](#21-addition---add)
-      - [2.2 Subtraction - SUB](#22-subtraction---sub)
-      - [2.3 Multiplication - MUL](#23-multiplication---mul)
-      - [2.4 Division - DIV](#24-division---div)
-    - [3. Functions](#3-functions)
-      - [3.1 END; (End of Function)](#31-end-end-of-function)
-    - [4. Subroutines](#4-subroutines)
-      - [4.1 RET (Return)](#41-ret-return)
-    - [5. Variables](#5-variables)
-      - [5.1. DVI (Define Variable Integer)](#51-dvi-define-variable-integer)
-      - [5.2. DVC (Define Variable Char)](#52-dvc-define-variable-char)
-      - [5.3. DVN (Define Variable Negative)](#53-dvn-define-variable-negative)
-    - [6. Printing Values](#6-printing-values)
-    - [7. Instructions](#7-instructions)
-      - [7.1 Instruction MOV](#71-instruction-mov)
-    - [8. Comparing Values](#8-comparing-values)
-    - [9. Jump](#9-jump)
-      - [9.1 Unconditional Jump](#91-unconditional-jump)
-      - [9.2 Conditional Jump](#92-conditional-jump)
-    - [10. Bitwise Operations](#10-bitwise-operations)
-      - [10.1 AND (Logical AND)](#101-and-logical-and)
-      - [10.2 XOR (Exclusive OR)](#102-xor-exclusive-or)
-      - [10.3 NOT (Logical NOT)](#103-not-logical-not)
-      - [10.4 OR (Logical OR)](#104-or-logical-or)
-    - [11. Get Address (GAD)](#11-get-address-gad)
-  - [IV. Non-Functional Requirements](#iv-non-functional-requirements)
-  - [V. Glossary](#v-glossary)
+    - [Table of content](#functional-specifications)
+    - [I. Document control](#i-document-control)
+        - [1. Document information](#1-document-information)
+        - [2. Document approval](#2-document-approval)
+    - [II. Introduction](#ii-introduction)
+        - [1. Project Overview](#1-project-overview)
+        - [2. Project Definition](#2-project-definition)
+            - [2.1 Our vision](#21-our-vision)
+            - [2.2 Scope](#22-scope)
+            - [2.3 Deliverables](#23-deliverables)
+            - [2.4 Personas](#24-personas)
+        - [3. Project Organisation](#3-project-organisation)
+            - [3.1 Project representation](#31-project-representation)
+            - [3.2 Stakeholders](#32-stakeholders)
+            - [3.3 Project roles](#33-project-roles)
+            - [3.4 Project reviewers](#34-project-reviewers)
+        - [4. Project Plan](#4-project-plan)
+            - [4.1 Resources/Financial plan](#41-resourcesfinancial-plan)
+            - [4.2 Assumptions/Constraints](#42-assumptionsconstraints)
+    - [III. Explanation of how a CPU works](#iii-explanation-of-how-a-cpu-works)
+    - [IV. Functional Requirements](#iii-functional-requirements)
+        - [1. Registers](#1-registers)
+            - [1.1 General registers](#11-general-registers)
+            - [1.2 Address registers](#12-address-registers)
+        - [2. Operands](#2-operands)
+            - [2.1 Addition - ADD](#21-addition---add)
+            - [2.2 Subtraction - SUB](#22-subtraction---sub)
+            - [2.3 Multiplication - MUL](#23-multiplication---mul)
+            - [2.4 Division - DIV](#24-division---div)
+        - [3. Functions](#3-functions)
+            - [3.1 END (End of Function)](#31-end-end-of-function)
+        - [4. Subroutines](#4-subroutines)
+            - [4.1 RET (Return)](#41-ret-return)
+        - [5. Variables](#5-variables)
+            - [5.1. DVI (Define Variable Integer)](#51-dvi-define-variable-integer)
+            - [5.2. DVC (Define Variable Char)](#52-dvc-define-variable-char)
+            - [5.3. DVN (Define Variable Negative)](#53-dvn-define-variable-negative)
+        - [6. Printing Values](#6-printing-values)
+        - [7. Instructions](#7-instructions)
+            - [7.1 Instruction MOV](#71-instruction-mov)
+        - [8. Comparing Values](#8-comparing-values)
+        - [9. Jump](#9-jump)
+            - [9.1 Unconditional Jump](#91-unconditional-jump)
+            - [9.2 Conditional Jump](#92-conditional-jump)
+        - [10. Bitwise Operations](#10-bitwise-operations)
+            - [10.1 AND (Logical AND)](#101-and-logical-and)
+            - [10.2 XOR (Exclusive OR)](#102-xor-exclusive-or)
+            - [10.3 NOT (Logical NOT)](#103-not-logical-not)
+            - [10.4 OR (Logical OR)](#104-or-logical-or)
+        - [11. Get Address (GAD)](#11-get-address-gad)
+    - [V. Test Cases](#iv-test-cases)
+    - [VI. Non-Functional Requirements](#v-non-functional-requirements)
+    - [VII. Glossary](#vi-glossary)
 </details>
 
 ## I. Document control
@@ -132,79 +133,8 @@ The aim of the project is to design both a **virtual processor**[^1] and an **in
 ![For Beginners (1)](https://github.com/algosup/2023-2024-project-3-virtual-processor-team-1/assets/147847949/a22d6f34-0f01-4d60-b430-9a0f13cb9b81)
 ![For Beginners](https://github.com/algosup/2023-2024-project-3-virtual-processor-team-1/assets/147847949/08230061-e2b5-48cd-96f9-5b4879e19d8f)
 
-#### 2.5 <u>Test Cases</u>
-
-#### 2.5.1. Test Case: Register Storing and Copying
-**Objective:** Verify that immediate values can be stored in registers and contents can be copied from one register to another.
-
-**Test Steps:**
-1. Store an immediate value in register `RA`.
-2. Copy the contents of `RA` to register `RB`.
-3. Check if the value in `RB` matches the original value stored in `RA`.
-
-**Expected Result:** The value in `RB` should be identical to the value initially stored in `RA`.
-<br><br>
-#### 2.5.2 Test Case: Arithmetic Operations (ADD, SUB, MUL, DIV)
-**Objective:** Ensure that the processor correctly performs basic arithmetic operations.
-
-**Test Steps for ADD:**
-1. Store values in registers `RA` and `RB`.
-2. Perform `ADD RA, RB`.
-3. Verify the result in `RA`.
-
-**Expected Result for ADD:** The value in `RA` should be the sum of the original values in `RA` and `RB`.
-
-**Repeat similar steps for SUB, MUL, and DIV operations with appropriate expected results.**
-<br><br>
-#### 2.5.3 Test Case: Jump Instructions (Unconditional and Conditional)
-**Objective:** Test the unconditional and conditional jump instructions.
-
-**Unconditional Jump Test:**
-1. Implement a simple loop using `JMP` instruction.
-2. Verify that the loop executes as expected.
-
-**Conditional Jump Test:**
-1. Use `CMP` instruction to compare two values.
-2. Based on comparison, use `JE` or `JNE` to direct program flow.
-3. Verify that the program follows the correct path.
-   <br><br>
-#### 2.5.4 Test Case: Bitwise Operations (AND, OR, XOR, NOT)
-**Objective:** Validate the correct functionality of bitwise operations.
-
-**Test Steps for AND:**
-1. Load binary values into two registers.
-2. Perform `AND` operation.
-3. Verify the result.
-
-**Repeat similar steps for OR, XOR, and NOT operations with appropriate binary values and expected results.**
-<br><br>
-#### 2.5.5 Test Case: Function and Subroutine Execution
-**Objective:** Ensure that functions and subroutines are called and executed correctly.
-
-**Test Steps for Function:**
-1. Define a function that performs a specific operation (e.g., adding two numbers).
-2. Call the function from the main program.
-3. Verify the result of the function.
-
-**Test Steps for Subroutine:**
-1. Define a subroutine that performs a task (e.g., modifying a register value).
-2. Call the subroutine from within a function.
-3. Verify that the subroutine has performed its task correctly.
-<br><br>
-#### 2.5.6 Test Case: Variable Handling (DVI, DVC, DVN)
-**Objective:** Test the declaration and usage of different variable types.
-
-**Test Steps:**
-1. Declare variables using `DVI`, `DVC`, and `DVN`.
-2. Assign and modify values in these variables.
-3. Verify that the variables hold the correct data.
-<br><br>
-#### 2.5.7 Test Case: Printing Values
-**Objective:** Check that the processor can correctly display strings, numbers, and register contents.
-
-**Test Steps:**
-1. Use `DISP` instruction to print a string, a number, and the contents of a register.
-2. Verify that the correct values are printed.
+Since we have to explain how the language works, the test cases follow the explanations so that you can understand how the test cases work.<br>
+[You can take the test cases directly by clicking here.](#iv-test-cases)
 
 ### 3. <u>Project Organisation</u>
 
@@ -223,12 +153,12 @@ The aim of the project is to design both a **virtual processor**[^1] and an **in
 | **ALGOSUP Students** | Learn C, understand how a code interpreter and a virtual processor work, gain experience |
 
 #### 3.3 <u>Project roles</u>
-| **Name**          | **Role**                              | **Description**                                                                                                                                                                         |
-|-------------------|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Project Manager   | CUREL Clémentine                      | Assumes responsibility for project organization, planning, and budgeting. <br>Endeavors to maintain team motivation at a high level.                                                    |
-| Program Manager   | DELILLE Elone                         | Ensures that the project aligns with expectations. <br>Takes charge of project design. <br>Holds responsibility for crafting the Functional Specifications.                             |
-| Technical Leader  | PLANCHARD Thomas                      | Exercises authority in making technical decisions within the project.<br>Translates the Functional Specification into Technical Specifications.<br>Conducts comprehensive code reviews. |
-| Software Engineer | LASSELIN Alexis <br>NAMIR Salaheddine | Engages in the development of code.<br>Creates and maintains documentation.<br>Actively participates in the technical design process.                                                   |
+| **Name**          | **Role**                              | **Description**                                                                                                                                                                                                                       |
+|-------------------|---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Project Manager   | CUREL Clémentine                      | Assumes responsibility for project organisation, planning, and budgeting. <br>Endeavors to maintain team motivation at a high level.                                                                                                  |
+| Program Manager   | DELILLE Elone                         | Ensures that the project aligns with expectations. <br>Takes charge of project design. <br>Holds responsibility for crafting the Functional Specifications.                                                                           |
+| Technical Leader  | PLANCHARD Thomas                      | Exercises authority in making technical decisions within the project.<br>Translates the Functional Specification into Technical Specifications.<br>Conducts comprehensive code reviews.                                               |
+| Software Engineer | LASSELIN Alexis <br>NAMIR Salaheddine | Engages in the development of code.<br>Creates and maintains documentation.<br>Actively participates in the technical design process.                                                                                                 |
 | Quality Assurance | BAVAROIS Séréna                       | Conducts thorough testing of all product functionalities to identify bugs and issues.<br>Carefully documents identified bugs and issues.<br>Formulates the test plan.<br>Verifies the resolution of issues and ensures their closure. |
 
 #### 3.4 <u>Project reviewers</u>
@@ -238,21 +168,21 @@ The project owner has designated external project reviewers to meticulously exam
 
 #### 4.1 <u>Resources/Financial Plan</u>
 
-In our custom assembly language project, we emphasize a cost-effective approach with no financial dependencies required for its development. Our focus is on optimizing resource utilization and ensuring efficient progress.
+In our custom assembly language project, we emphasise a cost-effective approach with no financial dependencies required for its development. Our focus is on optimising resource utilisation and ensuring efficient progress.
 
 **Resource Allocation:**
 
-- **Project Duration:** The project is scheduled to span over a total of X weeks.
+- **Project Duration:** The project is scheduled to span over a total of X weeks
 
-- **Personnel:** Our dedicated team consists of X skilled individuals who will actively contribute to different aspects of the project, including development, testing, and documentation.
+- **Personnel:** Our dedicated team consists of X skilled individuals who will actively contribute to different aspects of the project, including development, testing, and documentation
 
 **Work Hours:**
 
-To maintain a balanced workload and ensure steady progress, we have allocated a total of X hours per week, distributed among team members as needed. This allocation is designed to optimize productivity while allowing for flexibility in addressing project challenges.
+To maintain a balanced workload and ensure steady progress, we have allocated a total of X hours per week, distributed among team members as needed. This allocation is designed to optimise productivity while allowing for flexibility in addressing project challenges.
 
 **Financial Independence**
 
-We take pride in stating that our custom assembly language project requires no external financial investment, which means our total budget is 0€. We have efficiently organized our resources to ensure that all development activities can be carried out within the scope of our existing capabilities and infrastructure.
+We take pride in stating that our custom assembly language project requires no external financial investment, which means our total budget is 0€. We have efficiently organised our resources to ensure that all development activities can be carried out within the scope of our existing capabilities and infrastructure.
 
 By following this resource allocation plan and maintaining our financial independence, our goal is to successfully develop and deliver our custom assembly language, while adhering to the project's objectives and timelines.
 
@@ -268,7 +198,7 @@ When working with assembly language programming, it's important to consider cert
 3. **Proper Assembler:** It is assumed that a proper assembler or assembly language development environment is used to translate the assembly code into machine code. The assembler should correctly interpret the assembly language syntax and generate executable code.
 
 **Constraints:**
-1. **Native Libraries:** The assembly code is constrained to utilize only native libraries and resources available on the target system. It should not rely on external libraries or resources that may not be present on the system.
+1. **Native Libraries:** The assembly code is constrained to utilise only native libraries and resources available on the target system. It should not rely on external libraries or resources that may not be present on the system.
 
 2. **Low-Level Language:** Assembly language is inherently a low-level language, and as such, it may not offer the same level of abstraction and convenience as high-level programming languages. Developers should be prepared to work with raw memory, registers, and hardware interfaces.
 
@@ -282,7 +212,10 @@ When working with assembly language programming, it's important to consider cert
 
 7. **Limited Debugging Tools:** Debugging assembly code can be challenging, as it may have limited access to high-level debugging tools commonly available in higher-level languages.
 
-## III. Functional Requirements
+## III. Explanation of how a CPU works
+
+
+## IV. Functional Requirements
 We need to create our own assembler. To do this, we'll base ourselves on most existing assembler code, with the simple exception that we'll use different names for certain actions. Our assembler will be 32-bit based, which is easily adaptable to today's computers.<br>
 We won't be using the entire x86 architecture, as we don't need as much memory space for this project. Also, the 32-bit architecture is easily usable on any of today's computers, and is more suitable for this project.
 
@@ -293,13 +226,13 @@ We use 4 general registers to store data. These are 32-bit general-purpose regis
 
 #### 1.2 <u>Address registers</u>
 Address registers, are essential components of a processor, each capable of storing the memory address of another general-purpose register. These address registers enable the processor to efficiently access different areas of memory using the addresses stored in these registers, thus facilitating data management and the execution of operations in a computing environment.<br>
-`RAA`, `RAB`, `RAC`, `RAD`
+`ARA`, `ARB`, `ARC`, `ARD`
 
 ### 2. Operands
 #### 2.1 <u>Addition - ADD</u>
 The "ADD" (Addition) instruction is used in programming languages to add two values, or to add a value to a specified destination. In our assembly code, the "ADD" operation instruction uses the syntax :<br>
 > `ADD DESTINATION, SOURCE`<br>
-`DESTINATION` represents the location where the result of the addition will be stored.<br>
+`DESTINATION` represents the location where the result of the addition will be stored (the DESTINATION is always a register).<br>
 `SOURCE` represents the value to be added to the final destination.
 
 **Applications:**<br>
@@ -318,7 +251,7 @@ You'll get a compilation error.
 #### 2.2 <u>Subtraction - SUB</u>
 The "SUB" (Subtraction) instruction is used in programming languages to subtract one value from another, or to subtract a value from a specified destination. In our assembly code, the "SUB" operation instruction uses the following syntax:<br>
 > `SUB DESTINATION, SOURCE`<br>
-`DESTINATION` represents the location where the result of the subtraction will be stored.<br>
+`DESTINATION` represents the location where the result of the subtraction will be stored (the DESTINATION is always a register).<br>
 `SOURCE` represents the value to be subtracted from the destination.
 
 **Applications:**<br>
@@ -336,7 +269,7 @@ Imagine that our register `RA` contains the string "Hello, World!" and our regis
 #### 2.3 <u>Multiplication - MUL</u>
 The "MUL" (Multiplication) instruction is used in programming languages to multiply two values together, or to multiply a value by another and store the result in a specified destination. In our assembly code, the "MUL" operation instruction uses the following syntax:<br>
 > `MUL DESTINATION, SOURCE`<br>
-`DESTINATION` represents the location where the result of the multiplication will be stored.<br>
+`DESTINATION` represents the location where the result of the multiplication will be stored (the DESTINATION is always a register).<br>
 `SOURCE` represents the value to be multiplied with the destination.
 
 **Applications:**<br>
@@ -355,7 +288,7 @@ You'll get a compilation error.
 #### 2.4 <u>Division - DIV</u>
 The "DIV" (Division) instruction is used in programming languages to divide one value by another, or to divide a value by another and store the result in a specified destination. In our assembly code, the "DIV" operation instruction uses the following syntax:<br>
 > `DIV DESTINATION, SOURCE`<br>
-`DESTINATION` represents the location where the result of the division will be stored.<br>
+`DESTINATION` represents the location where the result of the division will be stored (the DESTINATION is always a register).<br>
 `SOURCE` represents the value by which the destination will be divided.
 
 **Applications:**<br>
@@ -386,7 +319,7 @@ function:
     
     ; Return value (if any)
     
-end;
+end
 ```
 
 **Example of a Function:**
@@ -403,15 +336,15 @@ add_numbers:
     
     ; Return to the calling code
     RET
-end;
+end
 ```
 
 In this example, `add_numbers` is the function name, and it takes one parameter (`SOURCE`) as input. It calculates the sum of this parameter and stores the result in `DESTINATION`.
 
-#### 3.1 <u>END; (End of Function)</u>
-The `END;` instruction is used to mark the end of a function. It signifies the conclusion of the function's code block and allows the program to continue with the main program or other functions. When the assembler encounters `END;` within a function, it understands that the function's code block has concluded, and control returns to the point in the main program where the function was originally called from.
+#### 3.1 <u>END (End of Function)</u>
+The `EN;` instruction is used to mark the end of a function. It signifies the conclusion of the function's code block and allows the program to continue with the main program or other functions. When the assembler encounters `END` within a function, it understands that the function's code block has concluded, and control returns to the point in the main program where the function was originally called from.
 
-Using `END;` is crucial in assembly language to properly terminate functions and ensure that control flow proceeds correctly within the program.
+Using `END` is crucial in assembly language to properly terminate functions and ensure that control flow proceeds correctly within the program.
 
 ### 4. Subroutines
 
@@ -429,7 +362,7 @@ function:
 
     ; More code for the main function
 
-end;
+end
 
 subroutineName:
     ; Some context and description of the subroutine
@@ -474,7 +407,7 @@ main:
     
     ; Continue with the main function code
 
-end;
+end
 ```
 
 In this example, `calculate_square` is the main function, and it uses the `multiply_numbers` subroutine to calculate the square of a number. The `multiply_numbers` subroutine performs the multiplication and returns the result in `DESTINATION`. The main function then continues with its code after calling `calculate_square`.
@@ -500,9 +433,9 @@ The "DVI" instruction is used to declare integer variables. It follows this synt
 ```assembly
 variableName dvi 1
 ```
-- `variableName` is the variable name.
-- `dvi` specifies the integer variable type.
-- `1` is the initial value of the integer variable.
+- `variableName` is the variable name
+- `dvi` specifies the integer variable type
+- `1` is the initial value of the integer variable
 
 Example:
 ```assembly
@@ -516,9 +449,9 @@ The "DVC" instruction is used to declare character variables. It follows this sy
 ```assembly
 variableName2 dvc "World! Hello."
 ```
-- `variableName2` is the variable name.
-- `dvc` specifies the character variable type.
-- `"World! Hello."` is the initial value of the character variable.
+- `variableName2` is the variable name
+- `dvc` specifies the character variable type
+- `"World! Hello."` is the initial value of the character variable
 
 Example:
 ```assembly
@@ -532,9 +465,9 @@ The "DVN" instruction is used to declare integer variables with negative values.
 ```assembly
 variableName3 dvn -6
 ```
-- `variableName3` is the variable name.
-- `dvn` specifies the integer variable type with a negative value.
-- `-6` is the initial value of the integer variable with a negative value.
+- `variableName3` is the variable name
+- `dvn` specifies the integer variable type with a negative value
+- `-6` is the initial value of the integer variable with a negative value
 
 Example:
 ```assembly
@@ -562,11 +495,11 @@ This allows you to define variables of different types to store data in your ass
 
 In assembly language, printing values to the output or display is a common task. How you print a value depends on whether it's a string, a number, or a register. We use different methods for each:
 
-- To print a **string**, you can use the `DISP "VALUE"` instruction, where `"VALUE"` represents the string you want to display.
+- To print a **string**, you can use the `DISP "VALUE"` instruction, where `"VALUE"` represents the string you want to display
 
-- To print a **number**, you can use the `DISP VALUE` instruction, where `VALUE` is the numerical value you want to display.
+- To print a **number**, you can use the `DISP VALUE` instruction, where `VALUE` is the numerical value you want to display
 
-- To print the **contents of a register**, you can use the `DISP REGISTERNAME` instruction, where `REGISTERNAME` is the name of the register you want to display.
+- To print the **contents of a register**, you can use the `DISP REGISTERNAME` instruction, where `REGISTERNAME` is the name of the register you want to display
 
 **Examples:**
 
@@ -599,7 +532,7 @@ In this section, we will look at the instructions that we have decided to implem
 #### 7.1 <u>Instruction MOV</u>
 The "MOV" (Move) instruction is used to copy the value from one register to another. It's commonly used for data transfer between registers. The syntax for the "MOV" instruction is as follows:
 > `MOV DESTINATION, SOURCE`<br>
-> `DESTINATION` represents the location where the result of the division will be stored
+> `DESTINATION` represents the location where the result of the division will be stored (the DESTINATION is always a register).
 > <br>`SOURCE` represents the value by which the destination will be divided
 
 Certainly, let's explain each of the "MOV" instruction examples one by one:
@@ -608,8 +541,8 @@ Certainly, let's explain each of the "MOV" instruction examples one by one:
 
 The instruction `MOV RA, RC` is used to copy the value from register RC to register RA.
 
-- `RA` is the destination register where the value will be copied.
-- `RC` is the source register from which the value is taken.
+- `RA` is the destination register where the value will be copied
+- `RC` is the source register from which the value is taken
 
 Example:
 ```assembly
@@ -622,8 +555,8 @@ In this example, the value currently stored in register RC is copied into regist
 
 The instruction `MOV RD, #2` is used to directly load the value `2` into register RD.
 
-- `RD` is the destination register where the value will be placed.
-- `#2` represents the immediate value `2` that is loaded directly into RD.
+- `RD` is the destination register where the value will be placed
+- `#2` represents the immediate value `2` that is loaded directly into RD
 
 Example:
 ```assembly
@@ -636,45 +569,45 @@ In this example, the value `2` is immediately loaded into register RD. This inst
 
 The instruction `MOV RA, "WORLD ! Hello."` is used to load a string, in this case, `"WORLD ! Hello."`, into register RA.
 
-- `RA` is the destination register where the string will be stored.
-- `"WORLD ! Hello."` is the string value that will be placed in RA.
+- `RA` is the destination register where the string will be stored
+- `"WORLD ! Hello."` is the string value that will be placed in RA
 
 Example:
 ```assembly
 MOV RA, "WORLD ! Hello."
 ```
 
-In this example, the string `"WORLD ! Hello."` is stored in register RA. This instruction is used for initializing a register with a string value.
+In this example, the string `"WORLD ! Hello."` is stored in register RA. This instruction is used for initialising a register with a string value.
 
 Certainly, I'll add the additional "MOV" instruction examples and the message regarding what not to do. Here's the updated section:
 
 #### 7.1.4 `MOV myTextVariable, "My text"`
 
-The instruction `MOV myTextVariable, "My text"` is used to load a string, in this case, `"My text"`, into the variable `myTextVariable`. 
+The instruction `MOV myTextVariable, "My text"` is used to load a string, in this case, `"My text"`, into the variable `myTextVariable`.
 
-- `myTextVariable` is the destination variable where the string will be stored.
-- `"My text"` is the string value that will be placed in `myTextVariable`.
+- `myTextVariable` is the destination variable where the string will be stored
+- `"My text"` is the string value that will be placed in `myTextVariable`
 
 Example:
 ```assembly
 MOV myTextVariable, "My text"
 ```
 
-In this example, the string `"My text"` is stored in the variable `myTextVariable`. This is a common way to initialize a string variable.
+In this example, the string `"My text"` is stored in the variable `myTextVariable`. This is a common way to initialise a string variable.
 
 #### 7.1.5 `MOV myIntegerVariable, 12`
 
 The instruction `MOV myIntegerVariable, 12` is used to assign the integer value `12` to the variable `myIntegerVariable`.
 
-- `myIntegerVariable` is the destination variable where the integer value will be stored.
-- `12` is the immediate integer value that will be placed in `myIntegerVariable`.
+- `myIntegerVariable` is the destination variable where the integer value will be stored
+- `12` is the immediate integer value that will be placed in `myIntegerVariable`
 
 Example:
 ```assembly
 MOV myIntegerVariable, 12
 ```
 
-In this example, the integer value `12` is assigned to the variable `myIntegerVariable`. This is a common way to initialize an integer variable.
+In this example, the integer value `12` is assigned to the variable `myIntegerVariable`. This is a common way to initialise an integer variable.
 
 #### 7.1.6 What Not to Do
 
@@ -691,13 +624,13 @@ The "CMP" (Compare) instruction is used to compare two values. It's essential fo
 
 Here are the different forms of the "CMP" instruction:
 
-- `CMP Registre, Variable` : This form compares the contents of a register with the value stored in a memory variable.
+- `CMP Registre, Variable` : This form compares the contents of a register with the value stored in a memory variable
 
-- `CMP Variable, Variable `: In this case, two memory variables are compared.
+- `CMP Variable, Variable `: In this case, two memory variables are compared
 
-- `CMP Registre, Registre` : You can compare the contents of two registers using this form.
+- `CMP Registre, Registre` : You can compare the contents of two registers using this form
 
-- `CMP DirectValue, DirectValue` : It's also possible to compare two immediate values directly.
+- `CMP DirectValue, DirectValue` : It's also possible to compare two immediate values directly
 
 **Example Usage:**
 
@@ -744,7 +677,7 @@ randomFunction:
 main:
     CALL randomFunction ; Call the randomFunction subroutine
     ; Here you can perform a conditional jump
-end;    
+end   
 ```
 
 ### 9. Jump
@@ -947,57 +880,131 @@ Certainly! Here's an explanation, syntax, and example for the "GAD" (Get Address
 
 ### 11. Get Address (GAD)
 
-The "GAD" instruction, which stands for "Get Address," is used to obtain the memory address of a specific register and store it in one of the destination registers, which can be RAA, RAB, RAC, or RAD.
+The "GAD" instruction, which stands for "Get Address," is used to obtain the memory address of a specific register and store it in one of the destination registers, which can be ARA, ARB, ARC, or ARD.
 
 **Syntax:**
 ```
 GAD DESTINATION, SOURCE
 ```
 
-- `DESTINATION` represents one of the destination registers (RAA, RAB, RAC, or RAD).
-- `SOURCE` represents the source register (e.g., RAD, RA, RB, RC, etc.) whose memory address you want to obtain.
+- `DESTINATION` represents one of the destination registers (ARA, ARB, ARC, or ARD)
+- `SOURCE` represents the source register (e.g., RA, RC, RC, RD, etc.) whose memory address you want to obtain
 
 **Example:**
 ```assembly
 MOV RA, 10    ; Set RA to the value 10
-GAD RAA, RA   ; Get the memory address of RA and store it in RAA
+GAD ARA, RA   ; Get the memory address of RA and store it in ARA
 ```
 
-In this example, the `GAD RAA, RA` instruction retrieves the memory address of register `RA` and stores it in register `RAA`. Now, `RAA` contains the memory address of `RA`, allowing you to perform operations that involve the address of RA, such as indirect addressing or memory manipulation.
+In this example, the `GAD ARA, RA` instruction retrieves the memory address of register `RA` and stores it in register `ARA`. Now, `ARA` contains the memory address of `RA`, allowing you to perform operations that involve the address of RA, such as indirect addressing or memory manipulation.
 
-## IV. Non-Functional Requirements
+## V. Test Cases
+
+### 1. Register Storing and Copying
+**Objective:** Verify that immediate values can be stored in registers and contents can be copied from one register to another.
+
+**Test Steps:**
+1. Store an immediate value in register `RA`.
+2. Copy the contents of `RA` to register `RB`.
+3. Check if the value in `RB` matches the original value stored in `RA`.
+
+**Expected Result:** The value in `RB` should be identical to the value initially stored in `RA`.
+<br><br>
+### 2. Arithmetic Operations (ADD, SUB, MUL, DIV)
+**Objective:** Ensure that the processor correctly performs basic arithmetic operations.
+
+**Test Steps for ADD:**
+1. Store values in registers `RA` and `RB`.
+2. Perform `ADD RA, RB`.
+3. Verify the result in `RA`.
+
+**Expected Result for ADD:** The value in `RA` should be the sum of the original values in `RA` and `RB`.
+
+**Repeat similar steps for SUB, MUL, and DIV operations with appropriate expected results.**
+<br><br>
+### 3. Jump Instructions (Unconditional and Conditional)
+**Objective:** Test the unconditional and conditional jump instructions.
+
+**Unconditional Jump Test:**
+1. Implement a simple loop using `JMP` instruction.
+2. Verify that the loop executes as expected.
+
+**Conditional Jump Test:**
+1. Use `CMP` instruction to compare two values.
+2. Based on comparison, use `JE` or `JNE` to direct program flow.
+3. Verify that the program follows the correct path.
+   <br><br>
+### 4. Bitwise Operations (AND, OR, XOR, NOT)
+**Objective:** Validate the correct functionality of bitwise operations.
+
+**Test Steps for AND:**
+1. Load binary values into two registers.
+2. Perform `AND` operation.
+3. Verify the result.
+
+**Repeat similar steps for OR, XOR, and NOT operations with appropriate binary values and expected results.**
+<br><br>
+### 5. Function and Subroutine Execution
+**Objective:** Ensure that functions and subroutines are called and executed correctly.
+
+**Test Steps for Function:**
+1. Define a function that performs a specific operation (e.g., adding two numbers).
+2. Call the function from the main program.
+3. Verify the result of the function.
+
+**Test Steps for Subroutine:**
+1. Define a subroutine that performs a task (e.g., modifying a register value).
+2. Call the subroutine from within a function.
+3. Verify that the subroutine has performed its task correctly.
+   <br><br>
+### 6. Variable Handling (DVI, DVC, DVN)
+**Objective:** Test the declaration and usage of different variable types.
+
+**Test Steps:**
+1. Declare variables using `DVI`, `DVC`, and `DVN`.
+2. Assign and modify values in these variables.
+3. Verify that the variables hold the correct data.
+   <br><br>
+### 7. Printing Values
+**Objective:** Check that the processor can correctly display strings, numbers, and register contents.
+
+**Test Steps:**
+1. Use `DISP` instruction to print a string, a number, and the contents of a register.
+2. Verify that the correct values are printed.
+
+## VI. Non-Functional Requirements
 > **Portability**<br>
-   Objective: The software should be easily portable across different operating systems without significant modifications.
+Objective: The software should be easily portable across different operating systems without significant modifications.
 
 Details:<br>
 **Platform Independence**: The code should rely on standard C libraries, avoiding system-specific dependencies.
 <br>**Cross-Platform Compatibility**: Testing on different OS (Windows, Linux, macOS) to ensure compatibility.
 <br><br>
 > **<u>Reliability and Robustness</u>**<br>
-   Objective: The system should handle errors gracefully and perform reliably under various conditions.
+Objective: The system should handle errors gracefully and perform reliably under various conditions.
 
 Details:<br>
 **Error Handling**: Efficient handling of exceptional cases and errors in instruction execution.
 <br>**System Stability**: Ensuring the system remains stable and performs reliably over extended periods.
 > **Maintainability and Extensibility**<br>
-   Objective: The design should facilitate easy maintenance and future enhancements.
+Objective: The design should facilitate easy maintenance and future enhancements.
 
 Details:<br>
-**Modular Design**: Code should be organized into modules for ease of understanding and modification.
+**Modular Design**: Code should be organised into modules for ease of understanding and modification.
 <br>**Documentation**: Comprehensive documentation of the codebase and architecture for easier maintenance and updates.
 
 > **Performance and Efficiency**<br>
-Objective: The interpreter and virtual processor should be optimized for maximum efficiency without compromising performance.
+Objective: The interpreter and virtual processor should be optimised for maximum efficiency without compromising performance.
 
 Details:<br>
-**Resource Usage**: The system should be optimized for low resource consumption (CPU, memory).
-<br>**Optimized Code**: The interpreter should be written in a way that minimizes processing time and memory usage.
+**Resource Usage**: The system should be optimised for low resource consumption (CPU, memory).
+<br>**Optimised Code**: The interpreter should be written in a way that minimises processing time and memory usage.
 <br>**Scalability**: The system should maintain performance levels under varying loads.
 
-## V. Glossary
+## VII. Glossary
 [^1]: **Virtual Processor**: A virtual processor refers to a simulated or emulated computing unit designed to execute instructions and perform operations, typically in a software environment. It mimics the behavior of a physical processor, allowing for testing and development without the need for actual hardware.
 [^2]: **Interpreter**: An interpreter is a software component that reads and executes source code or scripts in real-time, without the need for prior compilation. It translates and executes the code line by line, making it suitable for scripting languages and dynamic environments.
-[^3]: **Assembly Code**: Assembly code, also known as assembly language, is a low-level programming language that represents instructions in a human-readable form, closely resembling the architecture of a computer's central processing unit (CPU). It is used for direct hardware manipulation and optimization.
+[^3]: **Assembly Code**: Assembly code, also known as assembly language, is a low-level programming language that represents instructions in a human-readable form, closely resembling the architecture of a computer's central processing unit (CPU). It is used for direct hardware manipulation and optimisation.
 [^4]: **C Language**: The C language is a high-level, general-purpose programming language renowned for its efficiency, portability, and expressive power. It serves as a versatile tool for software development and system programming.
-[^5]: **Libraries**: Libraries are collections of pre-written code modules or functions that provide reusable and standardized functionality to simplify software development. They are commonly used to extend the capabilities of a programming language.
+[^5]: **Libraries**: Libraries are collections of pre-written code modules or functions that provide reusable and standardised functionality to simplify software development. They are commonly used to extend the capabilities of a programming language.
 [^6]: **Dependencies**: Dependencies are external software components or libraries that a program relies on to function correctly. They must be present and correctly configured for the program to operate as intended.
