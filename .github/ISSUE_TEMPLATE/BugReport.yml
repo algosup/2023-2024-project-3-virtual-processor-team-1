@@ -1,0 +1,88 @@
+name: Bug Report
+description: File a bug report
+title: "XXXXXX [2024/XX/XX] "
+labels: ["bug"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "Description"
+      description: Write a short and explicit description of your incident...
+      placeholder: Please enter an explicit description of your issue
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: "Severity"
+      options:
+        - 1 - Critical
+        - 2 - High
+        - 3 - Medium
+        - 4 - Low
+        - 5 - None
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: "Version"
+      description: "What version of our software are you running?"
+
+  - type: textarea
+    id: system
+    attributes:
+      label: "System informations"
+      description: "What are some details about your software?"
+      value: |
+        Operating system: Windows/MacOS/Linux
+        Other:
+
+  - type: textarea
+    id: inputs
+    attributes:
+      label: "Steps taken"
+      description: "What did you do to arrive at this point?"
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "Expected result"
+      description: "What were you expecting to happen?"
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: "Actual result"
+      description: "What results do you get?"
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: "Potential solution"
+      description: "If you have an idea on how to solve this problem, please share it here."
+
+  - type: textarea
+    id: other
+    attributes:
+      label: "Other"
+      description: "If you have anything else to say."
+      
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: CheckList
+      description: Please ensure that you agree to this CheckList before submitting this bug report.
+      options:
+        - label: I have checked that the problem has not already been reported.
+          required: true
+        - label: I have checked that the problem has not been resolved in the latest version.
+          required: true
+        - label: I have mentioned the operating system and compiler used.
+          required: true
