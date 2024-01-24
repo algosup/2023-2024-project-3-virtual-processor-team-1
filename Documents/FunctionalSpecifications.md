@@ -10,20 +10,18 @@
     - [1. Project Overview](#1-project-overview)
     - [2. Project Definition](#2-project-definition)
       - [2.1 Our vision](#21-uour-visionu)
-      - [2.2 Objectives](#22-uobjectivesu)
-      - [2.3 Scope](#23-uscopeu)
-      - [2.4 Deliverables](#24-udeliverablesu)
-      - [2.5 Personas](#25-upersonasu)
+      - [2.2 Scope](#22-uscopeu)
+      - [2.3 Deliverables](#23-udeliverablesu)
+      - [2.4 Personas](#24-upersonasu)
+      - [2.5 Test Cases](#25-utest-casesu)
     - [3. Project Organisation](#3-uproject-organisationu)
       - [3.1 Project representation](#31-uproject-representationu)
       - [3.2 Stakeholders](#32-ustakeholdersu)
       - [3.3 Project roles](#33-uproject-rolesu)
       - [3.4 Project reviewers](#34-uproject-reviewersu)
     - [4. Project Plan](#4-project-plan)
-      - [4.1 Milestones](#41-umilestonesu)
-      - [4.2 Dependencies](#42-udependenciesu)
-      - [4.3 Resources/Financial plan](#43-uresourcesfinancial-planu)
-      - [4.4 Assumptions/Constraints](#44-uassumptionsconstraintsu)
+      - [4.1 Resources/Financial plan](#43-uresourcesfinancial-planu)
+      - [4.2 Assumptions/Constraints](#44-uassumptionsconstraintsu)
   - [III. Functional Requirements](#iii-functional-requirements)
     - [1. Registers](#1-registers)
       - [1.1 General registers](#11-ugeneral-registersu)
@@ -34,7 +32,9 @@
       - [2.3 Multiplication - MUL](#23-umultiplication---mulu)
       - [2.4 Division - DIV](#24-udivision---divu)
     - [3. Functions](#3-functions)
+      - [3.1 END; (End of Function)](#31-uend-end-of-functionu)
     - [4. Subroutines](#4-subroutines)
+      - [4.1 RET (Return)](#41-uret-returnu)
     - [5. Variables](#5-variables)
       - [5.1. DVI (Define Variable Integer)](#51-udvi-define-variable-integeru)
       - [5.2. DVC (Define Variable Char)](#52-udvc-define-variable-charu)
@@ -43,6 +43,15 @@
     - [7. Instructions](#7-instructions)
       - [7.1 Instruction MOV](#71-uinstruction-movu)
     - [8. Comparing Values](#8-comparing-values)
+    - [9. Jump](#9-jump)
+      - [9.1 Unconditional Jump](#91-uunconditional-jumpu)
+      - [9.2 Conditional Jump](#92-uconditional-jumpu)
+    - [10. Bitwise Operations](#10-bitwise-operations)
+      - [10.1 AND (Logical AND)](#101-uand-logical-andu)
+      - [10.2 XOR (Exclusive OR)](#102-uxor-exclusive-oru)
+      - [10.3 NOT (Logical NOT)](#103-unot-logical-notu)
+      - [10.4 OR (Logical OR)](#104-uor-logical-oru)
+    - [11. Get Address (GAD)](#11-get-address-gad)
   - [IV. Non-Functional Requirements](#iv-non-functional-requirements)
   - [V. Glossary](#v-glossary)
 
@@ -69,9 +78,8 @@ The aim of the project is to design both a **virtual processor**[^1] and an **in
 ### 2. Project Definition
 #### 2.1 <u>Our vision</u>
 - We have to create our own assembly language and run it using a code interpreter that we will create in the C programming language. We must be able to run a programme that meets the requirements of the customer, JEANNIN Franck.
-#### 2.2 <u>Objectives</u>
 
-#### 2.3 <u>Scope</u>
+#### 2.2 <u>Scope</u>
 
 | **In scope**                                                                                                |
 |-------------------------------------------------------------------------------------------------------------|
@@ -101,7 +109,7 @@ The aim of the project is to design both a **virtual processor**[^1] and an **in
 | LEAQ                 |
 
 
-#### 2.4 <u>Deliverables</u>
+#### 2.3 <u>Deliverables</u>
 | Deliverables              | Type                | Deadline         | Access to the document |
 |---------------------------|---------------------|------------------|------------------------|
 | Weekly Reports            | Document (Markdown) | Every Friday     | Link                   |
@@ -113,7 +121,85 @@ The aim of the project is to design both a **virtual processor**[^1] and an **in
 | Unit Tests                | Program             | 22 February 2024 | Link                   |
 | Final Product             | Program             | 23 February 2024 | Link                   |
 
-#### 2.5 <u>Personas</u>
+#### 2.4 <u>Personas</u>
+
+![img.png](img.png)
+![img_1.png](img_1.png)
+![img_2.png](img_2.png)
+
+#### 2.5 <u>Test Cases</u>
+
+#### 2.5.1. Test Case: Register Storing and Copying
+**Objective:** Verify that immediate values can be stored in registers and contents can be copied from one register to another.
+
+**Test Steps:**
+1. Store an immediate value in register `RA`.
+2. Copy the contents of `RA` to register `RB`.
+3. Check if the value in `RB` matches the original value stored in `RA`.
+
+**Expected Result:** The value in `RB` should be identical to the value initially stored in `RA`.
+<br><br>
+#### 2.5.2 Test Case: Arithmetic Operations (ADD, SUB, MUL, DIV)
+**Objective:** Ensure that the processor correctly performs basic arithmetic operations.
+
+**Test Steps for ADD:**
+1. Store values in registers `RA` and `RB`.
+2. Perform `ADD RA, RB`.
+3. Verify the result in `RA`.
+
+**Expected Result for ADD:** The value in `RA` should be the sum of the original values in `RA` and `RB`.
+
+**Repeat similar steps for SUB, MUL, and DIV operations with appropriate expected results.**
+<br><br>
+#### 2.5.3 Test Case: Jump Instructions (Unconditional and Conditional)
+**Objective:** Test the unconditional and conditional jump instructions.
+
+**Unconditional Jump Test:**
+1. Implement a simple loop using `JMP` instruction.
+2. Verify that the loop executes as expected.
+
+**Conditional Jump Test:**
+1. Use `CMP` instruction to compare two values.
+2. Based on comparison, use `JE` or `JNE` to direct program flow.
+3. Verify that the program follows the correct path.
+   <br><br>
+#### 2.5.4 Test Case: Bitwise Operations (AND, OR, XOR, NOT)
+**Objective:** Validate the correct functionality of bitwise operations.
+
+**Test Steps for AND:**
+1. Load binary values into two registers.
+2. Perform `AND` operation.
+3. Verify the result.
+
+**Repeat similar steps for OR, XOR, and NOT operations with appropriate binary values and expected results.**
+<br><br>
+#### 2.5.5 Test Case: Function and Subroutine Execution
+**Objective:** Ensure that functions and subroutines are called and executed correctly.
+
+**Test Steps for Function:**
+1. Define a function that performs a specific operation (e.g., adding two numbers).
+2. Call the function from the main program.
+3. Verify the result of the function.
+
+**Test Steps for Subroutine:**
+1. Define a subroutine that performs a task (e.g., modifying a register value).
+2. Call the subroutine from within a function.
+3. Verify that the subroutine has performed its task correctly.
+<br><br>
+#### 2.5.6 Test Case: Variable Handling (DVI, DVC, DVN)
+**Objective:** Test the declaration and usage of different variable types.
+
+**Test Steps:**
+1. Declare variables using `DVI`, `DVC`, and `DVN`.
+2. Assign and modify values in these variables.
+3. Verify that the variables hold the correct data.
+<br><br>
+#### 2.5.7 Test Case: Printing Values
+**Objective:** Check that the processor can correctly display strings, numbers, and register contents.
+
+**Test Steps:**
+1. Use `DISP` instruction to print a string, a number, and the contents of a register.
+2. Verify that the correct values are printed.
 
 ### 3. <u>Project Organisation</u>
 
@@ -123,8 +209,6 @@ The aim of the project is to design both a **virtual processor**[^1] and an **in
 |----------------|----------------------------------------------------|
 | JEANNIN Franck | Represented by himself                             |
 | CUREL Clémentine | Represented by **DELILLE Elone** (Program Manager) |
-
-
 
 #### 3.2 <u>Stakeholders</u>
 
@@ -147,16 +231,52 @@ The project owner has designated external project reviewers to meticulously exam
 
 ### 4. Project Plan
 
-#### 4.1 <u>Milestones</u>
+#### 4.1 <u>Resources/Financial Plan</u>
 
+In our custom assembly language project, we emphasize a cost-effective approach with no financial dependencies required for its development. Our focus is on optimizing resource utilization and ensuring efficient progress.
 
-#### 4.2 <u>Dependencies</u>
+**Resource Allocation:**
 
-#### 4.3 <u>Resources/Financial Plan</u>
+- **Project Duration:** The project is scheduled to span over a total of X weeks.
 
-#### 4.4 <u>Assumptions/Constraints</u>
-<!-- constraints : language c, only native lib,
-assumptions : no technical issue with computers -->
+- **Personnel:** Our dedicated team consists of X skilled individuals who will actively contribute to different aspects of the project, including development, testing, and documentation.
+
+**Work Hours:**
+
+To maintain a balanced workload and ensure steady progress, we have allocated a total of X hours per week, distributed among team members as needed. This allocation is designed to optimize productivity while allowing for flexibility in addressing project challenges.
+
+**Financial Independence**
+
+We take pride in stating that our custom assembly language project requires no external financial investment, which means our total budget is 0€. We have efficiently organized our resources to ensure that all development activities can be carried out within the scope of our existing capabilities and infrastructure.
+
+By following this resource allocation plan and maintaining our financial independence, our goal is to successfully develop and deliver our custom assembly language, while adhering to the project's objectives and timelines.
+
+#### 4.2 <u>Assumptions/Constraints</u>
+
+When working with assembly language programming, it's important to consider certain assumptions and constraints to ensure the smooth execution of your code:
+
+**Assumptions:**
+1. **No Technical Issues:** We assume that the target computer system does not encounter any significant technical issues during the execution of the assembly code. This includes factors such as hardware failures, memory corruption, or system instability.
+
+2. **Compatible Hardware:** The assembly code is assumed to be executed on hardware that is compatible with the assembly language instructions used. Compatibility issues can lead to unexpected behavior or errors.
+
+3. **Proper Assembler:** It is assumed that a proper assembler or assembly language development environment is used to translate the assembly code into machine code. The assembler should correctly interpret the assembly language syntax and generate executable code.
+
+**Constraints:**
+1. **Native Libraries:** The assembly code is constrained to utilize only native libraries and resources available on the target system. It should not rely on external libraries or resources that may not be present on the system.
+
+2. **Low-Level Language:** Assembly language is inherently a low-level language, and as such, it may not offer the same level of abstraction and convenience as high-level programming languages. Developers should be prepared to work with raw memory, registers, and hardware interfaces.
+
+3. **Minimal Abstraction:** Assembly language programming typically involves minimal abstraction, meaning that developers have to handle many low-level details themselves. This can make code more complex and require a deep understanding of the hardware architecture.
+
+4. **Portability:** Assembly code is often not portable across different computer architectures. Code written for one architecture may not work on another without significant modifications.
+
+5. **Manual Memory Management:** Assembly language programming often requires manual memory management, including allocation and deallocation of memory, which can be error-prone if not handled carefully.
+
+6. **Limited High-Level Features:** Assembly language lacks many high-level features and abstractions found in modern programming languages, such as built-in data structures or complex control flow constructs.
+
+7. **Limited Debugging Tools:** Debugging assembly code can be challenging, as it may have limited access to high-level debugging tools commonly available in higher-level languages.
+
 ## III. Functional Requirements
 We need to create our own assembler. To do this, we'll base ourselves on most existing assembler code, with the simple exception that we'll use different names for certain actions. Our assembler will be 32-bit based, which is easily adaptable to today's computers.<br>
 We won't be using the entire x86 architecture, as we don't need as much memory space for this project. Also, the 32-bit architecture is easily usable on any of today's computers, and is more suitable for this project.
@@ -283,6 +403,11 @@ end;
 
 In this example, `add_numbers` is the function name, and it takes one parameter (`SOURCE`) as input. It calculates the sum of this parameter and stores the result in `DESTINATION`.
 
+#### 3.1 <u>END; (End of Function)</u>
+The `END;` instruction is used to mark the end of a function. It signifies the conclusion of the function's code block and allows the program to continue with the main program or other functions. When the assembler encounters `END;` within a function, it understands that the function's code block has concluded, and control returns to the point in the main program where the function was originally called from.
+
+Using `END;` is crucial in assembly language to properly terminate functions and ensure that control flow proceeds correctly within the program.
+
 ### 4. Subroutines
 
 Subroutines in assembly are similar to functions, but they are often used for smaller, reusable tasks within a larger program. They typically don't have their own return values but can modify existing variables or registers.<br>
@@ -348,6 +473,11 @@ end;
 ```
 
 In this example, `calculate_square` is the main function, and it uses the `multiply_numbers` subroutine to calculate the square of a number. The `multiply_numbers` subroutine performs the multiplication and returns the result in `DESTINATION`. The main function then continues with its code after calling `calculate_square`.
+
+#### 4.1 <u>RET (Return)</u>
+The "RET" (Return) instruction is used at the end of a subroutine to return control to the calling code. When a subroutine finishes its task, it uses "RET" to go back to the point in the main program where it was originally called from. This allows the main program to continue executing after the subroutine's task is completed.
+
+Using "RET" is essential in assembly language to maintain program flow and ensure that control is transferred back to the appropriate location in the calling code.
 
 ## 5. Variables
 
@@ -612,8 +742,252 @@ main:
 end;    
 ```
 
+### 9. Jump
+
+#### 9.1 <u>Unconditional Jump</u>
+
+**Syntax:**
+```
+JMP destination
+```
+
+The "Jump Unconditional" instruction, represented by `JMP`, transfers control to a different part of the program without any conditions.
+
+**Example:**
+```assembly
+JMP LoopStart
+```
+
+In this example, the program unconditionally jumps to the label `LoopStart`, typically used for implementing loops in assembly.
+
+#### 9.2 <u>Conditional Jump</u>
+
+Conditional jumps in assembly allow you to change program flow based on the results of previous comparisons or conditions.
+
+**Syntax:**
+```
+JXX destination
+```
+
+Here, `XX` represents a condition code that specifies the condition under which the jump will be taken.
+
+#### 9.2.1 Jump Equal (JE)
+
+**Syntax:**
+```
+JE destination
+```
+
+The "Jump Equal" (`JE`) instruction jumps to the specified destination if two values are equal.
+
+**Example:**
+```assembly
+MOV RA, 5     ; Set RA to 5
+CMP RA, 5     ; Compare the value in RA with 5
+JE EqualLabel ; Jump to EqualLabel if RA equals 5
+```
+
+#### 9.2.2 Jump Not Equal (JNE)
+
+**Syntax:**
+```
+JNE destination
+```
+
+The "Jump Not Equal" (`JNE`) instruction jumps to the specified destination if two values are not equal.
+
+**Example:**
+```assembly
+MOV RB, 10    ; Set RB to 10
+CMP RB, 5     ; Compare the value in RB with 5
+JNE NotEqual  ; Jump to NotEqual if RB is not equal to 5
+```
+
+#### 9.2.3 Jump Greater (JG)
+
+**Syntax:**
+```
+JG destination
+```
+
+The "Jump Greater" (`JG`) instruction jumps to the specified destination if one value is greater than another.
+
+**Example:**
+```assembly
+MOV RC, 15    ; Set RC to 15
+CMP RC, 10    ; Compare the value in RC with 10
+JG Greater    ; Jump to Greater if RC is greater than 10
+```
+
+#### 9.2.4 Jump Greater or Equal (JGE)
+
+**Syntax:**
+```
+JGE destination
+```
+
+The "Jump Greater or Equal" (`JGE`) instruction jumps to the specified destination if one value is greater than or equal to another.
+
+**Example:**
+```assembly
+MOV RD, 20    ; Set RD to 20
+CMP RD, 20    ; Compare the value in RD with 20
+JGE GreaterOrEqual ; Jump to GreaterOrEqual if RD is greater than or equal to 20
+```
+
+#### 9.2.5 Jump Less (JL)
+
+**Syntax:**
+```
+JL destination
+```
+
+The "Jump Less" (`JL`) instruction jumps to the specified destination if one value is less than another.
+
+**Example:**
+```assembly
+MOV RA, 25    ; Set RA to 25
+CMP RA, 30    ; Compare the value in RA with 30
+JL Less       ; Jump to Less if RA is less than 30
+```
+
+#### 9.2.6 Jump Less or Equal (JLE)
+
+**Syntax:**
+```
+JLE destination
+```
+
+The "Jump Less or Equal" (`JLE`) instruction jumps to the specified destination if one value is less than or equal to another.
+
+**Example:**
+```assembly
+MOV RB, 5     ; Set RB to 5
+CMP RB, 5     ; Compare the value in RB with 5
+JLE LessOrEqual ; Jump to LessOrEqual if RB is less than or equal to 5
+```
+
+Conditional jumps are used to control program flow based on comparisons and conditions, allowing you to create branching logic in assembly programs.
+
+### 10. Bitwise Operations
+
+Bitwise operations in assembly manipulate individual bits of binary values.
+
+#### 10.1 <u>AND (Logical AND)</u>
+
+**Syntax:**
+```
+AND destination, source
+```
+
+The `AND` instruction performs a bitwise AND operation between the bits of the destination and source operands, setting the bits in the destination to 1 only if both corresponding bits in the source and destination are 1.
+
+**Example:**
+```assembly
+MOV RA, 5     ; Set RA to binary 0101
+MOV RB, 3     ; Set RB to binary 0011
+AND RA, RB    ; Perform AND operation: RA = 0101 AND 0011 = 0001 (1 in decimal)
+```
+
+#### 10.2 <u>XOR (Exclusive OR)</u>
+
+**Syntax:**
+```
+XOR destination, source
+```
+
+The `XOR` instruction performs a bitwise XOR operation between the bits of the destination and source operands, setting the bits in the destination to 1 if they differ in value between the source and destination.
+
+**Example:**
+```assembly
+MOV RA, 6     ; Set RA to binary 0110
+MOV RB, 3     ; Set RB to binary 0011
+XOR RA, RB    ; Perform XOR operation: RA = 0110 XOR 0011 = 0101 (5 in decimal)
+```
+
+#### 10.3 <u>NOT (Logical NOT)</u>
+
+**Syntax:**
+```
+NOT destination
+```
+
+The `NOT` instruction performs a bitwise NOT operation on the destination operand, inverting all of its bits (changing 0s to 1s and vice versa).
+
+**Example:**
+```assembly
+MOV RA, 5     ; Set RA to binary 0101
+NOT RA        ; Perform NOT operation: RA = NOT 0101 = 1010 (10 in decimal)
+```
+
+#### 10.4 <u>OR (Logical OR)</u>
+
+**Syntax:**
+```
+OR destination, source
+```
+
+The `OR` instruction performs a bitwise OR operation between the bits of the destination and source operands, setting the bits in the destination to 1 if either the source or destination bit is 1.
+
+**Example:**
+```assembly
+MOV RA, 6     ; Set RA to binary 0110
+MOV RB, 3     ; Set RB to binary 0011
+OR RA, RB     ; Perform OR operation: RA = 0110 OR 0011 = 0111 (7 in decimal)
+```
+
+Bitwise operations are commonly used for various tasks in assembly language, such as manipulating individual flags or data masks. These instructions allow you to work with the binary representation of data at the bit level.
+
+Certainly! Here's an explanation, syntax, and example for the "GAD" (Get Address) instruction:
+
+### 11. Get Address (GAD)
+
+The "GAD" instruction, which stands for "Get Address," is used to obtain the memory address of a specific register and store it in one of the destination registers, which can be RAA, RAB, RAC, or RAD.
+
+**Syntax:**
+```
+GAD DESTINATION, SOURCE
+```
+
+- `DESTINATION` represents one of the destination registers (RAA, RAB, RAC, or RAD).
+- `SOURCE` represents the source register (e.g., RAD, RA, RB, RC, etc.) whose memory address you want to obtain.
+
+**Example:**
+```assembly
+MOV RA, 10    ; Set RA to the value 10
+GAD RAA, RA   ; Get the memory address of RA and store it in RAA
+```
+
+In this example, the `GAD RAA, RA` instruction retrieves the memory address of register `RA` and stores it in register `RAA`. Now, `RAA` contains the memory address of `RA`, allowing you to perform operations that involve the address of RA, such as indirect addressing or memory manipulation.
+
 ## IV. Non-Functional Requirements
-<!-- run -->
+> **Portability**<br>
+   Objective: The software should be easily portable across different operating systems without significant modifications.
+
+Details:<br>
+**Platform Independence**: The code should rely on standard C libraries, avoiding system-specific dependencies.
+<br>**Cross-Platform Compatibility**: Testing on different OS (Windows, Linux, macOS) to ensure compatibility.
+<br><br>
+> **<u>Reliability and Robustness</u>**<br>
+   Objective: The system should handle errors gracefully and perform reliably under various conditions.
+
+Details:<br>
+**Error Handling**: Efficient handling of exceptional cases and errors in instruction execution.
+<br>**System Stability**: Ensuring the system remains stable and performs reliably over extended periods.
+> **Maintainability and Extensibility**<br>
+   Objective: The design should facilitate easy maintenance and future enhancements.
+
+Details:<br>
+**Modular Design**: Code should be organized into modules for ease of understanding and modification.
+<br>**Documentation**: Comprehensive documentation of the codebase and architecture for easier maintenance and updates.
+
+> **Performance and Efficiency**<br>
+Objective: The interpreter and virtual processor should be optimized for maximum efficiency without compromising performance.
+
+Details:<br>
+**Resource Usage**: The system should be optimized for low resource consumption (CPU, memory).
+<br>**Optimized Code**: The interpreter should be written in a way that minimizes processing time and memory usage.
+<br>**Scalability**: The system should maintain performance levels under varying loads.
 
 ## V. Glossary
 [^1]: **Virtual Processor**: A virtual processor refers to a simulated or emulated computing unit designed to execute instructions and perform operations, typically in a software environment. It mimics the behavior of a physical processor, allowing for testing and development without the need for actual hardware.
