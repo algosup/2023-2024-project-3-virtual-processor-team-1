@@ -67,14 +67,14 @@
 | **Document Owner** | DELILLE Elone             |
 
 ### 2. Document Approval
-| **Role** | **Name** | **Signature**  | **Date** |
-|---|---|----------------|---|
-| Project Manager | CUREL Clémentine |                | |
-| Program Manager | DELILLE Elone | ✅              | |
-| Technical Leader | PLANCHARD Thomas |                | |
-| Software Engineer | LASSELIN Alexis |                | |
-| Software Engineer | NAMIR Salaheddine |                | |
-| Quality Assurance | BAVAROIS Séréna |                | |
+| **Role** | **Name** | **Signature** | **Date**        |
+|---|---|---------------|-----------------|
+| Project Manager | CUREL Clémentine | ✅             | 24 January 2024 |
+| Program Manager | DELILLE Elone | ✅             | 24 January 2024 |
+| Technical Leader | PLANCHARD Thomas | ✅             | 24 January 2024 |
+| Software Engineer | LASSELIN Alexis | ✅             | 24 January 2024 |
+| Software Engineer | NAMIR Salaheddine | ✅             | 24 January 2024 |
+| Quality Assurance | BAVAROIS Séréna | ✅             | 24 January 2024 |
 
 ## II. Introduction
 ### 1. Project Overview
