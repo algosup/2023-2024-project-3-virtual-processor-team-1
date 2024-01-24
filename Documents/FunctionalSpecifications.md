@@ -123,9 +123,9 @@ The aim of the project is to design both a **virtual processor**[^1] and an **in
 
 #### 2.4 <u>Personas</u>
 
-![img.png](img.png)
-![img_1.png](img_1.png)
-![img_2.png](img_2.png)
+![For Beginners (2)](https://github.com/algosup/2023-2024-project-3-virtual-processor-team-1/assets/147847949/cc78b316-05d3-4bdf-9fbb-ebdd2d6f4354)
+![For Beginners (2)](https://github.com/algosup/2023-2024-project-3-virtual-processor-team-1/assets/147847949/da10da59-be38-40d3-a4ff-eeaa3cbf3db5)
+![For Beginners](https://github.com/algosup/2023-2024-project-3-virtual-processor-team-1/assets/147847949/08230061-e2b5-48cd-96f9-5b4879e19d8f)
 
 #### 2.5 <u>Test Cases</u>
 
