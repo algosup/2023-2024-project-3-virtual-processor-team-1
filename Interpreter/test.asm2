@@ -1,0 +1,12 @@
+MOV RA, 5 ; comment
+DISP RA
+
+MOV RB, 7
+; empty line 
+DISP RB
+
+ADD RA, RB
+DISP RA ; Et olim licet otiosae thfhdhdsghgdsf
+;
+SUB RB, 3
+DISP RB
