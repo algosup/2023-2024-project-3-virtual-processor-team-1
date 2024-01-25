@@ -26,6 +26,9 @@
             - [4.1 Resources/Financial plan](#41-resourcesfinancial-plan)
             - [4.2 Assumptions/Constraints](#42-assumptionsconstraints)
     - [III. Explanation of how a CPU works](#iii-explanation-of-how-a-cpu-works)
+      - [1. The CPU's Inner Workings](#1-the-cpus-inner-workings)
+      - [2. The Role of Assembly Language](#2-the-role-of-assembly-language)
+      - [3. The Indispensable Role of Registers](#3-the-indispensable-role-of-registers)
     - [IV. Functional Requirements](#iii-functional-requirements)
         - [1. Registers](#1-registers)
             - [1.1 General registers](#11-general-registers)
@@ -212,8 +215,47 @@ When working with assembly language programming, it's important to consider cert
 
 7. **Limited Debugging Tools:** Debugging assembly code can be challenging, as it may have limited access to high-level debugging tools commonly available in higher-level languages.
 
-## III. Explanation of how a CPU works
+### III. Explanation of How a CPU Works
 
+In this section, we will delve into the intricate mechanisms of a Central Processing Unit (CPU) and elucidate the connection between CPU functionality, the use of assembly language, and the pivotal role of registers. We will explore the rationale behind employing assembly language for programming CPUs and the indispensable nature of registers in this endeavor.
+
+#### 1. The CPU's Inner Workings
+
+A CPU is the quintessential core of a computing system, akin to the brain orchestrating the intricate dance of data manipulation and instruction execution. Its significance lies in its ability to execute instructions and perform calculations, making it the bedrock of computing. Here's a more detailed look at how a CPU operates:
+
+- **Instruction Execution:** At its core, a CPU excels at executing a vast array of instructions that underpin software programs. These instructions encompass a wide spectrum of operations, including arithmetic computations, data handling, and control flow directives.
+
+- **Microarchitecture:** The inner architecture of a CPU comprises intricate circuits, such as arithmetic logic units (ALUs), control units, and registers, all synchronized to orchestrate the execution of instructions. ALUs perform arithmetic and logic operations, while control units manage the flow of instructions.
+
+- **Fetch-Decode-Execute Cycle:** The CPU operates in a cycle known as the "Fetch-Decode-Execute" cycle. It fetches instructions from memory, decodes them to understand their meaning, executes the instructions, and stores results as needed.
+
+#### 2. The Role of Assembly Language
+
+Assembly language serves as a vital bridge between the intricate workings of a CPU and the human-readable code. Here's why assembly language is a favored choice for programming CPUs:
+
+- **Low-Level Abstraction:** Assembly language provides a low-level abstraction that allows programmers to communicate directly with the CPU. It offers a one-to-one correspondence with machine code, making it a powerful tool for precise control.
+
+- **Efficiency:** Assembly code is highly efficient as it enables programmers to optimize operations for the CPU's microarchitecture. This fine-grained control leads to faster and more streamlined execution.
+
+- **Portability:** Assembly language can be tailored for specific CPU architectures, making it highly portable across different platforms. Programmers can optimize code for various processors while retaining the same logical structure.
+
+#### 3. The Indispensable Role of Registers
+
+Registers, small and ultra-fast storage units within the CPU, are critical components due to their unique capabilities:
+
+- **Data Storage:** Registers serve as rapid storage locations for data during instruction execution. They facilitate quick access to operands and temporary storage of intermediate results.
+
+- **Reduced Memory Access:** Accessing data from main memory (RAM) is comparatively slow. By storing frequently used data in registers, CPUs minimize the need for slower memory access, resulting in significantly enhanced performance.
+
+- **Operand Manipulation:** Registers hold operands for arithmetic and logic operations. When performing an operation, the CPU loads operands from memory into registers, executes the operation, and stores the result back in a register.
+
+- **Control Flow:** Registers also retain vital information related to program control and state. This includes program counter values, flags, and other control-related data, ensuring smooth execution of instructions and control flow operations.
+
+- **Context Switching:** During context switching, where the CPU switches between executing different processes or threads, registers play a pivotal role. Saving and restoring register values enable the CPU to seamlessly resume execution from where it left off.
+
+In essence, registers are the linchpin in CPU operations, offering lightning-fast and transient data storage along with control information. They are instrumental in optimizing instruction execution, and their efficient management plays a pivotal role in the CPU's ability to process data and execute complex tasks.
+
+The combination of a robust CPU, the precision of assembly language, and the seamless use of registers forms the bedrock of modern computing, enabling the execution of diverse tasks with precision and efficiency.
 
 ## IV. Functional Requirements
 We need to create our own assembler. To do this, we'll base ourselves on most existing assembler code, with the simple exception that we'll use different names for certain actions. Our assembler will be 32-bit based, which is easily adaptable to today's computers.<br>
