@@ -1,7 +1,6 @@
-#include "header.h"
+#include "../NotWorking/header.h"
 
 // Function to remove comments and empty lines from a given string
-
 void removeCommentsAndEmptyLines(char *str) {
     int inCommentLine = 0;
 
@@ -26,7 +25,6 @@ void removeCommentsAndEmptyLines(char *str) {
         }
     }
 }
-
 
 int main(int argc, char *argv[]) {
     // check if the user passed in a file name
@@ -65,32 +63,22 @@ int main(int argc, char *argv[]) {
     // Close the input file
     fclose(file);
 
-    // Create a new file with the same extension and "Clean" appended to the name
-    char *dot = strrchr(argv[1], '.');
-    if (dot == NULL) {
-        printf("Error: File has no extension\n");
-        return 1;
+    // Save the cleaned content in a 2D array
+    char cleanedLines[100][1000]; // Adjust the size based on your needs
+    int numLines = 0;
+
+    // Tokenize the cleaned content into lines and store them in the 2D array
+    char *token = strtok(cleanedContent, "\n");
+    while (token != NULL) {
+        strcpy(cleanedLines[numLines], token);
+        numLines++;
+        token = strtok(NULL, "\n");
     }
 
-    // Create a new file name with "Clean" appended
-    char newFileName[100];
-    snprintf(newFileName, sizeof(newFileName), "%.*sClean%s", (int)(dot - argv[1]), argv[1], dot);
-
-    // Open the new file for writing
-    FILE *cleanedFile = fopen(newFileName, "w");
-    if (cleanedFile == NULL) {
-        printf("Error: Could not create the cleaned file\n");
-        return 1;
+    // Print the cleaned content line by line
+    for (int i = 0; i < numLines; i++) {
+        printf("%s\n", cleanedLines[i]);
     }
-
-    // Write the cleaned content to the new file
-    fprintf(cleanedFile, "%s", cleanedContent);
-
-    // Close the new file
-    fclose(cleanedFile);
-
-    // Confirm that the file was cleaned successfully via the terminal
-    printf("File cleaned successfully. Cleaned file saved as: %s\n", newFileName);
 
     return 0;
 }
