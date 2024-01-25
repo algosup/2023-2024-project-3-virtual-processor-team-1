@@ -175,13 +175,13 @@ In our custom assembly language project, we emphasise a cost-effective approach 
 
 **Resource Allocation:**
 
-- **Project Duration:** The project is scheduled to span over a total of X weeks
+- **Project Duration:** The project is scheduled to span over a total of 8 weeks
 
-- **Personnel:** Our dedicated team consists of X skilled individuals who will actively contribute to different aspects of the project, including development, testing, and documentation
+- **Personnel:** Our dedicated team consists of 6 skilled individuals who will actively contribute to different aspects of the project, including development, testing, and documentation
 
 **Work Hours:**
 
-To maintain a balanced workload and ensure steady progress, we have allocated a total of X hours per week, distributed among team members as needed. This allocation is designed to optimise productivity while allowing for flexibility in addressing project challenges.
+To maintain a balanced workload and ensure steady progress, we have allocated a total of 399 hours, distributed among team members as needed. This allocation is designed to optimise productivity while allowing for flexibility in addressing project challenges.
 
 **Financial Independence**
 
@@ -217,45 +217,30 @@ When working with assembly language programming, it's important to consider cert
 
 ### III. Explanation of How a CPU Works
 
-In this section, we will delve into the intricate mechanisms of a Central Processing Unit (CPU) and elucidate the connection between CPU functionality, the use of assembly language, and the pivotal role of registers. We will explore the rationale behind employing assembly language for programming CPUs and the indispensable nature of registers in this endeavor.
-
+In this section, we'll be talking about the Central Processing Unit (CPU) and how it works. We'll also be discussing assembly language, which is a type of programming language that's commonly used with CPUs. Specifically, we'll be looking at registers, which are super important for programming in assembly language. We'll dive into why assembly language is so useful for programming CPUs and how registers make it all possible.
 #### 1. The CPU's Inner Workings
 
-A CPU is the quintessential core of a computing system, akin to the brain orchestrating the intricate dance of data manipulation and instruction execution. Its significance lies in its ability to execute instructions and perform calculations, making it the bedrock of computing. Here's a more detailed look at how a CPU operates:
+The central processing unit (CPU) is the fundamental element of a computing system, much like the brain responsible for managing the complex dance of data manipulation and instruction execution. Its importance lies in its capability to execute instructions and perform calculations, making it the foundation of computing. Let's take a more detailed look at how a CPU operates:
 
-- **Instruction Execution:** At its core, a CPU excels at executing a vast array of instructions that underpin software programs. These instructions encompass a wide spectrum of operations, including arithmetic computations, data handling, and control flow directives.
+- **Instruction Execution:** At its core, a CPU is designed to carry out a wide range of instructions that form the basis of software programs. These instructions include various operations such as arithmetic computations, data handling, and control flow directives
 
-- **Microarchitecture:** The inner architecture of a CPU comprises intricate circuits, such as arithmetic logic units (ALUs), control units, and registers, all synchronized to orchestrate the execution of instructions. ALUs perform arithmetic and logic operations, while control units manage the flow of instructions.
+- **Microarchitecture:** The internal architecture of a CPU is made up of complex circuits, including arithmetic logic units (ALUs), control units, and registers, all of which work together to manage the execution of instructions. ALUs perform arithmetic and logical operations, while control units manage the flow of instructions
 
-- **Fetch-Decode-Execute Cycle:** The CPU operates in a cycle known as the "Fetch-Decode-Execute" cycle. It fetches instructions from memory, decodes them to understand their meaning, executes the instructions, and stores results as needed.
-
+- **Fetch-Decode-Execute Cycle:** The CPU operates in a cycle referred to as the "Fetch-Decode-Execute" cycle. It fetches instructions from memory, decodes them to understand their meaning, executes the instructions, and stores any results as necessary
 #### 2. The Role of Assembly Language
 
-Assembly language serves as a vital bridge between the intricate workings of a CPU and the human-readable code. Here's why assembly language is a favored choice for programming CPUs:
+Assembly language is a crucial link between the complex internal workings of a CPU and the human-readable code. It's a preferred choice for programming CPUs for various reasons.
 
-- **Low-Level Abstraction:** Assembly language provides a low-level abstraction that allows programmers to communicate directly with the CPU. It offers a one-to-one correspondence with machine code, making it a powerful tool for precise control.
+Firstly, assembly language provides a low-level abstraction that allows programmers to communicate directly with the CPU. By offering a one-to-one correspondence with machine code, it provides precise control, making it a powerful tool.
 
-- **Efficiency:** Assembly code is highly efficient as it enables programmers to optimize operations for the CPU's microarchitecture. This fine-grained control leads to faster and more streamlined execution.
+Secondly, when it comes to efficiency, assembly code is highly optimized for the CPU's microarchitecture. This fine-grained control leads to faster and streamlined execution, making it a popular choice for programmers.
 
-- **Portability:** Assembly language can be tailored for specific CPU architectures, making it highly portable across different platforms. Programmers can optimize code for various processors while retaining the same logical structure.
-
+Lastly, assembly language can be tailored for specific CPU architectures, making it portable across different platforms. Programmers can optimize code for various processors while retaining the same logical structure, making it an adaptable tool for different projects.
 #### 3. The Indispensable Role of Registers
 
-Registers, small and ultra-fast storage units within the CPU, are critical components due to their unique capabilities:
+Registers, which are small, ultra-fast storage units within the CPU, play a critical role due to their unique capabilities. They serve as rapid storage locations for data during instruction execution, allowing for quick access to operands and temporary storage of intermediate results. By storing frequently used data in registers, CPUs minimize the need for slow memory access, resulting in significantly enhanced performance. Registers hold operands for arithmetic and logic operations, and they also retain vital information related to program control and state. Additionally, during context switching, registers play a pivotal role in saving and restoring register values, enabling the CPU to seamlessly resume execution from where it left off.
 
-- **Data Storage:** Registers serve as rapid storage locations for data during instruction execution. They facilitate quick access to operands and temporary storage of intermediate results.
-
-- **Reduced Memory Access:** Accessing data from main memory (RAM) is comparatively slow. By storing frequently used data in registers, CPUs minimize the need for slower memory access, resulting in significantly enhanced performance.
-
-- **Operand Manipulation:** Registers hold operands for arithmetic and logic operations. When performing an operation, the CPU loads operands from memory into registers, executes the operation, and stores the result back in a register.
-
-- **Control Flow:** Registers also retain vital information related to program control and state. This includes program counter values, flags, and other control-related data, ensuring smooth execution of instructions and control flow operations.
-
-- **Context Switching:** During context switching, where the CPU switches between executing different processes or threads, registers play a pivotal role. Saving and restoring register values enable the CPU to seamlessly resume execution from where it left off.
-
-In essence, registers are the linchpin in CPU operations, offering lightning-fast and transient data storage along with control information. They are instrumental in optimizing instruction execution, and their efficient management plays a pivotal role in the CPU's ability to process data and execute complex tasks.
-
-The combination of a robust CPU, the precision of assembly language, and the seamless use of registers forms the bedrock of modern computing, enabling the execution of diverse tasks with precision and efficiency.
+In summary, registers are a crucial component in CPU operations, providing lightning-fast and transient data storage along with control information. They are essential in optimizing instruction execution, and their efficient management plays a pivotal role in the CPU's ability to process data and execute complex tasks. Together with a robust CPU, the precision of assembly language, and the seamless use of registers, they form the bedrock of modern computing, enabling the execution of diverse tasks with precision and efficiency.
 
 ## IV. Functional Requirements
 We need to create our own assembler. To do this, we'll base ourselves on most existing assembler code, with the simple exception that we'll use different names for certain actions. Our assembler will be 32-bit based, which is easily adaptable to today's computers.<br>
@@ -575,7 +560,7 @@ In this section, we will look at the instructions that we have decided to implem
 The "MOV" (Move) instruction is used to copy the value from one register to another. It's commonly used for data transfer between registers. The syntax for the "MOV" instruction is as follows:
 > `MOV DESTINATION, SOURCE`<br>
 > `DESTINATION` represents the location where the result of the division will be stored (the DESTINATION is always a register).
-> <br>`SOURCE` represents the value by which the destination will be divided
+> <br>`SOURCE` represents the value by which the destination will be taken from
 
 Certainly, let's explain each of the "MOV" instruction examples one by one:
 
