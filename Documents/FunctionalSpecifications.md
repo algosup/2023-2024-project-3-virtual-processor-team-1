@@ -249,11 +249,11 @@ We won't be using the entire x86 architecture, as we don't need as much memory s
 ### 1. Registers
 #### 1.1 <u>General registers</u>
 We use 4 general registers to store data. These are 32-bit general-purpose registers.<br>
-`RA`, `RB`, `RC`, `RD`
+`R1`, `R2`, `R3`, `R4`
 
 #### 1.2 <u>Address registers</u>
 Address registers, are essential components of a processor, each capable of storing the memory address of another general-purpose register. These address registers enable the processor to efficiently access different areas of memory using the addresses stored in these registers, thus facilitating data management and the execution of operations in a computing environment.<br>
-`ARA`, `ARB`, `ARC`, `ARD`
+`A1`, `A2`, `A3`, `A4`
 
 ### 2. Operands
 #### 2.1 <u>Addition - ADD</u>
@@ -263,16 +263,16 @@ The "ADD" (Addition) instruction is used in programming languages to add two val
 `SOURCE` represents the value to be added to the final destination.
 
 **Applications:**<br>
-Let's assume that the `RA` general register has a value of 10. We therefore add the value 15 to this register. To carry out this operation, we can proceed as follows:<br>
-`ADD RA, #15` | Here, we `ADD` to `RA`, the value `15`.<br>
-`Result : RA = 25`
+Let's assume that the `R1` general register has a value of 10. We therefore add the value 15 to this register. To carry out this operation, we can proceed as follows:<br>
+`ADD R1, #15` | Here, we `ADD` to `R1`, the value `15`.<br>
+`Result : R1 = 25`
 
-We can also add the value of one register to another, provided that both registers contain the same data types. We have `RC`, which contains the value 5 and `RD`, which contains the value 25. We want `RD` to add the value of `RC` to the value already assigned to it. We must therefore indicate `RD` as `DESTINATION` and `RC` as `SOURCE`. To carry out this operation, we can proceed as follows: <br>
-`ADD RD, RC` | Here, we `ADD` to `RD`, the value of `RC`<br>
-`Result : RD = 30`
+We can also add the value of one register to another, provided that both registers contain the same data types. We have `R3`, which contains the value 5 and `R4`, which contains the value 25. We want `R4` to add the value of `R3` to the value already assigned to it. We must therefore indicate `R4` as `DESTINATION` and `R3` as `SOURCE`. To carry out this operation, we can proceed as follows: <br>
+`ADD R4, R3` | Here, we `ADD` to `R4`, the value of `R3`<br>
+`Result : R4 = 30`
 
 **What not to do:**<br>
-Let's imagine that our `RA` register contains the string "Hello, World!" and that our `RC` register contains the value 20. You can't do an `ADD`, as the program will try to understand that "Hello, World!" is a numerical value.<br>
+Let's imagine that our `R1` register contains the string "Hello, World!" and that our `R3` register contains the value 20. You can't do an `ADD`, as the program will try to understand that "Hello, World!" is a numerical value.<br>
 You'll get a compilation error.
 
 #### 2.2 <u>Subtraction - SUB</u>
@@ -282,16 +282,16 @@ The "SUB" (Subtraction) instruction is used in programming languages to subtract
 `SOURCE` represents the value to be subtracted from the destination.
 
 **Applications:**<br>
-Let's assume that the general register `RA` contains a value of 20. We want to subtract the value 8 from this register. To perform this operation, we can proceed as follows:<br>
-`SUB RA, #8` | Here, we use the `SUB` instruction to subtract `8` from `RA`.<br>
-`Result : RA = 12`
+Let's assume that the general register `R1` contains a value of 20. We want to subtract the value 8 from this register. To perform this operation, we can proceed as follows:<br>
+`SUB R1, #8` | Here, we use the `SUB` instruction to subtract `8` from `R1`.<br>
+`Result : R1 = 12`
 
-We can also subtract the value of one register from another, provided that both registers contain the same data type. Imagine we have `RC`, which contains the value 10, and `RD`, which contains the value 4. We want `RD` to subtract the value of `RC` from the value already assigned to it. To perform this operation, we can proceed as follows:<br>
-`SUB RD, RC` | Here, we use the `SUB` instruction to subtract the value of `RC` from `RD`.<br>
-`Result : RD = 6`
+We can also subtract the value of one register from another, provided that both registers contain the same data type. Imagine we have `R1`, which contains the value 10, and `R4`, which contains the value 4. We want `R4` to subtract the value of `R3` from the value already assigned to it. To perform this operation, we can proceed as follows:<br>
+`SUB R4, R3` | Here, we use the `SUB` instruction to subtract the value of `R3` from `R4`.<br>
+`Result : R4 = 6`
 
 **What not to do:**<br>
-Imagine that our register `RA` contains the string "Hello, World!" and our register `RC` contains the value 5. You cannot use the "SUB" instruction in this case, as the program will attempt to interpret "Hello, World!" as a numerical value. <br>This will result in a compilation error.
+Imagine that our register `R1` contains the string "Hello, World!" and our register `R3` contains the value 5. You cannot use the "SUB" instruction in this case, as the program will attempt to interpret "Hello, World!" as a numerical value. <br>This will result in a compilation error.
 
 #### 2.3 <u>Multiplication - MUL</u>
 The "MUL" (Multiplication) instruction is used in programming languages to multiply two values together, or to multiply a value by another and store the result in a specified destination. In our assembly code, the "MUL" operation instruction uses the following syntax:<br>
@@ -300,16 +300,16 @@ The "MUL" (Multiplication) instruction is used in programming languages to multi
 `SOURCE` represents the value to be multiplied with the destination.
 
 **Applications:**<br>
-Let's assume that the `RA` general register contains a value of 10. We want to multiply this value by 5 and store the result in `RA`. To perform this operation, we can proceed as follows:<br>
-`MUL RA, #5` | Here, we use the "MUL" instruction to multiply the value in `RA` by 5.<br>
-`Result : RA = 50`
+Let's assume that the `R1` general register contains a value of 10. We want to multiply this value by 5 and store the result in `R1`. To perform this operation, we can proceed as follows:<br>
+`MUL R1, #5` | Here, we use the "MUL" instruction to multiply the value in `R1` by 5.<br>
+`Result : R1 = 50`
 
-You can also multiply the value of one register by another, provided that both registers contain the same data types. Imagine we have `RC`, which contains the value 6, and `RD`, which contains the value 8. We want `RD` to multiply the value of `RC` and store the result in `RD`. To perform this operation, we can proceed as follows:<br>
-`MUL RD, RC` | Here, we use the "MUL" instruction to multiply the value in `RC` by the value in `RD` and store the result in `RD`.<br>
-`Result : RD = 48`
+You can also multiply the value of one register by another, provided that both registers contain the same data types. Imagine we have `R3`, which contains the value 6, and `R4`, which contains the value 8. We want `R4` to multiply the value of `R3` and store the result in `R4`. To perform this operation, we can proceed as follows:<br>
+`MUL R4, R3` | Here, we use the "MUL" instruction to multiply the value in `R3` by the value in `R4` and store the result in `R4`.<br>
+`Result : R4 = 48`
 
 **What not to do:**<br>
-Imagine that our `RA` register contains the string "Hello, World!" and our `RC` register contains the value 20. You cannot use the "MUL" instruction in this case, as the program will attempt to interpret "Hello, World!" as a numerical value.<br>
+Imagine that our `R1` register contains the string "Hello, World!" and our `R3` register contains the value 20. You cannot use the "MUL" instruction in this case, as the program will attempt to interpret "Hello, World!" as a numerical value.<br>
 You'll get a compilation error.
 
 #### 2.4 <u>Division - DIV</u>
@@ -319,16 +319,16 @@ The "DIV" (Division) instruction is used in programming languages to divide one 
 `SOURCE` represents the value by which the destination will be divided.
 
 **Applications:**<br>
-Let's assume that the `RA` general register contains a value of 50. We want to divide this value by 5 and store the result in `RA`. To perform this operation, we can proceed as follows:<br>
-`DIV RA, #5` | Here, we use the "DIV" instruction to divide the value in `RA` by 5.<br>
-`Result : RA = 10`
+Let's assume that the `R1` general register contains a value of 50. We want to divide this value by 5 and store the result in `R1`. To perform this operation, we can proceed as follows:<br>
+`DIV R1, #5` | Here, we use the "DIV" instruction to divide the value in `R1` by 5.<br>
+`Result : R1 = 10`
 
-You can also divide the value of one register by another, provided that both registers contain the same data types. Imagine we have `RC`, which contains the value 40, and `RD`, which contains the value 8. We want `RD` to divide the value of `RC` and store the result in `RD`. To perform this operation, we can proceed as follows:<br>
-`DIV RD, RC` | Here, we use the "DIV" instruction to divide the value in `RC` by the value in `RD` and store the result in `RD`.<br>
-`Result : RD = 5`
+You can also divide the value of one register by another, provided that both registers contain the same data types. Imagine we have `R3`, which contains the value 40, and `R4`, which contains the value 8. We want `R4` to divide the value of `R3` and store the result in `R4`. To perform this operation, we can proceed as follows:<br>
+`DIV R4, R3` | Here, we use the "DIV" instruction to divide the value in `R3` by the value in `R4` and store the result in `R4`.<br>
+`Result : R4 = 5`
 
 **What not to do:**<br>
-Imagine that our `RA` register contains the string "Hello, World!" and our `RC` register contains the value 20. You cannot use the "DIV" instruction in this case, as the program will attempt to interpret "Hello, World!" as a numerical value.<br>
+Imagine that our `R1` register contains the string "Hello, World!" and our `R1` register contains the value 20. You cannot use the "DIV" instruction in this case, as the program will attempt to interpret "Hello, World!" as a numerical value.<br>
 You'll get a compilation error.
 
 Attempting to divide by zero (0) is not allowed. If you attempt to divide any value by zero, including a constant or the content of a register, it will result in an error or undefined behavior in most programming languages and assembly instructions. For example, `DIV RA, 0` where RA contains any value will result in an error or an exception, and the program may crash or behave unpredictably. It's important to ensure that the divisor (the value after the "DIV" instruction) is not zero to avoid such issues.
@@ -546,11 +546,11 @@ In assembly language, printing values to the output or display is a common task.
 
 3. Printing the Contents of a Register:
    ```assembly
-   MOV RB, #100   ; Load a value into register RB
-   DISP RB       ; Display the contents of register RB
+   MOV R2, #100   ; Load a value into register R2
+   DISP R2       ; Display the contents of register R2
    ```
 
-   If the value in register RB is 100, this code will display the number 100 to the output.
+   If the value in register R2 is 100, this code will display the number 100 to the output.
 
 ### 7. Instructions
 
@@ -564,47 +564,47 @@ The "MOV" (Move) instruction is used to copy the value from one register to anot
 
 Certainly, let's explain each of the "MOV" instruction examples one by one:
 
-#### 7.1.1 `MOV RA, RC`
+#### 7.1.1 `MOV R1, R3`
 
-The instruction `MOV RA, RC` is used to copy the value from register RC to register RA.
+The instruction `MOV R1, R3` is used to copy the value from register RC to register RA1.
 
-- `RA` is the destination register where the value will be copied
-- `RC` is the source register from which the value is taken
-
-Example:
-```assembly
-MOV RA, RC
-```
-
-In this example, the value currently stored in register RC is copied into register RA. This instruction performs a straightforward data transfer between registers.
-
-#### 7.1.2 `MOV RD, #2`
-
-The instruction `MOV RD, #2` is used to directly load the value `2` into register RD.
-
-- `RD` is the destination register where the value will be placed
-- `#2` represents the immediate value `2` that is loaded directly into RD
+- `R1` is the destination register where the value will be copied
+- `R3` is the source register from which the value is taken
 
 Example:
 ```assembly
-MOV RD, #2
+MOV R1, R3
 ```
 
-In this example, the value `2` is immediately loaded into register RD. This instruction does not involve copying from another register but directly assigns the value.
+In this example, the value currently stored in register R3 is copied into register R1. This instruction performs a straightforward data transfer between registers.
 
-#### 7.1.3 `MOV RA, "WORLD ! Hello."`
+#### 7.1.2 `MOV R4, #2`
 
-The instruction `MOV RA, "WORLD ! Hello."` is used to load a string, in this case, `"WORLD ! Hello."`, into register RA.
+The instruction `MOV R4, #2` is used to directly load the value `2` into register R4.
 
-- `RA` is the destination register where the string will be stored
-- `"WORLD ! Hello."` is the string value that will be placed in RA
+- `R4` is the destination register where the value will be placed
+- `#2` represents the immediate value `2` that is loaded directly into R4
 
 Example:
 ```assembly
-MOV RA, "WORLD ! Hello."
+MOV R4, #2
 ```
 
-In this example, the string `"WORLD ! Hello."` is stored in register RA. This instruction is used for initialising a register with a string value.
+In this example, the value `2` is immediately loaded into register R4. This instruction does not involve copying from another register but directly assigns the value.
+
+#### 7.1.3 `MOV R1, "WORLD ! Hello."`
+
+The instruction `MOV R1, "WORLD ! Hello."` is used to load a string, in this case, `"WORLD ! Hello."`, into register R1.
+
+- `R1` is the destination register where the string will be stored
+- `"WORLD ! Hello."` is the string value that will be placed in R1
+
+Example:
+```assembly
+MOV R1, "WORLD ! Hello."
+```
+
+In this example, the string `"WORLD ! Hello."` is stored in register R1. This instruction is used for initialising a register with a string value.
 
 Certainly, I'll add the additional "MOV" instruction examples and the message regarding what not to do. Here's the updated section:
 
@@ -663,8 +663,8 @@ Here are the different forms of the "CMP" instruction:
 
 1. Comparing a Register with a Memory Variable:
    ```assembly
-   MOV RA, #42       ; Load value 42 into register RA
-   CMP RA, variable1   ; Compare the value in RA with the content of memory variable variable1
+   MOV R1, #42       ; Load value 42 into register R1
+   CMP R1, variable1   ; Compare the value in R1 with the content of memory variable variable1
    ```
    The CMP is therefore stored in RAM until it is used. You can therefore perform a conditional jump at any time in the program, which will use this value (if no other CMP has been performed in the meantime in the program).
 
@@ -676,9 +676,9 @@ Here are the different forms of the "CMP" instruction:
 
 3. Comparing Two Registers:
    ```assembly
-   MOV RA, #10       ; Load value 10 into register RA
-   MOV RB, #20       ; Load value 20 into register RB
-   CMP RA, RB       ; Compare the values in registers RA and RB
+   MOV R1, #10       ; Load value 10 into register R1
+   MOV R2, #20       ; Load value 20 into register R2
+   CMP R1, R2       ; Compare the values in registers R1 and R2
    ```
 
 4. Comparing Immediate Values:
@@ -747,9 +747,9 @@ The "Jump Equal" (`JE`) instruction jumps to the specified destination if two va
 
 **Example:**
 ```assembly
-MOV RA, #5     ; Set RA to 5
-CMP RA, #5     ; Compare the value in RA with 5
-JE EqualLabel ; Jump to EqualLabel if RA equals 5
+MOV R1, #5     ; Set R1 to 5
+CMP R1, #5     ; Compare the value in R1 with 5
+JE EqualLabel ; Jump to EqualLabel if R1 equals 5
 ```
 
 #### 9.2.2 Jump Not Equal (JNE)
@@ -763,9 +763,9 @@ The "Jump Not Equal" (`JNE`) instruction jumps to the specified destination if t
 
 **Example:**
 ```assembly
-MOV RB, #10    ; Set RB to 10
-CMP RB, #5     ; Compare the value in RB with 5
-JNE NotEqual  ; Jump to NotEqual if RB is not equal to 5
+MOV R2, #10    ; Set R2 to 10
+CMP R2, #5     ; Compare the value in R2 with 5
+JNE NotEqual  ; Jump to NotEqual if R2 is not equal to 5
 ```
 
 #### 9.2.3 Jump Greater (JG)
@@ -779,9 +779,9 @@ The "Jump Greater" (`JG`) instruction jumps to the specified destination if one 
 
 **Example:**
 ```assembly
-MOV RC, #15    ; Set RC to 15
-CMP RC, #10    ; Compare the value in RC with 10
-JG Greater    ; Jump to Greater if RC is greater than 10
+MOV R3, #15    ; Set R3 to 15
+CMP R3, #10    ; Compare the value in R3 with 10
+JG Greater    ; Jump to Greater if R3 is greater than 10
 ```
 
 #### 9.2.4 Jump Greater or Equal (JGE)
@@ -795,9 +795,9 @@ The "Jump Greater or Equal" (`JGE`) instruction jumps to the specified destinati
 
 **Example:**
 ```assembly
-MOV RD, #20    ; Set RD to 20
-CMP RD, #20    ; Compare the value in RD with 20
-JGE GreaterOrEqual ; Jump to GreaterOrEqual if RD is greater than or equal to 20
+MOV R4, #20    ; Set R4 to 20
+CMP R4, #20    ; Compare the value in R4 with 20
+JGE GreaterOrEqual ; Jump to GreaterOrEqual if R4 is greater than or equal to 20
 ```
 
 #### 9.2.5 Jump Less (JL)
@@ -811,9 +811,9 @@ The "Jump Less" (`JL`) instruction jumps to the specified destination if one val
 
 **Example:**
 ```assembly
-MOV RA, #25    ; Set RA to 25
-CMP RA, #30    ; Compare the value in RA with 30
-JL Less       ; Jump to Less if RA is less than 30
+MOV R1, #25    ; Set R1 to 25
+CMP R1, #30    ; Compare the value in R1 with 30
+JL Less       ; Jump to Less if R1 is less than 30
 ```
 
 #### 9.2.6 Jump Less or Equal (JLE)
@@ -827,9 +827,9 @@ The "Jump Less or Equal" (`JLE`) instruction jumps to the specified destination 
 
 **Example:**
 ```assembly
-MOV RB, #5     ; Set RB to 5
-CMP RB, #5     ; Compare the value in RB with 5
-JLE LessOrEqual ; Jump to LessOrEqual if RB is less than or equal to 5
+MOV R2, #5     ; Set R2 to 5
+CMP R2, #5     ; Compare the value in R2 with 5
+JLE LessOrEqual ; Jump to LessOrEqual if R2 is less than or equal to 5
 ```
 
 Conditional jumps are used to control program flow based on comparisons and conditions, allowing you to create branching logic in assembly programs.
@@ -849,9 +849,9 @@ The `AND` instruction performs a bitwise AND operation between the bits of the d
 
 **Example:**
 ```assembly
-MOV RA, #5     ; Set RA to binary 0101
-MOV RB, #3     ; Set RB to binary 0011
-AND RA, RB    ; Perform AND operation: RA = 0101 AND 0011 = 0001 (1 in decimal)
+MOV R1, #5     ; Set R1 to binary 0101
+MOV R2, #3     ; Set R2 to binary 0011
+AND R1, R2    ; Perform AND operation: R1 = 0101 AND 0011 = 0001 (1 in decimal)
 ```
 
 #### 10.2 <u>XOR (Exclusive OR)</u>
@@ -865,9 +865,9 @@ The `XOR` instruction performs a bitwise XOR operation between the bits of the d
 
 **Example:**
 ```assembly
-MOV RA, #6     ; Set RA to binary 0110
-MOV RB, #3     ; Set RB to binary 0011
-XOR RA, RB    ; Perform XOR operation: RA = 0110 XOR 0011 = 0101 (5 in decimal)
+MOV R1, #6     ; Set R1 to binary 0110
+MOV R2, #3     ; Set R2 to binary 0011
+XOR R1, R2    ; Perform XOR operation: R1 = 0110 XOR 0011 = 0101 (5 in decimal)
 ```
 
 #### 10.3 <u>NOT (Logical NOT)</u>
@@ -881,8 +881,8 @@ The `NOT` instruction performs a bitwise NOT operation on the destination operan
 
 **Example:**
 ```assembly
-MOV RA, #5     ; Set RA to binary 0101
-NOT RA        ; Perform NOT operation: RA = NOT 0101 = 1010 (10 in decimal)
+MOV R1, #5     ; Set R1 to binary 0101
+NOT R1        ; Perform NOT operation: R1 = NOT 0101 = 1010 (10 in decimal)
 ```
 
 #### 10.4 <u>OR (Logical OR)</u>
@@ -896,34 +896,32 @@ The `OR` instruction performs a bitwise OR operation between the bits of the des
 
 **Example:**
 ```assembly
-MOV RA, #6     ; Set RA to binary 0110
-MOV RB, #3     ; Set RB to binary 0011
-OR RA, RB     ; Perform OR operation: RA = 0110 OR 0011 = 0111 (7 in decimal)
+MOV R1, #6     ; Set R1 to binary 0110
+MOV R2, #3     ; Set R2 to binary 0011
+OR R1, R2     ; Perform OR operation: R1 = 0110 OR 0011 = 0111 (7 in decimal)
 ```
 
 Bitwise operations are commonly used for various tasks in assembly language, such as manipulating individual flags or data masks. These instructions allow you to work with the binary representation of data at the bit level.
 
-Certainly! Here's an explanation, syntax, and example for the "GAD" (Get Address) instruction:
-
 ### 11. Get Address (GAD)
 
-The "GAD" instruction, which stands for "Get Address," is used to obtain the memory address of a specific register and store it in one of the destination registers, which can be ARA, ARB, ARC, or ARD.
+The "GAD" instruction, which stands for "Get Address," is used to obtain the memory address of a specific register and store it in one of the destination registers, which can be A1, A2, A3, or A4.
 
 **Syntax:**
 ```
 GAD DESTINATION, SOURCE
 ```
 
-- `DESTINATION` represents one of the destination registers (ARA, ARB, ARC, or ARD)
-- `SOURCE` represents the source register (e.g., RA, RC, RC, RD, etc.) whose memory address you want to obtain
+- `DESTINATION` represents one of the destination registers (A1, A2, A3, or A4)
+- `SOURCE` represents the source register (e.g., R1, R2, R3, R4) whose memory address you want to obtain
 
 **Example:**
 ```assembly
-MOV RA, #10    ; Set RA to the value 10
-GAD ARA, RA   ; Get the memory address of RA and store it in ARA
+MOV R1, #10    ; Set R1 to the value 10
+GAD A1, R1   ; Get the memory address of R1 and store it in A1
 ```
 
-In this example, the `GAD ARA, RA` instruction retrieves the memory address of register `RA` and stores it in register `ARA`. Now, `ARA` contains the memory address of `RA`, allowing you to perform operations that involve the address of RA, such as indirect addressing or memory manipulation.
+In this example, the `GAD A1, R1` instruction retrieves the memory address of register `R1` and stores it in register `A1`. Now, `A1` contains the memory address of `R1`, allowing you to perform operations that involve the address of R1, such as indirect addressing or memory manipulation.
 
 ## V. Test Cases
 
@@ -931,21 +929,21 @@ In this example, the `GAD ARA, RA` instruction retrieves the memory address of r
 **Objective:** Verify that immediate values can be stored in registers and contents can be copied from one register to another.
 
 **Test Steps:**
-1. Store an immediate value in register `RA`.
-2. Copy the contents of `RA` to register `RB`.
-3. Check if the value in `RB` matches the original value stored in `RA`.
+1. Store an immediate value in register `R1`.
+2. Copy the contents of `R1` to register `R2`.
+3. Check if the value in `R2` matches the original value stored in `R1`.
 
-**Expected Result:** The value in `RB` should be identical to the value initially stored in `RA`.
+**Expected Result:** The value in `RR` should be identical to the value initially stored in `R1`.
 <br><br>
 ### 2. Arithmetic Operations (ADD, SUB, MUL, DIV)
 **Objective:** Ensure that the processor correctly performs basic arithmetic operations.
 
 **Test Steps for ADD:**
-1. Store values in registers `RA` and `RB`.
-2. Perform `ADD RA, RB`.
-3. Verify the result in `RA`.
+1. Store values in registers `R1` and `R2`.
+2. Perform `ADD R1, R2`.
+3. Verify the result in `R1`.
 
-**Expected Result for ADD:** The value in `RA` should be the sum of the original values in `RA` and `RB`.
+**Expected Result for ADD:** The value in `R1` should be the sum of the original values in `R1` and `R2`.
 
 **Repeat similar steps for SUB, MUL, and DIV operations with appropriate expected results.**
 <br><br>
