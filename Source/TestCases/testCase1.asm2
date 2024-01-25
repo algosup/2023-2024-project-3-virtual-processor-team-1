@@ -1,0 +1,31 @@
+; Objective: Verify that immediate values can be stored in registers and contents can be copied from one register to another.
+
+DISP "RA contains"
+DISP RA
+
+DISP "=============="
+
+DISP "RB contains"
+DISP RB
+
+DISP "=============="
+
+DISP "Initialize RA to 5"
+MOV RA, #5
+
+DISP "=============="
+
+
+DISP "RA contains"
+DISP RA
+
+DISP "=============="
+
+DISP "Copy the content of RA in RB"
+MOV RB, RA
+
+
+DISP "=============="
+
+DISP "RB contains"
+DISP RB
