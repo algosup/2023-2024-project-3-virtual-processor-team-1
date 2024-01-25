@@ -237,7 +237,7 @@ The "ADD" (Addition) instruction is used in programming languages to add two val
 
 **Applications:**<br>
 Let's assume that the `RA` general register has a value of 10. We therefore add the value 15 to this register. To carry out this operation, we can proceed as follows:<br>
-`ADD RA, 15` | Here, we `ADD` to `RA`, the value `15`.<br>
+`ADD RA, #15` | Here, we `ADD` to `RA`, the value `15`.<br>
 `Result : RA = 25`
 
 We can also add the value of one register to another, provided that both registers contain the same data types. We have `RC`, which contains the value 5 and `RD`, which contains the value 25. We want `RD` to add the value of `RC` to the value already assigned to it. We must therefore indicate `RD` as `DESTINATION` and `RC` as `SOURCE`. To carry out this operation, we can proceed as follows: <br>
@@ -256,7 +256,7 @@ The "SUB" (Subtraction) instruction is used in programming languages to subtract
 
 **Applications:**<br>
 Let's assume that the general register `RA` contains a value of 20. We want to subtract the value 8 from this register. To perform this operation, we can proceed as follows:<br>
-`SUB RA, 8` | Here, we use the `SUB` instruction to subtract `8` from `RA`.<br>
+`SUB RA, #8` | Here, we use the `SUB` instruction to subtract `8` from `RA`.<br>
 `Result : RA = 12`
 
 We can also subtract the value of one register from another, provided that both registers contain the same data type. Imagine we have `RC`, which contains the value 10, and `RD`, which contains the value 4. We want `RD` to subtract the value of `RC` from the value already assigned to it. To perform this operation, we can proceed as follows:<br>
@@ -274,7 +274,7 @@ The "MUL" (Multiplication) instruction is used in programming languages to multi
 
 **Applications:**<br>
 Let's assume that the `RA` general register contains a value of 10. We want to multiply this value by 5 and store the result in `RA`. To perform this operation, we can proceed as follows:<br>
-`MUL RA, 5` | Here, we use the "MUL" instruction to multiply the value in `RA` by 5.<br>
+`MUL RA, #5` | Here, we use the "MUL" instruction to multiply the value in `RA` by 5.<br>
 `Result : RA = 50`
 
 You can also multiply the value of one register by another, provided that both registers contain the same data types. Imagine we have `RC`, which contains the value 6, and `RD`, which contains the value 8. We want `RD` to multiply the value of `RC` and store the result in `RD`. To perform this operation, we can proceed as follows:<br>
@@ -293,7 +293,7 @@ The "DIV" (Division) instruction is used in programming languages to divide one 
 
 **Applications:**<br>
 Let's assume that the `RA` general register contains a value of 50. We want to divide this value by 5 and store the result in `RA`. To perform this operation, we can proceed as follows:<br>
-`DIV RA, 5` | Here, we use the "DIV" instruction to divide the value in `RA` by 5.<br>
+`DIV RA, #5` | Here, we use the "DIV" instruction to divide the value in `RA` by 5.<br>
 `Result : RA = 10`
 
 You can also divide the value of one register by another, provided that both registers contain the same data types. Imagine we have `RC`, which contains the value 40, and `RD`, which contains the value 8. We want `RD` to divide the value of `RC` and store the result in `RD`. To perform this operation, we can proceed as follows:<br>
@@ -342,7 +342,7 @@ end
 In this example, `add_numbers` is the function name, and it takes one parameter (`SOURCE`) as input. It calculates the sum of this parameter and stores the result in `DESTINATION`.
 
 #### 3.1 <u>END (End of Function)</u>
-The `EN;` instruction is used to mark the end of a function. It signifies the conclusion of the function's code block and allows the program to continue with the main program or other functions. When the assembler encounters `END` within a function, it understands that the function's code block has concluded, and control returns to the point in the main program where the function was originally called from.
+The `END` instruction is used to mark the end of a function. It signifies the conclusion of the function's code block and allows the program to continue with the main program or other functions. When the assembler encounters `END` within a function, it understands that the function's code block has concluded, and control returns to the point in the main program where the function was originally called from.
 
 Using `END` is crucial in assembly language to properly terminate functions and ensure that control flow proceeds correctly within the program.
 
@@ -512,14 +512,14 @@ In assembly language, printing values to the output or display is a common task.
 
 2. Printing a Number:
    ```assembly
-   DISP 42       ; Display the value 42
+   DISP #42       ; Display the value 42
    ```
 
    This code will display the number 42 to the output.
 
 3. Printing the Contents of a Register:
    ```assembly
-   MOV RB, 100   ; Load a value into register RB
+   MOV RB, #100   ; Load a value into register RB
    DISP RB       ; Display the contents of register RB
    ```
 
@@ -595,16 +595,16 @@ MOV myTextVariable, "My text"
 
 In this example, the string `"My text"` is stored in the variable `myTextVariable`. This is a common way to initialise a string variable.
 
-#### 7.1.5 `MOV myIntegerVariable, 12`
+#### 7.1.5 `MOV myIntegerVariable, #12`
 
-The instruction `MOV myIntegerVariable, 12` is used to assign the integer value `12` to the variable `myIntegerVariable`.
+The instruction `MOV myIntegerVariable, #12` is used to assign the integer value `12` to the variable `myIntegerVariable`.
 
 - `myIntegerVariable` is the destination variable where the integer value will be stored
 - `12` is the immediate integer value that will be placed in `myIntegerVariable`
 
 Example:
 ```assembly
-MOV myIntegerVariable, 12
+MOV myIntegerVariable, #12
 ```
 
 In this example, the integer value `12` is assigned to the variable `myIntegerVariable`. This is a common way to initialise an integer variable.
@@ -636,7 +636,7 @@ Here are the different forms of the "CMP" instruction:
 
 1. Comparing a Register with a Memory Variable:
    ```assembly
-   MOV RA, 42       ; Load value 42 into register RA
+   MOV RA, #42       ; Load value 42 into register RA
    CMP RA, variable1   ; Compare the value in RA with the content of memory variable variable1
    ```
    The CMP is therefore stored in RAM until it is used. You can therefore perform a conditional jump at any time in the program, which will use this value (if no other CMP has been performed in the meantime in the program).
@@ -649,14 +649,14 @@ Here are the different forms of the "CMP" instruction:
 
 3. Comparing Two Registers:
    ```assembly
-   MOV RA, 10       ; Load value 10 into register RA
-   MOV RB, 20       ; Load value 20 into register RB
+   MOV RA, #10       ; Load value 10 into register RA
+   MOV RB, #20       ; Load value 20 into register RB
    CMP RA, RB       ; Compare the values in registers RA and RB
    ```
 
 4. Comparing Immediate Values:
    ```assembly
-   CMP 5, 10         ; Compare the immediate values 5 and 10
+   CMP #5, #10         ; Compare the immediate values 5 and 10
    ```
    The "CMP" instruction can directly compare two constants.
 
@@ -720,8 +720,8 @@ The "Jump Equal" (`JE`) instruction jumps to the specified destination if two va
 
 **Example:**
 ```assembly
-MOV RA, 5     ; Set RA to 5
-CMP RA, 5     ; Compare the value in RA with 5
+MOV RA, #5     ; Set RA to 5
+CMP RA, #5     ; Compare the value in RA with 5
 JE EqualLabel ; Jump to EqualLabel if RA equals 5
 ```
 
@@ -736,8 +736,8 @@ The "Jump Not Equal" (`JNE`) instruction jumps to the specified destination if t
 
 **Example:**
 ```assembly
-MOV RB, 10    ; Set RB to 10
-CMP RB, 5     ; Compare the value in RB with 5
+MOV RB, #10    ; Set RB to 10
+CMP RB, #5     ; Compare the value in RB with 5
 JNE NotEqual  ; Jump to NotEqual if RB is not equal to 5
 ```
 
@@ -752,8 +752,8 @@ The "Jump Greater" (`JG`) instruction jumps to the specified destination if one 
 
 **Example:**
 ```assembly
-MOV RC, 15    ; Set RC to 15
-CMP RC, 10    ; Compare the value in RC with 10
+MOV RC, #15    ; Set RC to 15
+CMP RC, #10    ; Compare the value in RC with 10
 JG Greater    ; Jump to Greater if RC is greater than 10
 ```
 
@@ -768,8 +768,8 @@ The "Jump Greater or Equal" (`JGE`) instruction jumps to the specified destinati
 
 **Example:**
 ```assembly
-MOV RD, 20    ; Set RD to 20
-CMP RD, 20    ; Compare the value in RD with 20
+MOV RD, #20    ; Set RD to 20
+CMP RD, #20    ; Compare the value in RD with 20
 JGE GreaterOrEqual ; Jump to GreaterOrEqual if RD is greater than or equal to 20
 ```
 
@@ -784,8 +784,8 @@ The "Jump Less" (`JL`) instruction jumps to the specified destination if one val
 
 **Example:**
 ```assembly
-MOV RA, 25    ; Set RA to 25
-CMP RA, 30    ; Compare the value in RA with 30
+MOV RA, #25    ; Set RA to 25
+CMP RA, #30    ; Compare the value in RA with 30
 JL Less       ; Jump to Less if RA is less than 30
 ```
 
@@ -800,8 +800,8 @@ The "Jump Less or Equal" (`JLE`) instruction jumps to the specified destination 
 
 **Example:**
 ```assembly
-MOV RB, 5     ; Set RB to 5
-CMP RB, 5     ; Compare the value in RB with 5
+MOV RB, #5     ; Set RB to 5
+CMP RB, #5     ; Compare the value in RB with 5
 JLE LessOrEqual ; Jump to LessOrEqual if RB is less than or equal to 5
 ```
 
@@ -822,8 +822,8 @@ The `AND` instruction performs a bitwise AND operation between the bits of the d
 
 **Example:**
 ```assembly
-MOV RA, 5     ; Set RA to binary 0101
-MOV RB, 3     ; Set RB to binary 0011
+MOV RA, #5     ; Set RA to binary 0101
+MOV RB, #3     ; Set RB to binary 0011
 AND RA, RB    ; Perform AND operation: RA = 0101 AND 0011 = 0001 (1 in decimal)
 ```
 
@@ -838,8 +838,8 @@ The `XOR` instruction performs a bitwise XOR operation between the bits of the d
 
 **Example:**
 ```assembly
-MOV RA, 6     ; Set RA to binary 0110
-MOV RB, 3     ; Set RB to binary 0011
+MOV RA, #6     ; Set RA to binary 0110
+MOV RB, #3     ; Set RB to binary 0011
 XOR RA, RB    ; Perform XOR operation: RA = 0110 XOR 0011 = 0101 (5 in decimal)
 ```
 
@@ -854,7 +854,7 @@ The `NOT` instruction performs a bitwise NOT operation on the destination operan
 
 **Example:**
 ```assembly
-MOV RA, 5     ; Set RA to binary 0101
+MOV RA, #5     ; Set RA to binary 0101
 NOT RA        ; Perform NOT operation: RA = NOT 0101 = 1010 (10 in decimal)
 ```
 
@@ -869,8 +869,8 @@ The `OR` instruction performs a bitwise OR operation between the bits of the des
 
 **Example:**
 ```assembly
-MOV RA, 6     ; Set RA to binary 0110
-MOV RB, 3     ; Set RB to binary 0011
+MOV RA, #6     ; Set RA to binary 0110
+MOV RB, #3     ; Set RB to binary 0011
 OR RA, RB     ; Perform OR operation: RA = 0110 OR 0011 = 0111 (7 in decimal)
 ```
 
@@ -892,7 +892,7 @@ GAD DESTINATION, SOURCE
 
 **Example:**
 ```assembly
-MOV RA, 10    ; Set RA to the value 10
+MOV RA, #10    ; Set RA to the value 10
 GAD ARA, RA   ; Get the memory address of RA and store it in ARA
 ```
 
