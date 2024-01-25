@@ -2,15 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 
-int main(void) {
-    // Open the file for reading
-    FILE *file = fopen("test.algoasm", "r");
-    
-    // Check if the file was opened successfully
-    if (file == NULL) {
-        perror("Error opening file");
+int main(int argc, char *argv[]) {
+    // Check if the user passed in a file name
+    if (argc != 2) {
+        printf("Error: Please pass in a file name\n");
         return 1;
     }
+
+    // Open the file
+    FILE *file = fopen(argv[1], "r");
+    // Check if the file exists
+    if (file == NULL) {
+        printf("Error: File does not exist\n");
+        return 1;
+    }
+
 
     // Count the number of lines in the file and print the content
     int line_count = 0;

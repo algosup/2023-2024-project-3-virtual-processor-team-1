@@ -31,8 +31,8 @@ void removeCommentsAndEmptyLines(char *str) {
 
 // Function to tokenize a line based on spaces and commas
 // This function tokenizes the input line and stores the tokens in a 2D array.
-void tokenizeLine(char *line, char cleanedLines[][4][1000], int *numLines) {
-    const char delimiters[] = " ,";
+void tokenizeLine(char *line, char cleanedLines[][3][1000], int *numLines) {
+    const char delimiters[] = ", ";
     int numTokens = 0;
 
     // Tokenize the line only if it is not empty
@@ -42,18 +42,17 @@ void tokenizeLine(char *line, char cleanedLines[][4][1000], int *numLines) {
 
     // Tokenize the line and store each token in the 2D array
     char *token = strtok(line, delimiters);
-    while (token != NULL && numTokens < 4) {
+    while (token != NULL && numTokens < 3) {
         strcpy(cleanedLines[*numLines][numTokens], token);
         numTokens++;
         token = strtok(NULL, delimiters);
     }
 
-    // If fewer than 4 tokens are found, pad the remaining elements with empty strings
-    while (numTokens < 4) {
+    // If fewer than 3 tokens are found, pad the remaining elements with empty strings
+    while (numTokens < 3) {
         strcpy(cleanedLines[*numLines][numTokens], "");
         numTokens++;
     }
-
     (*numLines)++;
 }
 
@@ -74,7 +73,7 @@ int main(int argc, char *argv[]) {
 
     // Read the file line by line and remove comments, empty lines, and newline characters
     char line[1000]; // Adjust the size based on your needs
-    char cleanedLines[100][4][1000]; // Adjust the size based on your needs
+    char cleanedLines[100][3][1000]; // Adjust the size based on your needs
     int numLines = 0;
 
     // Iterate over the file line by line to remove comments, empty lines, and newline characters
@@ -90,7 +89,7 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < numLines; i++) {
         // Check if the line is not empty before printing
         if (strcmp(cleanedLines[i][0], "") != 0) {
-            printf("{\"%s\", \"%s\", \"%s\", \"%s\"}\n", cleanedLines[i][0], cleanedLines[i][1], cleanedLines[i][2], cleanedLines[i][3]);
+            printf("{\"%s\", \"%s\", \"%s\"}\n", cleanedLines[i][0], cleanedLines[i][1], cleanedLines[i][2]);
         }
     }
 
