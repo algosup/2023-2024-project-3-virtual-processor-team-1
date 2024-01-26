@@ -91,15 +91,14 @@ The aim of the project is to design both a **virtual processor**[^1] and an **in
 | Malloc and memory management are beyond the scope, as they pertain to dynamic memory allocation |
 | Complex data structure management is not included as it goes beyond the basic operations listed |
 
-| Nice to have         |
-|----------------------|
-| Debugger             |
-| PUSH, POP            |
+| Nice to have        |
+|---------------------|
+| Debugger            |
+| PUSH, POP           |
 | Increment, Decrement |
-| LEAQ                 |
-| Functions            |
-| Flags                |
-
+| LEAQ                |
+| Variable            |
+| Flags               |
 
 #### 2.3 <u>Deliverables</u>
 | Deliverables              | Type                | Deadline         | Access to the document |
@@ -164,9 +163,9 @@ In our custom assembly language project, we emphasise a cost-effective approach 
 
 **Work Hours:**
 
-To maintain a balanced workload and ensure steady progress, we have allocated a total of 399 hours, distributed among team members as needed. This allocation is designed to optimise productivity while allowing for flexibility in addressing project challenges.
+To maintain a balanced workload and ensure steady progress, we have allocated a total of 399 hours (9 and a half days of work on the project, bearing in mind that half a day is 3.5 hours and that there are 6 of us in the team), distributed among team members as needed. This allocation is designed to optimise productivity while allowing for flexibility in addressing project challenges.
 
-**Financial Independence**
+**Financial Independence:**
 
 We take pride in stating that our custom assembly language project requires no external financial investment, which means our total budget is 0€. We have efficiently organised our resources to ensure that all development activities can be carried out within the scope of our existing capabilities and infrastructure.
 
@@ -180,8 +179,6 @@ When working with assembly language programming, it's important to consider cert
 1. **No Technical Issues:** We assume that the target computer system does not encounter any significant technical issues during the execution of the assembly code. This includes factors such as hardware failures, memory corruption, or system instability.
 
 2. **Compatible Hardware:** The assembly code is assumed to be executed on hardware that is compatible with the assembly language instructions used. Compatibility issues can lead to unexpected behavior or errors.
-
-3. **Proper Assembler:** It is assumed that a proper assembler or assembly language development environment is used to translate the assembly code into machine code. The assembler should correctly interpret the assembly language syntax and generate executable code.
 
 **Constraints:**
 1. **Native Libraries:** The assembly code is constrained to utilise only native libraries and resources available on the target system. It should not rely on external libraries or resources that may not be present on the system.
@@ -254,7 +251,7 @@ Let's assume that the `R1` general register has a value of 10. We therefore add 
 `ADD R1, #15` | Here, we `ADD` to `R1`, the value `15`.<br>
 `Result : R1 = 25`
 
-We can also add the value of one register to another, provided that both registers contain the same data types. We have `R3`, which contains the value 5 and `R4`, which contains the value 25. We want `R4` to add the value of `R3` to the value already assigned to it. We must therefore indicate `R4` as `DESTINATION` and `R3` as `SOURCE`. To carry out this operation, we can proceed as follows: <br>
+We can also add the value of one register to another, provided that both registers contain the same data types. We have `R3`, which contains the value 5 and `R4`, which contains the value 25. We want to increment the value of R4 by adding the value stored in R3. We must therefore indicate `R4` as `DESTINATION` and `R3` as `SOURCE`. To carry out this operation, we can proceed as follows: <br>
 `ADD R4, R3` | Here, we `ADD` to `R4`, the value of `R3`<br>
 `Result : R4 = 30`
 
@@ -273,7 +270,7 @@ Let's assume that the general register `R1` contains a value of 20. We want to s
 `SUB R1, #8` | Here, we use the `SUB` instruction to subtract `8` from `R1`.<br>
 `Result : R1 = 12`
 
-We can also subtract the value of one register from another, provided that both registers contain the same data type. Imagine we have `R1`, which contains the value 10, and `R4`, which contains the value 4. We want `R4` to subtract the value of `R3` from the value already assigned to it. To perform this operation, we can proceed as follows:<br>
+We can also subtract the value of one register from another, provided that both registers contain the same data type. Imagine we have `R4`, which contains the value 10, and `R3`, which contains the value 4. We want to decrement the value of R4 by subtracting the value stored in R3. To perform this operation, we can proceed as follows:<br>
 `SUB R4, R3` | Here, we use the `SUB` instruction to subtract the value of `R3` from `R4`.<br>
 `Result : R4 = 6`
 
@@ -291,7 +288,7 @@ Let's assume that the `R1` general register contains a value of 10. We want to m
 `MUL R1, #5` | Here, we use the "MUL" instruction to multiply the value in `R1` by 5.<br>
 `Result : R1 = 50`
 
-You can also multiply the value of one register by another, provided that both registers contain the same data types. Imagine we have `R3`, which contains the value 6, and `R4`, which contains the value 8. We want `R4` to multiply the value of `R3` and store the result in `R4`. To perform this operation, we can proceed as follows:<br>
+You can also multiply the value of one register by another, provided that both registers contain the same data types. Imagine we have `R3`, which contains the value 6, and `R4`, which contains the value 8. We want to update the value of `R4` by multiplying it with the value stored in `R3` and storing the result back in `R4`. To perform this operation, we can proceed as follows:<br>
 `MUL R4, R3` | Here, we use the "MUL" instruction to multiply the value in `R3` by the value in `R4` and store the result in `R4`.<br>
 `Result : R4 = 48`
 
@@ -310,19 +307,27 @@ Let's assume that the `R1` general register contains a value of 50. We want to d
 `DIV R1, #5` | Here, we use the "DIV" instruction to divide the value in `R1` by 5.<br>
 `Result : R1 = 10`
 
-You can also divide the value of one register by another, provided that both registers contain the same data types. Imagine we have `R3`, which contains the value 40, and `R4`, which contains the value 8. We want `R4` to divide the value of `R3` and store the result in `R4`. To perform this operation, we can proceed as follows:<br>
+You can also divide the value of one register by another, provided that both registers contain the same data types. Imagine we have `R3`, which contains the value 40, and `R4`, which contains the value 8. We want to update the value of `R4` by dividing it by the value stored in `R3` and storing the result back in `R4`. To perform this operation, we can proceed as follows:<br>
 `DIV R4, R3` | Here, we use the "DIV" instruction to divide the value in `R3` by the value in `R4` and store the result in `R4`.<br>
 `Result : R4 = 5`
 
 **What not to do:**<br>
-Imagine that our `R1` register contains the string "Hello, World!" and our `R1` register contains the value 20. You cannot use the "DIV" instruction in this case, as the program will attempt to interpret "Hello, World!" as a numerical value.<br>
+Imagine that our `R1` register contains the string "Hello, World!" and our `R2` register contains the value 20. You cannot use the "DIV" instruction in this case, as the program will attempt to interpret "Hello, World!" as a numerical value.<br>
 You'll get a compilation error.
 
-Attempting to divide by zero (0) is not allowed. If you attempt to divide any value by zero, including a constant or the content of a register, it will result in an error or undefined behavior in most programming languages and assembly instructions. For example, `DIV RA, 0` where RA contains any value will result in an error or an exception, and the program may crash or behave unpredictably. It's important to ensure that the divisor (the value after the "DIV" instruction) is not zero to avoid such issues.
+Attempting to divide by zero (0) is not allowed. If you attempt to divide any value by zero, including a constant or the content of a register, it will result in an error or undefined behavior in most programming languages and assembly instructions. For example, `DIV R1, 0` where R1 contains any value will result in an error or an exception, and the program may crash or behave unpredictably. It's important to ensure that the divisor (the value after the "DIV" instruction) is not zero to avoid such issues.
 
 ### 3. Functions
 
-Functions in assembly language serve as blocks of code that can be called upon to perform specific tasks. They allow for modular and structured programming. Here's a general structure for defining functions in assembly:
+Functions in assembly language serve as blocks of code that can be called upon to perform specific tasks. They allow for modular and structured programming.
+Functions have a naming convention. Each function must :
+- be named in camelCase
+- not start with a number
+- not be just a number
+- not contain any special characters
+- not start or end with `_`
+<br><br>
+Here's a general structure for defining functions in our own assembly:
 
 ```assembly
 .function
@@ -362,10 +367,15 @@ Using `END` is crucial in assembly language to properly terminate functions and 
 
 ### 4. Subroutines
 
-Subroutines in assembly are similar to functions, but they are often used for smaller, reusable tasks within a larger program. They typically don't have their own return values but can modify existing variables or registers.<br>
+Subroutines in our assembly are similar to functions, but they are often used for smaller, reusable tasks within a larger program. They typically don't have their own return values but can modify existing variables or registers. Like functions, subroutines use a usage convention. They must :
+- be named in camelCase
+- not start with a number
+- not be just a number
+- not contain any special characters
+- must start with a `.`<br>
 > `CALL .subroutineName`
 
-Here's a general structure for defining subroutines in assembly:
+Here's a general structure for defining subroutines in our assembly:
 
 ```assembly
 .function
@@ -433,6 +443,7 @@ Using "RET" is essential in assembly language to maintain program flow and ensur
 
 ## 5. Variables
 For all strings, we enclose them in `""` so that we can retrieve the whole string and so that special characters such as `'` do not differ in the program.<bR>
+
 In our assembly language, you can declare variables using different instructions specific to each variable type. The basic syntax for declaring variables is as follows:
 
 ```assembly
@@ -674,6 +685,12 @@ Here are the different forms of the "CMP" instruction:
    CMP #5, #10         ; Compare the immediate values 5 and 10
    ```
    The "CMP" instruction can directly compare two constants.
+
+5. Comparing Register with an Immediate Value :
+```assembly             
+    MOV R1, #2          ; Load value 2 into register R1
+    CMP R1, #5          ; Comparing the value in R1 with the immediate value 5
+```
 
 Example usage:
 ```assembly
