@@ -7,137 +7,113 @@
 #include "token.h"
 #include"isImmOrNeg.h"
 
-void exucuteInstruction(instruction inst, output output)
+// Function to convert enum to string
+const char* operatorToString(operators op) {
+    switch (op) {
+        case MOV: return "MOV";
+        case ADD: return "ADD";
+        case SUB: return "SUB";
+        case MUL: return "MUL";
+        case DIV: return "DIV";
+        case JMP: return "JMP";
+        case JE: return "JE";
+        case JNE: return "JNE";
+        case JG: return "JG";
+        case JGE: return "JGE";
+        case JL: return "JL";
+        case JLE: return "JLE";
+        case RET: return "RET";
+        case CMP: return "CMP";
+        case CALL: return "CALL";
+        case AND: return "AND";
+        case OR: return "OR";
+        case XOR: return "XOR";
+        case NOT: return "NOT";
+        case GAD: return "GAD";
+        case DISP: return "DISP";
+        default: return NULL;
+    }
+}
+
+const char* generalRegisterToString(general_registers reg) {
+    switch (reg) {
+        case R1: return "R1";
+        case R2: return "R2";
+        case R3: return "R3";
+        case R4: return "R4";
+        default: return NULL;
+    }
+}
+
+const char* addressRegisterToString(address_registers reg) {
+    switch (reg) {
+        case A1: return "A1";
+        case A2: return "A2";
+        case A3: return "A3";
+        case A4: return "A4";
+        default: return NULL;
+    }
+}
+
+int isOperator(char* str)
 {
-    if (strcmp(inst.opcode,"MOV") == 0)
-    {
-        if(inst.destination != "R1" || inst.destination != "R2" || inst.destination != "R3" || inst.destination != "R4" || inst.destination !="A1" || inst.destination != "A2" || inst.destination != "A3" || inst.destination != "A4")
-        {
-            printf("Error: Invalid destination register\n");
-            return 1;
+    for (operators op = MOV; op <= DISP; op++) {
+        if (strcmp(str, operatorToString(op)) == 0) {
+            return 1;  // inst.opcode is in the operators enum
         }
-        else if (inst.source == NULL)
-        {
-            printf("Error: Invalid source register or value\n");
-            return 1;
+    }
+    return 0;  // inst.opcode is not in the operators enum
+
+}
+
+int isGeneralRegister(char* str)
+{
+        for (general_registers reg = R1; reg <= R4; reg++) {
+        if (strcmp(str, operatorToString(reg)) == 0) {
+            return 1;  // inst.opcode is in the operators enum
         }
-        else if(inst.source == "R1" || inst.source == "R2" || inst.source == "R3" || inst.source == "R4" || inst.source =="A1" || inst.source == "A2" || inst.source == "A3" || inst.source == "A4")
-        {
-            
-        }else if (isImmOrNeg(inst.source) == 0)
-        {
-            printf("Error: Invalid source register or value\n");
-            return 1;
+    }
+    return 0;  // inst.opcode is not in the operators enum
+}
+
+
+int isAddressRegister(char* str)
+{
+    for (address_registers reg = A1; reg <= A4; reg++) {
+        if (strcmp(str, operatorToString(reg)) == 0) {
+            return 1;  // inst.opcode is in the operators enum
         }
-        else if(isImmOrNeg(inst.source) == 1)
-        {
-            output.register1 =+ (int)removeToken(inst.source);
-        }
-        else if(isImmOrNeg(inst.source) == 2)
-        {
-            output.register1 =- (int)removeToken(inst.source);
-        }
-
     }
-    
-    if (strcmp(inst.opcode,"ADD") == 0)
-    {
-        if(inst.destination != "R1" || inst.destination != "R2" || inst.destination != "R3" || inst.destination != "R4" || inst.destination !="A1" || inst.destination != "A2" || inst.destination != "A3" || inst.destination != "A4")
-        {
-            printf("Error: Invalid destination register\n");
-            return 1;
-        }
-        else if (inst.source == NULL)
-        {
-            printf("Error: Invalid source register or value\n");
-            return 1;
-        }
-        else if(inst.source == "R1" || inst.source == "R2" || inst.source == "R3" || inst.source == "R4" || inst.source =="A1" || inst.source == "A2" || inst.source == "A3" || inst.source == "A4")
-        {
-            output.register1 = output.register1 + (int)inst.source;
-        }
-        
-    }
-    else if(strcmp(inst.opcode,"SUB") == 0)
-    {
+    return 0;  // inst.opcode is not in the operators enum
+}
 
-    }
-    else if (strcmp(inst.opcode,"MUL") == 0)
-    {
 
-    }
-    else if (strcmp(inst.opcode,"DIV") == 0)
+int isLabel(char* str)
+{
+    if (str[0] == LABEL)
     {
-
-    }
-    else if (strcmp(inst.opcode,"JMP") == 0)
-    {
-
-    }
-    else if (strcmp(inst.opcode,"JE") == 0)
-    {
-
-    }
-    else if (strcmp(inst.opcode,"JNE") == 0)
-    {
-
-    }
-    else if (strcmp(inst.opcode,"JG") == 0)
-    {
-
-    }
-    else if (strcmp(inst.opcode,"JGE") == 0)
-    {
-
-    }
-    else if (strcmp(inst.opcode,"JL") == 0)
-    {
-
-    }
-    else if (strcmp(inst.opcode,"JLE") == 0)
-    {
-
-    }
-    else if (strcmp(inst.opcode,"RET") == 0)
-    {
-
-    }
-    else if (strcmp(inst.opcode,"CMP") == 0)
-    {
-
-    }
-    else if (strcmp(inst.opcode,"CALL") == 0)
-    {
-
-    }
-    else if (strcmp(inst.opcode,"AND") == 0)
-    {
-
-    }
-    else if (strcmp(inst.opcode,"OR") == 0)
-    {
-
-    }
-    else if (strcmp(inst.opcode,"XOR") == 0)
-    {
-
-    }
-    else if (strcmp(inst.opcode,"NOT") == 0)
-    {
-
-    }
-    else if (strcmp(inst.opcode,"GAD") == 0)
-    {
-
-    }
-    else if (strcmp(inst.opcode,"DISP") == 0)
-    {
-
+        return 1;
     }
     else
     {
-        printf("Error: Invalid instruction\n");
-        return 1;
+        return 0;
     }
 }
+
+
+void interpreteInstruction(instruction inst)
+{
+    if (isOperator(inst.opcode) == 0)
+    {
+        printf("Error: Invalid Operator\n");
+        return 1;
+    }
+    else if (isGeneralRegister(inst.destination) == 0 && isOperator(inst.opcode) != operatorToString(DISP))
+    {
+        printf("Error: Invalid Destination\n");
+        return 1;
+    }
+
+}
+
 #endif

@@ -31,16 +31,20 @@ int main(int argc, char *argv[]) {
     // Define the instruction structure
     instruction inst;
     output output;
+    address_registers address_registers;
+    general_registers general_registers;
+    operators operators;
     // Print the cleaned content in the desired format
     for (int i = 0; i < numLines; i++) {
         // Check if the line is not empty before printing
         if (strcmp(cleanedLines[i][0], "") != 0) {
             printf("{\"%s\", \"%s\", \"%s\"}\n", cleanedLines[i][0], cleanedLines[i][1], cleanedLines[i][2]);
             getInstruction(inst, cleanedLines[i][0], cleanedLines[i][1], cleanedLines[i][2]);
+            //interpreteInstruction(inst, output, general_registers, address_registers, operators);
         }
     }
     
-    exucuteInstruction(inst, output);
+    //exucuteInstruction(inst, output);
 
     
 

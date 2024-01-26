@@ -21,7 +21,7 @@
 #define SPACE ' '
 #define IMMEDIATE '#'
 #define NEG '-'
-#define LABEL ':'
+#define LABEL '.'
 #define END 'e', 'n', 'd'
 #define STRING '"'
 
