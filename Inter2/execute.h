@@ -5,10 +5,11 @@
 #include <string.h>
 #include"parse.h"
 #include "token.h"
+#include"isImmOrNeg.h"
 
-void exucuteInstruction(instruction inst)
+void exucuteInstruction(instruction inst, output output)
 {
-    if (strcmp(inst.opcode,"ADD") == 0)
+    if (strcmp(inst.opcode,"MOV") == 0)
     {
         if(inst.destination != "R1" || inst.destination != "R2" || inst.destination != "R3" || inst.destination != "R4" || inst.destination !="A1" || inst.destination != "A2" || inst.destination != "A3" || inst.destination != "A4")
         {
@@ -23,6 +24,37 @@ void exucuteInstruction(instruction inst)
         else if(inst.source == "R1" || inst.source == "R2" || inst.source == "R3" || inst.source == "R4" || inst.source =="A1" || inst.source == "A2" || inst.source == "A3" || inst.source == "A4")
         {
             
+        }else if (isImmOrNeg(inst.source) == 0)
+        {
+            printf("Error: Invalid source register or value\n");
+            return 1;
+        }
+        else if(isImmOrNeg(inst.source) == 1)
+        {
+            output.register1 =+ (int)removeToken(inst.source);
+        }
+        else if(isImmOrNeg(inst.source) == 2)
+        {
+            output.register1 =- (int)removeToken(inst.source);
+        }
+
+    }
+    
+    if (strcmp(inst.opcode,"ADD") == 0)
+    {
+        if(inst.destination != "R1" || inst.destination != "R2" || inst.destination != "R3" || inst.destination != "R4" || inst.destination !="A1" || inst.destination != "A2" || inst.destination != "A3" || inst.destination != "A4")
+        {
+            printf("Error: Invalid destination register\n");
+            return 1;
+        }
+        else if (inst.source == NULL)
+        {
+            printf("Error: Invalid source register or value\n");
+            return 1;
+        }
+        else if(inst.source == "R1" || inst.source == "R2" || inst.source == "R3" || inst.source == "R4" || inst.source =="A1" || inst.source == "A2" || inst.source == "A3" || inst.source == "A4")
+        {
+            output.register1 = output.register1 + (int)inst.source;
         }
         
     }

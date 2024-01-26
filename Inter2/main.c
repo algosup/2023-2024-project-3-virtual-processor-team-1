@@ -30,6 +30,7 @@ int main(int argc, char *argv[]) {
     fclose(file);
     // Define the instruction structure
     instruction inst;
+    output output;
     // Print the cleaned content in the desired format
     for (int i = 0; i < numLines; i++) {
         // Check if the line is not empty before printing
@@ -39,7 +40,7 @@ int main(int argc, char *argv[]) {
         }
     }
     
-    exucuteInstruction(inst);
+    exucuteInstruction(inst, output);
 
     
 
