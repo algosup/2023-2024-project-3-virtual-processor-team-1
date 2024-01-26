@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include"parse.h"
+#include "token.h"
 
 void exucuteInstruction(instruction inst)
 {
@@ -19,10 +20,11 @@ void exucuteInstruction(instruction inst)
             printf("Error: Invalid source register or value\n");
             return 1;
         }
-        else
+        else if(inst.source == "R1" || inst.source == "R2" || inst.source == "R3" || inst.source == "R4" || inst.source =="A1" || inst.source == "A2" || inst.source == "A3" || inst.source == "A4")
         {
             
         }
+        
     }
     else if(strcmp(inst.opcode,"SUB") == 0)
     {

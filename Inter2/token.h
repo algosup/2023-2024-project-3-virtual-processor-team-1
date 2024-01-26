@@ -75,4 +75,10 @@ typedef enum ADDRESSE_REGISTER
     A4
 } address_registers;
 
+typedef struct {
+    int register1;
+    int register2;
+    
+} output;
+
 #endif
