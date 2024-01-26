@@ -1,5 +1,5 @@
 
-**Technical Specification - Virtual Processor and Interpreter**
+**Technical Specifications - 2023-2024-project-3-virtual-processor**
 
 *Document Version: 1.0*
 
@@ -13,34 +13,35 @@
 - [DEADLINE 9/2 5pm](#deadline-92-5pm)
   - [I. Audience](#i-audience)
   - [II. Deliverable](#ii-deliverable)
-  - [III. Details](#iii-details)
   - [IV. Requirements](#iv-requirements)
+  - [III. Details](#iii-details)
   - [V. Nice to have](#v-nice-to-have)
   - [VI. Priorities](#vi-priorities)
   - [VII. Technical Architecture](#vii-technical-architecture)
-    - [1. Technology stack](#1-technology-stack)
-    - [2. Input data](#2-input-data)
-    - [3. Output data](#3-output-data)
-    - [4. Non-requirements / Out of scope](#4-non-requirements--out-of-scope)
-    - [5. Operating requirements](#5-operating-requirements)
-    - [6. Key functions, operations, and algorithms](#6-key-functions-operations-and-algorithms)
-    - [7. Algorithms](#7-algorithms)
-    - [1. File cleaning and reading](#1-file-cleaning-and-reading)
-    - [2. Lexical analysis (Tokenization)](#2-lexical-analysis-tokenization)
-    - [3. Syntax analysis (Parsing)](#3-syntax-analysis-parsing)
-    - [4. Semantic analysis](#4-semantic-analysis)
-    - [5. Code generation](#5-code-generation)
-    - [6. Virtual processor](#6-virtual-processor)
+    - [Technology stack](#technology-stack)
+    - [Input data](#input-data)
+    - [Output data](#output-data)
+    - [Non-requirements / Out of scope](#non-requirements--out-of-scope)
+    - [Operating requirements](#operating-requirements)
+    - [Key functions, operations, and algorithms](#key-functions-operations-and-algorithms)
+    - [Algorithms](#algorithms)
+    - [File Cleaning and Reading](#file-cleaning-and-reading)
+    - [Lexical analysis (Tokenization)](#lexical-analysis-tokenization)
+    - [Syntax analysis (Parsing)](#syntax-analysis-parsing)
+    - [Semantic analysis](#semantic-analysis)
+    - [Code generation](#code-generation)
+      - [Instruction format](#instruction-format)
+    - [Virtual processor](#virtual-processor)
   - [VIII. Syntax and Structure](#viii-syntax-and-structure)
-    - [1. Folder structure](#1-folder-structure)
-    - [2. Program file structure](#2-program-file-structure)
-    - [3. Function declaration](#3-function-declaration)
-    - [4. Naming](#4-naming)
-    - [5. Comments](#5-comments)
+    - [Folder structure](#folder-structure)
+    - [Program file structure](#program-file-structure)
+    - [Function declaration](#function-declaration)
+    - [Naming](#naming)
+    - [Comments](#comments)
   - [IX. Code Design Principles](#ix-code-design-principles)
   - [X. Ideas and Hypotheses](#x-ideas-and-hypotheses)
-    - [1. Unproven hypotheses](#1-unproven-hypotheses)
-    - [2. Proven Hypotheses](#2-proven-hypotheses)
+    - [Unproven hypotheses](#unproven-hypotheses)
+    - [Proven Hypotheses](#proven-hypotheses)
   - [XI. Challenges](#xi-challenges)
   - [XII. Possible Bugs](#xii-possible-bugs)
   - [XIII. Development Process](#xiii-development-process)
@@ -53,30 +54,58 @@
 
 This document is primarily intended for:
 
-* Software developer - to understand the user and technical requirements, and to guide decision-making and planning. Help them understand risks and challenges, customer requirements, and additional technical requirements and choices made.  
+- Software developer - to understand the user and technical requirements, and to guide decision-making and planning. Help them understand risks and challenges, customer requirements, and additional technical requirements and choices made  
   
 Secondary audiences
-* Program manager - to validate against the functional specification, and the client expectations.
-* QA - to aid in preparing the test plan and to use it for validating issues.
-* Project manager - to help identify risks and dependencies.
+- Program manager - to validate against the functional specification, and the client expectations
+- QA - to aid in preparing the test plan and to use it for validating issues.
+- Project manager - to help identify risks and dependencies
 
 
 ## II. Deliverable 
 
  The goal of the project is to create a virtual processor and an interpreter for running assembly code on that processor.
+ 
+
+
+## IV. Requirements 
+
+1. Create a minimal assembly language (This requirement is fully described in the [functional specifications](./FunctionalSpecifications.md.md))
+   
+2. Develop a C program that reads assembly code from a file, checks for semantic correctness, and executes it on the virtual processor.
+   
+3. Implement a virtual system call for displaying text in a virtual terminal, that can be accessed from the assembly code  
+   
+4. Implement a virtual processor that can execute the assembly code
+   
+5. Write a small assembly program conceptually similar to unit tests to showcase that everything is working 
+
 
 ## III. Details 
 
 The project will be developed in plain, portable, C language without using any external library besides C standard libraries. 
 
-## IV. Requirements 
+The project is divided into two parts:
+1. The first part is the virtual processor. The virtual processor will have the following components:
+   - 4 general-purpose registers
+   - 4 address registers
+   - 1 instruction register
+   - 1 program counter
+   - 1 stack pointer
+   - 1 data memory
+   - 1 instruction memory
+   - 1 stack memory
+   - 1 virtual terminal
+   - 32-bit architecture
+ 
+2. The second part is the interpreter. The purpose of the interpreter is to read the assembly code from a file, check for semantic correctness, and execute it on the virtual processor. 
 
--  Create a minimal assembly language (This requirement is fully described in the [functional specification](./FunctionalSpecifications.md.md))
--  Write a program that can read a text file containing a program written in the aforementioned assembly language and run it
-	- The program should also check if the assembly program is semantically correct and detect syntactical errors 
-- Implement a virtual system call for displaying text in a virtual terminal, that can be accessed from the assembly code  
-- Implement a virtual processor that can execute the assembly code
-- Write a small assembly program conceptually similar to unit tests to showcase that everything is working 
+The interpreter will have the following components:
+   - A lexical analyzer
+   - A parser
+   - A semantic analyzer
+   - A code generator
+
 
 
 ## V. Nice to have
@@ -90,11 +119,12 @@ The project will be developed in plain, portable, C language without using any e
 
 1. Smooth performance, each assembly instruction should be executed in the same amount of time
 2. Correctness, the program should be able to run any semantically correct assembly program
+3. Flexibility, the system should be designed to handle various assembly constructs and provide a foundation for potential future extensions
 
 
 ## VII. Technical Architecture
 
-### 1. Technology stack
+### Technology stack
 
 - Operating System: Any modern, widely used operating system with support for C development (e.g., Linux, Windows, macOS)
 - Programming Language: C17 (the most recent standard version)
@@ -103,30 +133,30 @@ The project will be developed in plain, portable, C language without using any e
 - No additional libraries can be used besides C standard libraries
 
 
-### 2. Input data
+### Input data
 
 One file on the command line.
 - Arg[0] -  The input data will be a text file containing a program written in the assembly language. The program will be read by the interpreter and executed on the virtual processor.
 
 
-### 3. Output data
+### Output data
 
 The output data will be the result of the execution of the assembly program. The result will be displayed in the virtual terminal.
 
 
-### 4. Non-requirements / Out of scope
+### Non-requirements / Out of scope
 
 - Graphical debugger with visual representations of the register, data, and instruction memory
 - Implementation of flags  
 
-### 5. Operating requirements
+### Operating requirements
 
 - The program should be able to run on any modern operating system with support for C development (e.g., Linux, Windows, macOS)
 - The program should be able to run on any modern computer with a 64-bit processor.
 
 
 
-### 6. Key functions, operations, and algorithms
+### Key functions, operations, and algorithms
 
 Some of the key operations that the software will perform and that need to be represented via functions are: 
 
@@ -145,20 +175,51 @@ Some of the key operations that the software will perform and that need to be re
 - **Virtual Processor Execution:**
    - Implementing a virtual processor with registers, memory, and an execution pipeline
    - Executing generated machine code
-   - Mimicking the behavior of a physical processor
 
 
-### 7. Algorithms  
+### Algorithms  
 
 The following section describes the algorithms described above in depth. Furthermore, it describes the skeleton of the program and the order in which the algorithms will be implemented.
 
-### 1. File cleaning and reading
 
-Cleaning the file of any comments and whitespaces will make the reading of the file easier. The file will be read line by line without being parasitized by comments and whitespaces.
+### File Cleaning and Reading
+
+Cleaning the file involves removing comments and whitespaces to facilitate easier reading. The size of the array storing the cleaned assembly code needs to be managed dynamically, considering potential memory constraints.
+
+**Dynamic Array Allocation:**
+   - The program will dynamically allocate memory for the array based on the size of the cleaned assembly code.
+   - This dynamic allocation ensures flexibility, accommodating assembly programs of varying lengths without predefined size limitations.
+
+```
+// Initialize variables
+// Initial assumption of a reasonable maximum number of lines
+
+// Check for memory allocation success
+    // Read the file line by line and dynamically allocate memory for each line
+    // Assuming a maximum line length
+        // Dynamically allocate memory for the current line
+
+        // Check for memory allocation success
+            // Handle memory allocation failure
+
+    // Resize the array to the actual number of lines read
+
+    // Continue with processing or error handling
+    // Handle initial memory allocation failure
+
+
+// Free allocated memory when done
+```
+
+Diagram of the cleaning function
 
 ![diagram](/Documents/Appendices/cleanFile.png)
 
-Basically, the program will read the file line by line and will check either if it's a carriage return or a line feed and remove it. Then, the program will remove the comments by checking if a ";" is present in the line and if it is, it will remove everything after it. Finally, this new file will be stored in a 2D array and will be used for the next step.
+**Note:**
+- The initial assumption of the maximum number of lines provides a starting point for memory allocation.
+- Dynamic resizing after reading the file ensures efficient memory utilization based on the actual number of lines.
+- The program will read the file line by line and will check either if it's a carriage return or a line feed and remove it. Then, the program will remove the comments by checking if a ";" is present in the line and if it is, it will remove everything after it. Finally, this new file will be stored in a 2D array and will be used for the next step.
+
 
 **Input data**
       
@@ -183,7 +244,7 @@ Basically, the program will read the file line by line and will check either if 
 The size of the array should be dynamic and should be able to store any size of the assembly program.
  
 
-### 2. Lexical analysis (Tokenization)
+### Lexical analysis (Tokenization)
 
 Tokenization plays a crucial role by breaking down the assembly code into manageable units called tokens. Think of tokens as building blocks or Lego pieces that make up the code. Each token represents a specific element, like an instruction, register, or operand.
 
@@ -217,7 +278,7 @@ ADD R3, R1
 
 
 
-### 3. Syntax analysis (Parsing)
+### Syntax analysis (Parsing)
 
 The parser acts like a language detective. It takes the tokens, which are like the words of our assembly code, and figures out the rules that govern their arrangement. Think of it as a grammar expert for computers.
 
@@ -257,7 +318,7 @@ ADD(instruction)
 ```
 
 
-### 4. Semantic analysis
+### Semantic analysis
 
 Semantic analysis is like having a wise friend who not only understands what you say but also ensures you're making sense. It helps the computer not just follow the rules but also understand the meaning behind the assembly code.
 
@@ -273,19 +334,101 @@ Semantic analysis is like having a wise friend who not only understands what you
 4. **Preventing Confusion:**
    - By understanding the meaning of the code, semantic analysis prevents confusion. It ensures the computer doesn't get lost in translation and executes the instructions correctly.
 
-Semantic analysis is crucial for a computer to go beyond just following rules. It ensures the code makes sense, uses instructions correctly, and avoids any confusion during execution. 
 
 
+In the case of semantically incorrect assembly programs, the program will:
+    - Provide detailed error messages pinpointing the nature and location of the semantic errors.
+    - Halt the execution of the assembly program to prevent undefined behavior.
+    - Avoid taking corrective actions that may compromise the integrity of subsequent instructions.
 
 
-
-
-
-### 5. Code generation
+### Code generation
 The AST is translated into an intermediate representation or machine code.
 Each assembly language instruction is mapped to corresponding C functions or operations.
 
-### 6. Virtual processor
+
+- **Assembly Code Size:** Each instruction in the assembly code is in 32-bit format.
+- **Instruction Width:** Every instruction is 64 bits wide.
+- **Data Storage:** Data is stored in little-endian format.
+
+#### Instruction format
+- **Opcode (Byte 1):** The first byte signifies the opcode of the instruction.
+- **Register (Byte 2):** The second byte represents the register.
+- **Data Bytes (Bytes 3-6):** The third, fourth, fifth, and sixth bytes collectively encode the data associated with the instruction.
+
+**Opcodes**  
+
+|**Instruction**| **Opcode** |
+|-----------|----------------|
+|MOV R1, 0X332| 0x10         |
+|MOV A1, adress|0x11         |
+|MOV R1, R2|    0x12         | 
+|-|       -                  |
+|ADD R1, R2|    0x20         |
+|ADD R1, 0X332 |0x22         |
+|SUB R1, R2|    0x21         |
+|SUB R1, 0X332 |0x23         |
+|MUL R1, R2|    0x30         |
+|MUL R1, 0X332| 0x31         |
+|DIV R1, R2    |0x40         |
+|#DIV R1, 0X332|0x41         |
+|-|          -               |
+|.label|       0x99          |
+|END|          0x98          |
+|RET|          0x97          |
+|CALL|         0x96          |
+|-|            -             |
+|CMP R1, R2|   0x50          |
+|CMP R1, 0X332|0x51          |
+|-|       -                  |
+|JMP .label|   0x60          |
+|JE .label|    0x61          |
+|JNE .label|   0x62          |
+|JG .label|    0x63          |
+|JGE .label|   0x64          |
+|JL .label|    0x65          |
+|JLE .label|   0x66          |
+|-|-                         | 
+|AND R1, R2|   0x70          |
+|AND R1, 0X332|0x71          |
+|XOR R1, R2|   0x72          |
+|XOR R1, 0X332|0x73          |
+|OR R1, R2|    0x74          |
+|OR R1, 0X332| 0x75          |
+|NOT R1|       0x76          |
+|GAD R1|       0x77          |
+|-|       -                  |
+|**General Register**|       |
+|R1 |          0x01          | 
+|R2 |          0x02          | 
+|R3 |          0x03          | 
+|R4 |          0x04          | 
+|**Adress register** |       | 
+|A1 |          0x11          | 
+|A2 |          0x12          | 
+|A3 |          0x13          |
+|A4 |          0x14          |
+       
+
+
+**Example of MOV instruction**
+
+|0x12| 0x01| 0x00| 0x00| 0x00| 0x02|
+|----|-----|-----|-----|-----|-----|
+|MOV | R1  | Unused| Unused| Unused| R2|
+|OPCODE| REGISTER | DATA | DATA | DATA | DATA |
+
+
+|0x10| 0x01| 0x00| 0x00| 0x19| 0x23|
+|----|-----|-----|-----|-----|-----|
+|MOV | R1  | Unused| Unused| 25 | 35 |
+|OPCODE| REGISTER | DATA | DATA | DATA | DATA |
+
+
+
+### Virtual processor
+
+
 
 
 
@@ -294,7 +437,7 @@ Each assembly language instruction is mapped to corresponding C functions or ope
 
 ## VIII. Syntax and Structure
 
-### 1. Folder structure
+### Folder structure
 
 ```
 📦2023-2024-project-3-virtual-processor
@@ -321,7 +464,19 @@ Each assembly language instruction is mapped to corresponding C functions or ope
 └── 📝 README.MD 
 ```
 
-### 2. Program file structure 
+**vm.h** - Header file for the virtual processor
+
+**lexical.h** - Header file for the lexical analysis
+
+**parser.h** - Header file for the parser
+
+**global.h** - Header file for the global variables and centralized point for all the header files import
+
+**assemblyCode.asm2** - Assembly code file
+
+**interpreter.c** - Main file for the interpreter
+
+### Program file structure 
 
 1. **Prologue:**
    - Start the file with a prologue describing the purpose of objects (functions, data declarations, etc.)
@@ -347,29 +502,12 @@ Each assembly language instruction is mapped to corresponding C functions or ope
    - Consider alphabetical order for large sets of independent utility functions
 
 
-### 3. Function declaration 
+### Function declaration 
 
 Each function should be preceded by a block comment prologue that gives a short description of what the function does.
 
-Moreover, if the function should return nothing; you should use the keyword **void** instead of **int**
 
-eg.
-
-```
-int MyFunction(str input) {
-    // ----snip----
-    return -1;  // The "-1" is merely a placeholder for function exit and is unrelated to the intended data processing.
-}
-
-// Use the keyword "void" instead of "int". It will enhance the comprehension of the code and not create confusion in the intended data processing. 
-
-void MyFunction(str input){
-    // ----snip----
-    return;
-}
-```
-
-### 4. Naming
+### Naming
 
 - **File names**: should be in camelCase
 - **`#define`:** constants should be in all CAPS
@@ -379,7 +517,7 @@ void MyFunction(str input){
 - **Typedef** names should have "`_t`" appended to their name
 
 
-### 5. Comments 
+### Comments 
 
 - Putting comments at the top of a 3-10 line section telling what it does
 ```
@@ -402,9 +540,9 @@ The following are the coding design principles:
 
 ## X. Ideas and Hypotheses
 //TODO
-### 1. Unproven hypotheses
+### Unproven hypotheses
 //TODO
-### 2. Proven Hypotheses
+### Proven Hypotheses
 //TODO
 
 ## XI. Challenges
@@ -412,7 +550,7 @@ The following are the coding design principles:
 - Developing a robust lexer and parser for precise assembly code tokenization, and managing diverse language constructs, poses a significant challenge
 - Enforcing correct usage of assembly instructions and operands through semantic analysis requires careful consideration to detect and prevent potential runtime errors
 - Implementing parsing by string comparison is relatively straightforward; the true challenge lies in the conversion to machine code
-- Handling labels and function calls within the assembly code introduces an additional challenge, requiring effective management of addresses, offsets, and the intricacies of control flow.
+- Handling labels and function calls within the assembly code introduces an additional challenge, requiring effective management of addresses, offsets, and the intricacies of control flow
 
 
 
@@ -422,7 +560,7 @@ The following are the coding design principles:
 - The system may not be able to handle complex assembly programs
 - The system takes too long to execute
 - The system may have trouble translating the assembly code into machine code and it can result in an incorrect result
-- The system may not be able to detect major errors for instance: overflow, underflow, division by zero, etc.
+- The system may not be able to detect major errors for instance: overflow, underflow, division by zero, etc
 
 
 ## XIII. Development Process
