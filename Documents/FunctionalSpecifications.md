@@ -22,7 +22,7 @@
         - [4. Project plan](#4-project-plan)
             - [4.1 Resources/Financial plan](#41-resourcesfinancial-plan)
             - [4.2 Assumptions/Constraints](#42-assumptionsconstraints)
-    - [II. Explanation of how a CPU works](#ii-explanation-of-how-a-cpu-works)
+    - [II. Explanation of How a CPU Works](#ii-explanation-of-how-a-cpu-works)
       - [1. The CPU's inner workings](#1-the-cpus-inner-workings)
       - [2. The role of assembly language](#2-the-role-of-assembly-language)
       - [3. The indispensable role of registers](#3-the-indispensable-role-of-registers)
@@ -97,6 +97,8 @@ The aim of the project is to design both a **virtual processor**[^1] and an **in
 | PUSH, POP            |
 | Increment, Decrement |
 | LEAQ                 |
+| Functions            |
+| Flags                |
 
 
 #### 2.3 <u>Deliverables</u>
@@ -227,6 +229,8 @@ In summary, registers are a crucial component in CPU operations, providing light
 We need to create our own assembler. To do this, we'll base ourselves on most existing assembler code, with the simple exception that we'll use different names for certain actions. Our assembler will be 32-bit based, which is easily adaptable to today's computers.<br>
 We won't be using the entire x86 architecture, as we don't need as much memory space for this project. Also, the 32-bit architecture is easily usable on any of today's computers, and is more suitable for this project.
 
+> More technical, detailed and user-friendly documentation has been created for the project. This documentation can be accessed by [clicking here](https://algosup-t1.gitbook.io/asm2/), but below we prefer to keep a more explicit and less technical preview.
+
 ### 1. Registers
 #### 1.1 <u>General registers</u>
 We use 4 general registers to store data. These are 32-bit general-purpose registers.<br>
@@ -329,7 +333,7 @@ Functions in assembly language serve as blocks of code that can be called upon t
     
     ; Return value (if any)
     
-end
+END
 ```
 
 **Example of a Function:**
@@ -346,7 +350,7 @@ Let's say we want to create a function that adds two numbers and returns the res
     
     ; Return to the calling code
     RET
-end
+END
 ```
 
 In this example, `add_numbers` is the function name, and it takes one parameter (`SOURCE`) as input. It calculates the sum of this parameter and stores the result in `DESTINATION`.
@@ -372,7 +376,7 @@ Here's a general structure for defining subroutines in assembly:
 
     ; More code for the main function
 
-end
+END
 
 .subroutineName
     ; Some context and description of the subroutine
@@ -417,7 +421,7 @@ Let's say we have a main function that calculates the square of a number and a s
     
     ; Continue with the main function code
 
-end
+END
 ```
 
 In this example, `calculate_square` is the main function, and it uses the `multiply_numbers` subroutine to calculate the square of a number. The `multiply_numbers` subroutine performs the multiplication and returns the result in `DESTINATION`. The main function then continues with its code after calling `calculate_square`.
@@ -673,14 +677,14 @@ Here are the different forms of the "CMP" instruction:
 
 Example usage:
 ```assembly
-myAge dvi 18           ; Declare a variable named myAge with an initial value of 18
-myNewAge dvi 16        ; Declare a variable named myNewAge with an initial value of 16
+myAge dvi #18           ; Declare a variable named myAge with an initial value of 18
+myNewAge dvi #16        ; Declare a variable named myNewAge with an initial value of 16
 myName dvc "Jean-Charles" ; Declare a variable named myName with a string value "Jean-Charles"
 myFamilyName dvc "DUPONT" ; Declare a variable named myFamilyName with a string value "DUPONT"
-actualYear dvi 2023     ; Declare a variable named actualYear with an initial value of 2023
+actualYear dvi #2023     ; Declare a variable named actualYear with an initial value of 2023
 
 .randomFunction
-    ADD myNewAge, 2     ; Add 2 to the value of myNewAge
+    ADD myNewAge, #2     ; Add 2 to the value of myNewAge
     CMP myAge, actualYear ; Compare the value of myAge with actualYear
     ; Here you can perform a conditional jump
     RET                 ; Return from the function (subroutine)
@@ -688,7 +692,7 @@ actualYear dvi 2023     ; Declare a variable named actualYear with an initial va
 .main
     CALL .randomFunction ; Call the randomFunction subroutine
     ; Here you can perform a conditional jump
-end   
+END   
 ```
 
 ### 9. Jump
