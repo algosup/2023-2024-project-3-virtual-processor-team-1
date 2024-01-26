@@ -7,29 +7,26 @@
 
 - [Functional Specifications](#functional-specifications)
     - [Table of content](#functional-specifications)
-    - [I. Document control](#i-document-control)
-        - [1. Document information](#1-document-information)
-        - [2. Document approval](#2-document-approval)
-    - [II. Introduction](#ii-introduction)
-        - [1. Project Overview](#1-project-overview)
-        - [2. Project Definition](#2-project-definition)
+    - [I. Introduction](#i-introduction)
+        - [1. Project overview](#1-project-overview)
+        - [2. Project definition](#2-project-definition)
             - [2.1 Our vision](#21-our-vision)
             - [2.2 Scope](#22-scope)
             - [2.3 Deliverables](#23-deliverables)
             - [2.4 Personas](#24-personas)
-        - [3. Project Organisation](#3-project-organisation)
+        - [3. Project organisation](#3-project-organisation)
             - [3.1 Project representation](#31-project-representation)
             - [3.2 Stakeholders](#32-stakeholders)
             - [3.3 Project roles](#33-project-roles)
             - [3.4 Project reviewers](#34-project-reviewers)
-        - [4. Project Plan](#4-project-plan)
+        - [4. Project plan](#4-project-plan)
             - [4.1 Resources/Financial plan](#41-resourcesfinancial-plan)
             - [4.2 Assumptions/Constraints](#42-assumptionsconstraints)
-    - [III. Explanation of how a CPU works](#iii-explanation-of-how-a-cpu-works)
-      - [1. The CPU's Inner Workings](#1-the-cpus-inner-workings)
-      - [2. The Role of Assembly Language](#2-the-role-of-assembly-language)
-      - [3. The Indispensable Role of Registers](#3-the-indispensable-role-of-registers)
-    - [IV. Functional Requirements](#iii-functional-requirements)
+    - [II. Explanation of how a CPU works](#ii-explanation-of-how-a-cpu-works)
+      - [1. The CPU's inner workings](#1-the-cpus-inner-workings)
+      - [2. The role of assembly language](#2-the-role-of-assembly-language)
+      - [3. The indispensable role of registers](#3-the-indispensable-role-of-registers)
+    - [III. Functional Requirements](#iii-functional-requirements)
         - [1. Registers](#1-registers)
             - [1.1 General registers](#11-general-registers)
             - [1.2 Address registers](#12-address-registers)
@@ -46,45 +43,29 @@
             - [5.1. DVI (Define Variable Integer)](#51-dvi-define-variable-integer)
             - [5.2. DVC (Define Variable Char)](#52-dvc-define-variable-char)
             - [5.3. DVN (Define Variable Negative)](#53-dvn-define-variable-negative)
-        - [6. Printing Values](#6-printing-values)
+        - [6. Printing values](#6-printing-values)
         - [7. Instructions](#7-instructions)
             - [7.1 Instruction MOV](#71-instruction-mov)
-        - [8. Comparing Values](#8-comparing-values)
+        - [8. Comparing values](#8-comparing-values)
         - [9. Jump](#9-jump)
-            - [9.1 Unconditional Jump](#91-unconditional-jump)
-            - [9.2 Conditional Jump](#92-conditional-jump)
-        - [10. Bitwise Operations](#10-bitwise-operations)
+            - [9.1 Unconditional jump](#91-unconditional-jump)
+            - [9.2 Conditional jump](#92-conditional-jump)
+        - [10. Bitwise operations](#10-bitwise-operations)
             - [10.1 AND (Logical AND)](#101-and-logical-and)
             - [10.2 XOR (Exclusive OR)](#102-xor-exclusive-or)
             - [10.3 NOT (Logical NOT)](#103-not-logical-not)
             - [10.4 OR (Logical OR)](#104-or-logical-or)
         - [11. Get Address (GAD)](#11-get-address-gad)
-    - [V. Test Cases](#iv-test-cases)
-    - [VI. Non-Functional Requirements](#v-non-functional-requirements)
-    - [VII. Glossary](#vi-glossary)
+    - [IV. Test Cases](#iv-test-cases)
+    - [V. Non-Functional Requirements](#v-non-functional-requirements)
+    - [VI. Glossary](#vi-glossary)
 </details>
 
-## I. Document control
-### 1. Document Information
-| **Document Name**  | Functional Specifications |
-|--------------------|---------------------------|
-| **Document Owner** | DELILLE Elone             |
-
-### 2. Document Approval
-| **Role** | **Name** | **Signature** | **Date**        |
-|---|---|---------------|-----------------|
-| Project Manager | CUREL Clémentine | ✅             | 24 January 2024 |
-| Program Manager | DELILLE Elone | ✅             | 24 January 2024 |
-| Technical Leader | PLANCHARD Thomas | ✅             | 24 January 2024 |
-| Software Engineer | LASSELIN Alexis | ✅             | 24 January 2024 |
-| Software Engineer | NAMIR Salaheddine | ✅             | 24 January 2024 |
-| Quality Assurance | BAVAROIS Séréna | ✅             | 24 January 2024 |
-
-## II. Introduction
-### 1. Project Overview
+## I. Introduction
+### 1. Project overview
 The aim of the project is to design both a **virtual processor**[^1] and an **interpreter**[^2] capable of executing **assembly code**[^3], coded by us during the project. It will be developed in pure, portable **C language**[^4], relying solely on [standard C](https://en.wikipedia.org/wiki/C_standard_library) **libraries**[^5], to the exclusion of any external **dependencies**[^6].
 
-### 2. Project Definition
+### 2. Project definition
 #### 2.1 <u>Our vision</u>
 - We have to create our own assembly language and run it using a code interpreter that we will create in the C programming language. We must be able to run a programme that meets the requirements of the customer, JEANNIN Franck.
 
@@ -139,7 +120,7 @@ The aim of the project is to design both a **virtual processor**[^1] and an **in
 Since we have to explain how the language works, the test cases follow the explanations so that you can understand how the test cases work.<br>
 [You can take the test cases directly by clicking here.](#iv-test-cases)
 
-### 3. <u>Project Organisation</u>
+### 3. <u>Project organisation</u>
 
 #### 3.1 <u>Project representation</u>
 
@@ -167,9 +148,9 @@ Since we have to explain how the language works, the test cases follow the expla
 #### 3.4 <u>Project reviewers</u>
 The project owner has designated external project reviewers to meticulously examine our specifications and furnish us with constructive feedback.
 
-### 4. Project Plan
+### 4. Project plan
 
-#### 4.1 <u>Resources/Financial Plan</u>
+#### 4.1 <u>Resources/Financial plan</u>
 
 In our custom assembly language project, we emphasise a cost-effective approach with no financial dependencies required for its development. Our focus is on optimising resource utilisation and ensuring efficient progress.
 
@@ -215,10 +196,10 @@ When working with assembly language programming, it's important to consider cert
 
 7. **Limited Debugging Tools:** Debugging assembly code can be challenging, as it may have limited access to high-level debugging tools commonly available in higher-level languages.
 
-### III. Explanation of How a CPU Works
+### II. Explanation of How a CPU Works
 
 In this section, we'll be talking about the Central Processing Unit (CPU) and how it works. We'll also be discussing assembly language, which is a type of programming language that's commonly used with CPUs. Specifically, we'll be looking at registers, which are super important for programming in assembly language. We'll dive into why assembly language is so useful for programming CPUs and how registers make it all possible.
-#### 1. The CPU's Inner Workings
+#### 1. The CPU's inner workings
 
 The central processing unit (CPU) is the fundamental element of a computing system, much like the brain responsible for managing the complex dance of data manipulation and instruction execution. Its importance lies in its capability to execute instructions and perform calculations, making it the foundation of computing. Let's take a more detailed look at how a CPU operates:
 
@@ -227,7 +208,7 @@ The central processing unit (CPU) is the fundamental element of a computing syst
 - **Microarchitecture:** The internal architecture of a CPU is made up of complex circuits, including arithmetic logic units (ALUs), control units, and registers, all of which work together to manage the execution of instructions. ALUs perform arithmetic and logical operations, while control units manage the flow of instructions
 
 - **Fetch-Decode-Execute Cycle:** The CPU operates in a cycle referred to as the "Fetch-Decode-Execute" cycle. It fetches instructions from memory, decodes them to understand their meaning, executes the instructions, and stores any results as necessary
-#### 2. The Role of Assembly Language
+#### 2. The role of assembly language
 
 Assembly language is a crucial link between the complex internal workings of a CPU and the human-readable code. It's a preferred choice for programming CPUs for various reasons.
 
@@ -236,13 +217,13 @@ Firstly, assembly language provides a low-level abstraction that allows programm
 Secondly, when it comes to efficiency, assembly code is highly optimized for the CPU's microarchitecture. This fine-grained control leads to faster and streamlined execution, making it a popular choice for programmers.
 
 Lastly, assembly language can be tailored for specific CPU architectures, making it portable across different platforms. Programmers can optimize code for various processors while retaining the same logical structure, making it an adaptable tool for different projects.
-#### 3. The Indispensable Role of Registers
+#### 3. The indispensable role of registers
 
 Registers, which are small, ultra-fast storage units within the CPU, play a critical role due to their unique capabilities. They serve as rapid storage locations for data during instruction execution, allowing for quick access to operands and temporary storage of intermediate results. By storing frequently used data in registers, CPUs minimize the need for slow memory access, resulting in significantly enhanced performance. Registers hold operands for arithmetic and logic operations, and they also retain vital information related to program control and state. Additionally, during context switching, registers play a pivotal role in saving and restoring register values, enabling the CPU to seamlessly resume execution from where it left off.
 
 In summary, registers are a crucial component in CPU operations, providing lightning-fast and transient data storage along with control information. They are essential in optimizing instruction execution, and their efficient management plays a pivotal role in the CPU's ability to process data and execute complex tasks. Together with a robust CPU, the precision of assembly language, and the seamless use of registers, they form the bedrock of modern computing, enabling the execution of diverse tasks with precision and efficiency.
 
-## IV. Functional Requirements
+## III. Functional Requirements
 We need to create our own assembler. To do this, we'll base ourselves on most existing assembler code, with the simple exception that we'll use different names for certain actions. Our assembler will be 32-bit based, which is easily adaptable to today's computers.<br>
 We won't be using the entire x86 architecture, as we don't need as much memory space for this project. Also, the 32-bit architecture is easily usable on any of today's computers, and is more suitable for this project.
 
@@ -256,6 +237,8 @@ Address registers, are essential components of a processor, each capable of stor
 `A1`, `A2`, `A3`, `A4`
 
 ### 2. Operands
+
+For all immediate values, we add a `#` in front of the value so that it is stored directly without passing through an address or anything else.
 #### 2.1 <u>Addition - ADD</u>
 The "ADD" (Addition) instruction is used in programming languages to add two values, or to add a value to a specified destination. In our assembly code, the "ADD" operation instruction uses the syntax :<br>
 > `ADD DESTINATION, SOURCE`<br>
@@ -338,7 +321,7 @@ Attempting to divide by zero (0) is not allowed. If you attempt to divide any va
 Functions in assembly language serve as blocks of code that can be called upon to perform specific tasks. They allow for modular and structured programming. Here's a general structure for defining functions in assembly:
 
 ```assembly
-function:
+.function
     ; Some context and description of the function
     ; OPERANDS Setup: DESTINATION, SOURCE
 
@@ -354,7 +337,7 @@ end
 Let's say we want to create a function that adds two numbers and returns the result.
 
 ```assembly
-add_numbers:
+.add_numbers
     ; Description: Adds two numbers and returns the result
     ; Input:      OPERANDS Setup: DESTINATION, SOURCE (values to be added)
 
@@ -376,12 +359,12 @@ Using `END` is crucial in assembly language to properly terminate functions and 
 ### 4. Subroutines
 
 Subroutines in assembly are similar to functions, but they are often used for smaller, reusable tasks within a larger program. They typically don't have their own return values but can modify existing variables or registers.<br>
-> `CALL subroutineName;`
+> `CALL .subroutineName`
 
 Here's a general structure for defining subroutines in assembly:
 
 ```assembly
-function:
+.function
     ; Some context and description of the function
     ; OPERANDS Setup: DESTINATION, SOURCE
 
@@ -391,7 +374,7 @@ function:
 
 end
 
-subroutineName:
+.subroutineName
     ; Some context and description of the subroutine
     ; OPERANDS Setup: DESTINATION, SOURCE (if needed)
 
@@ -405,7 +388,7 @@ subroutineName:
 Let's say we have a main function that calculates the square of a number and a separate subroutine that multiplies two numbers. Here's how it could be structured:
 
 ```assembly
-calculate_square:
+.calculate_square
     ; Description: Calculates the square of a number
     ; Input:      OPERANDS Setup: DESTINATION, SOURCE (the number to be squared)
 
@@ -416,7 +399,7 @@ calculate_square:
     ; Return to the calling code
     RET
 
-multiply_numbers:
+.multiply_numbers
     ; Description: Multiplies two numbers
     ; Input:      OPERANDS Setup: DESTINATION, SOURCE (values to be multiplied)
 
@@ -426,7 +409,7 @@ multiply_numbers:
     ; Return to the calling code
     RET
 
-main:
+.main
     ; Main function code
 
     ; Call the calculate_square function
@@ -445,7 +428,7 @@ The "RET" (Return) instruction is used at the end of a subroutine to return cont
 Using "RET" is essential in assembly language to maintain program flow and ensure that control is transferred back to the appropriate location in the calling code.
 
 ## 5. Variables
-
+For all strings, we enclose them in `""` so that we can retrieve the whole string and so that special characters such as `'` do not differ in the program.<bR>
 In our assembly language, you can declare variables using different instructions specific to each variable type. The basic syntax for declaring variables is as follows:
 
 ```assembly
@@ -458,16 +441,17 @@ Here's how to declare variables of different types:
 
 The "DVI" instruction is used to declare integer variables. It follows this syntax:
 ```assembly
-variableName dvi 1
+variableName dvi #1
 ```
 - `variableName` is the variable name
 - `dvi` specifies the integer variable type
+- `#` specifies that it's an immediate value
 - `1` is the initial value of the integer variable
 
 Example:
 ```assembly
 ; Declare an integer variable with an initial value of 1
-myIntegerVariable dvi 1
+myIntegerVariable dvi #1
 ```
 
 ### 5.2. <u>DVC (Define Variable Char)</u>
@@ -507,7 +491,7 @@ These instructions allow you to define variables of different types to store dat
 Example usage:
 ```assembly
 ; Variable declarations
-myIntegerVariable dvi 1
+myIntegerVariable dvi #1
 myCharVariable dvc "World! Hello."
 myNegativeVariable dvn -6
 
@@ -518,7 +502,7 @@ myNegativeVariable dvn -6
 This allows you to define variables of different types to store data in your assembly language program.
 
 
-### 6. Printing Values
+### 6. Printing values
 
 In assembly language, printing values to the output or display is a common task. How you print a value depends on whether it's a string, a number, or a register. We use different methods for each:
 
@@ -559,14 +543,14 @@ In this section, we will look at the instructions that we have decided to implem
 #### 7.1 <u>Instruction MOV</u>
 The "MOV" (Move) instruction is used to copy the value from one register to another. It's commonly used for data transfer between registers. The syntax for the "MOV" instruction is as follows:
 > `MOV DESTINATION, SOURCE`<br>
-> `DESTINATION` represents the location where the result of the division will be stored (the DESTINATION is always a register).
+> `DESTINATION` represents the location where the data will be stored (the DESTINATION is always a register).
 > <br>`SOURCE` represents the value by which the destination will be taken from
 
 Certainly, let's explain each of the "MOV" instruction examples one by one:
 
 #### 7.1.1 `MOV R1, R3`
 
-The instruction `MOV R1, R3` is used to copy the value from register RC to register RA1.
+The instruction `MOV R1, R3` is used to copy the value from register R3 to register R1.
 
 - `R1` is the destination register where the value will be copied
 - `R3` is the source register from which the value is taken
@@ -636,7 +620,7 @@ MOV myIntegerVariable, #12
 
 In this example, the integer value `12` is assigned to the variable `myIntegerVariable`. This is a common way to initialise an integer variable.
 
-#### 7.1.6 What Not to Do
+#### 7.1.6 What not to do
 
 It's important to follow proper syntax and conventions when using the "MOV" instruction. Avoid the following incorrect usage:
 
@@ -646,7 +630,7 @@ MOV 2, "My text"
 
 In this incorrect example, the instruction attempts to move a string into the value `2`, which is not a valid variable name or destination. It's crucial to specify a valid destination, such as a register or a named variable, when using the "MOV" instruction. Trying to move data into an invalid destination can result in compilation errors or unexpected behavior.
 
-### 8. Comparing Values
+### 8. Comparing values
 The "CMP" (Compare) instruction is used to compare two values. It's essential for making decisions in your program based on the result of the comparison. The "CMP" instruction doesn't alter the values in the operands.
 
 Here are the different forms of the "CMP" instruction:
@@ -695,21 +679,21 @@ myName dvc "Jean-Charles" ; Declare a variable named myName with a string value 
 myFamilyName dvc "DUPONT" ; Declare a variable named myFamilyName with a string value "DUPONT"
 actualYear dvi 2023     ; Declare a variable named actualYear with an initial value of 2023
 
-randomFunction:
+.randomFunction
     ADD myNewAge, 2     ; Add 2 to the value of myNewAge
     CMP myAge, actualYear ; Compare the value of myAge with actualYear
     ; Here you can perform a conditional jump
     RET                 ; Return from the function (subroutine)
 
-main:
-    CALL randomFunction ; Call the randomFunction subroutine
+.main
+    CALL .randomFunction ; Call the randomFunction subroutine
     ; Here you can perform a conditional jump
 end   
 ```
 
 ### 9. Jump
 
-#### 9.1 <u>Unconditional Jump</u>
+#### 9.1 <u>Unconditional jump</u>
 
 **Syntax:**
 ```
@@ -725,7 +709,7 @@ JMP LoopStart
 
 In this example, the program unconditionally jumps to the label `LoopStart`, typically used for implementing loops in assembly.
 
-#### 9.2 <u>Conditional Jump</u>
+#### 9.2 <u>Conditional jump</u>
 
 Conditional jumps in assembly allow you to change program flow based on the results of previous comparisons or conditions.
 
@@ -834,7 +818,7 @@ JLE LessOrEqual ; Jump to LessOrEqual if R2 is less than or equal to 5
 
 Conditional jumps are used to control program flow based on comparisons and conditions, allowing you to create branching logic in assembly programs.
 
-### 10. Bitwise Operations
+### 10. Bitwise operations
 
 Bitwise operations in assembly manipulate individual bits of binary values.
 
@@ -912,7 +896,7 @@ The "GAD" instruction, which stands for "Get Address," is used to obtain the mem
 GAD DESTINATION, SOURCE
 ```
 
-- `DESTINATION` represents one of the destination registers (A1, A2, A3, or A4)
+- `DESTINATION` represents one of the address registers (A1, A2, A3, or A4)
 - `SOURCE` represents the source register (e.g., R1, R2, R3, R4) whose memory address you want to obtain
 
 **Example:**
@@ -923,9 +907,9 @@ GAD A1, R1   ; Get the memory address of R1 and store it in A1
 
 In this example, the `GAD A1, R1` instruction retrieves the memory address of register `R1` and stores it in register `A1`. Now, `A1` contains the memory address of `R1`, allowing you to perform operations that involve the address of R1, such as indirect addressing or memory manipulation.
 
-## V. Test Cases
+## IV. Test Cases
 
-### 1. Register Storing and Copying
+### 1. Register storing and copying
 **Objective:** Verify that immediate values can be stored in registers and contents can be copied from one register to another.
 
 **Test Steps:**
@@ -933,9 +917,9 @@ In this example, the `GAD A1, R1` instruction retrieves the memory address of re
 2. Copy the contents of `R1` to register `R2`.
 3. Check if the value in `R2` matches the original value stored in `R1`.
 
-**Expected Result:** The value in `RR` should be identical to the value initially stored in `R1`.
+**Expected Result:** The value in `R2` should be identical to the value initially stored in `R1`.
 <br><br>
-### 2. Arithmetic Operations (ADD, SUB, MUL, DIV)
+### 2. Arithmetic operations (ADD, SUB, MUL, DIV)
 **Objective:** Ensure that the processor correctly performs basic arithmetic operations.
 
 **Test Steps for ADD:**
@@ -947,7 +931,7 @@ In this example, the `GAD A1, R1` instruction retrieves the memory address of re
 
 **Repeat similar steps for SUB, MUL, and DIV operations with appropriate expected results.**
 <br><br>
-### 3. Jump Instructions (Unconditional and Conditional)
+### 3. Jump instructions (Unconditional and Conditional)
 **Objective:** Test the unconditional and conditional jump instructions.
 
 **Unconditional Jump Test:**
@@ -959,7 +943,7 @@ In this example, the `GAD A1, R1` instruction retrieves the memory address of re
 2. Based on comparison, use `JE` or `JNE` to direct program flow.
 3. Verify that the program follows the correct path.
    <br><br>
-### 4. Bitwise Operations (AND, OR, XOR, NOT)
+### 4. Bitwise operations (AND, OR, XOR, NOT)
 **Objective:** Validate the correct functionality of bitwise operations.
 
 **Test Steps for AND:**
@@ -969,7 +953,7 @@ In this example, the `GAD A1, R1` instruction retrieves the memory address of re
 
 **Repeat similar steps for OR, XOR, and NOT operations with appropriate binary values and expected results.**
 <br><br>
-### 5. Function and Subroutine Execution
+### 5. Function and subroutine execution
 **Objective:** Ensure that functions and subroutines are called and executed correctly.
 
 **Test Steps for Function:**
@@ -982,7 +966,7 @@ In this example, the `GAD A1, R1` instruction retrieves the memory address of re
 2. Call the subroutine from within a function.
 3. Verify that the subroutine has performed its task correctly.
    <br><br>
-### 6. Variable Handling (DVI, DVC, DVN)
+### 6. Variable handling (DVI, DVC, DVN)
 **Objective:** Test the declaration and usage of different variable types.
 
 **Test Steps:**
@@ -990,14 +974,14 @@ In this example, the `GAD A1, R1` instruction retrieves the memory address of re
 2. Assign and modify values in these variables.
 3. Verify that the variables hold the correct data.
    <br><br>
-### 7. Printing Values
+### 7. Printing values
 **Objective:** Check that the processor can correctly display strings, numbers, and register contents.
 
 **Test Steps:**
 1. Use `DISP` instruction to print a string, a number, and the contents of a register.
 2. Verify that the correct values are printed.
 
-## VI. Non-Functional Requirements
+## V. Non-Functional Requirements
 > **Portability**<br>
 Objective: The software should be easily portable across different operating systems without significant modifications.
 
@@ -1026,7 +1010,7 @@ Details:<br>
 <br>**Optimised Code**: The interpreter should be written in a way that minimises processing time and memory usage.
 <br>**Scalability**: The system should maintain performance levels under varying loads.
 
-## VII. Glossary
+## VI. Glossary
 [^1]: **Virtual Processor**: A virtual processor refers to a simulated or emulated computing unit designed to execute instructions and perform operations, typically in a software environment. It mimics the behavior of a physical processor, allowing for testing and development without the need for actual hardware.
 [^2]: **Interpreter**: An interpreter is a software component that reads and executes source code or scripts in real-time, without the need for prior compilation. It translates and executes the code line by line, making it suitable for scripting languages and dynamic environments.
 [^3]: **Assembly Code**: Assembly code, also known as assembly language, is a low-level programming language that represents instructions in a human-readable form, closely resembling the architecture of a computer's central processing unit (CPU). It is used for direct hardware manipulation and optimisation.
