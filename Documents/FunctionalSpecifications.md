@@ -101,16 +101,14 @@ The aim of the project is to design both a **virtual processor**[^1] and an **in
 | Flags               |
 
 #### 2.3 <u>Deliverables</u>
-| Deliverables              | Type                | Deadline         | Access to the document |
-|---------------------------|---------------------|------------------|------------------------|
-| Weekly Reports            | Document (Markdown) | Every Friday     | Link                   |
-| Functional Specifications | Document (Markdown) | 30 January 2024  | Link                   |
-| Technical Specifications  | Document (Markdown) | 9 February 2024  | Link                   |
-| Architecture Diagram      | Document            | 9 February 2024  | Link                   |
-| Test Plan                 | Document (Markdown) | 16 February 2024 | Link                   |
-| Database of Bug           | Document (Markdown) | 16 February 2024 | Link                   |
-| Unit Tests                | Program             | 22 February 2024 | Link                   |
-| Final Product             | Program             | 23 February 2024 | Link                   |
+| Deliverables              | Type                | Deadline         | Access to the document                                                                                                          |
+|---------------------------|---------------------|------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| Weekly Reports            | Document (Markdown) | Every Friday     | [Link](https://virtual-processor.atlassian.net/l/cp/JWmc6DFB)                                                                   |
+| Functional Specifications | Document (Markdown) | 30 January 2024  | [Link](https://github.com/algosup/2023-2024-project-3-virtual-processor-team-1/blob/main/Documents/FunctionalSpecifications.md) |
+| Technical Specifications  | Document (Markdown) | 9 February 2024  | [Link](https://github.com/algosup/2023-2024-project-3-virtual-processor-team-1/blob/main/Documents/TechnicalSpecifications.md)  |
+| Test Plan                 | Document (Markdown) | 16 February 2024 | [Link](https://github.com/algosup/2023-2024-project-3-virtual-processor-team-1/blob/main/Documents/TestPlan.md)                 |
+| Database of Bug           | Document (Markdown) | 16 February 2024 | [Link](https://github.com/algosup/2023-2024-project-3-virtual-processor-team-1/issues?q=)                                       |
+| Final Product             | Program             | 23 February 2024 | [Link](https://github.com/algosup/2023-2024-project-3-virtual-processor-team-1)                                                 |
 
 #### 2.4 <u>Personas</u>
 
