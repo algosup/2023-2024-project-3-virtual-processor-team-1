@@ -226,6 +226,7 @@ We won't be using the entire x86 architecture, as we don't need as much memory s
 
 > More technical, detailed and user-friendly documentation has been created for the project. This documentation can be accessed by [clicking here](https://algosup-t1.gitbook.io/asm2/), but below we prefer to keep a more explicit and less technical preview.
 
+
 ### 1. Registers
 #### 1.1 <u>General registers</u>
 We use 4 general registers to store data. These are 32-bit general-purpose registers.<br>
@@ -547,7 +548,13 @@ In assembly language, printing values to the output or display is a common task.
    DISP R2       ; Display the contents of register R2
    ```
 
-   If the value in register R2 is 100, this code will display the number 100 to the output.
+4. Printing the Address of a Register :
+    ```assembly
+   MOV A1, R1     ; Load the memory address of R1, in A1
+   DISP A1        ; Display the memory address on R1 in A1
+   ```
+       
+If the value in register R2 is 100, this code will display the number 100 to the output.
 
 ### 7. Instructions
 
@@ -685,10 +692,10 @@ Here are the different forms of the "CMP" instruction:
    The "CMP" instruction can directly compare two constants.
 
 5. Comparing Register with an Immediate Value :
-```assembly             
-    MOV R1, #2          ; Load value 2 into register R1
-    CMP R1, #5          ; Comparing the value in R1 with the immediate value 5
-```
+    ```assembly             
+        MOV R1, #2          ; Load value 2 into register R1
+        CMP R1, #5          ; Comparing the value in R1 with the immediate value 5
+    ```
 
 Example usage:
 ```assembly
