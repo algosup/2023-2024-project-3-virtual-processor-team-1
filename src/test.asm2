@@ -11,3 +11,6 @@ DISP RB     ; 4
 DISP "Hello World, this is a test" ; expected Hello World
 
 ; expected --> RA = 5, RB = 7, RA = 12, RB = 4
+
+    DISP "End of program"
+    END
