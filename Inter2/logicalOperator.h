@@ -1,12 +1,13 @@
-#ifndef ISIMMORNEG_H
-#define ISIMMORNEG_H
+#ifndef LOGICALOPERATOR_H
+#define LOGICALOPERATOR_H
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "token.h"
 #include"parse.h"
 
-// Check if str is an immediate or negative value
+// Check if str is an immediate or negative value 
+// return 1 if immediate, 2 if negative
 int isImmediateOrNegative(char *str)
 {
     if (str[0] == IMMEDIATE)
