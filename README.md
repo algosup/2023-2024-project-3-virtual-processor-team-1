@@ -40,5 +40,9 @@ cd <2023-2024-project-3-virtual-processor-team-1>
 ./vCPU
 ```
 
+## Documentation
+
+Our code documentation is available directly from the language's GitBook. You can find it by [clicking here](https://algosup-t1.gitbook.io/asm2/).
+
 
 
