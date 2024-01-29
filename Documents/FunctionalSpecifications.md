@@ -56,7 +56,7 @@
             - [10.3 NOT (Logical NOT)](#103-not-logical-not)
             - [10.4 OR (Logical OR)](#104-or-logical-or)
         - [11. Get Address (GAD)](#11-get-address-gad)
-        - [12. Error Handling](#12-error-handling)
+        - [12. Error handling](#12-error-handling)
     - [IV. Test Cases](#iv-test-cases)
     - [V. Non-Functional Requirements](#v-non-functional-requirements)
     - [VI. Glossary](#vi-glossary)
@@ -935,7 +935,7 @@ GAD A1, R1   ; Get the memory address of R1 and store it in A1
 
 In this example, the `GAD A1, R1` instruction retrieves the memory address of register `R1` and stores it in register `A1`. Now, `A1` contains the memory address of `R1`, allowing you to perform operations that involve the address of R1, such as indirect addressing or memory manipulation.
 
-### 12. Error Handling
+### 12. Error handling
 
 | Error Code | Type of Error                   | Message                                                                                                                       |
 |------------|---------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
