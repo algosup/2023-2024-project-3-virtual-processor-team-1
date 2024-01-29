@@ -81,6 +81,7 @@ Secondary audiences
 5. Write a small assembly program conceptually similar to unit tests to showcase that everything is working 
 
 
+
 ## III. Details 
 
 The project will be developed in plain, portable, C language without using any external library besides C standard libraries. 
@@ -98,9 +99,9 @@ The project is divided into two parts:
    - 1 virtual terminal
    - 32-bit architecture
  
-2. The second part is the interpreter. The purpose of the interpreter is to read the assembly code from a file, check for semantic correctness, and execute it on the virtual processor. 
+2. The second part is the interpreter. The purpose of the interpreter is to read the assembly code from a file, check for semantic correctness, transform it into machine code and execute it on the virtual processor. 
 
-The interpreter will have the following components:
+   The interpreter will have the following components:
    - A lexical analyzer
    - A parser
    - A semantic analyzer
@@ -141,7 +142,7 @@ One file on the command line.
 
 ### Output data
 
-The output data will be the result of the execution of the assembly program. The result will be displayed in the virtual terminal.
+The output data will be the result of the execution of the assembly program or the errors returned by the program. The result will be displayed in the virtual terminal.
 
 
 ### Non-requirements / Out of scope
@@ -164,7 +165,7 @@ Some of the key operations that the software will perform and that need to be re
    - Breaking down assembly code into tokens (instructions, registers, operands)
    - Removing whitespace and comments
 - **Syntax Analysis (Parsing):**
-   - Analyzing tokens and verifying adherence to assembly language grammar
+   - Analyzing tokens and verifying adherence to the assembly language grammar
    - Constructing an abstract syntax tree (AST) representing code structure
 - **Semantic Analysis:**
    - Checking for the correctness of the assembly code
@@ -213,7 +214,7 @@ Cleaning the file involves removing comments and whitespaces to facilitate easie
 
 Diagram of the cleaning function
 
-![diagram](/Documents/Appendices/cleanFile.png)
+![diagram](/Documents/Appendices/cleaning.png)
 
 **Note:**
 - The initial assumption of the maximum number of lines provides a starting point for memory allocation.
@@ -241,42 +242,62 @@ Diagram of the cleaning function
    }
    ```
 
-The size of the array should be dynamic and should be able to store any size of the assembly program.
+
  
 
 ### Lexical analysis (Tokenization)
 
-Tokenization plays a crucial role by breaking down the assembly code into manageable units called tokens. Think of tokens as building blocks or Lego pieces that make up the code. Each token represents a specific element, like an instruction, register, or operand.
+Tokenization plays a crucial role by breaking down the assembly code into manageable units called tokens. Think of tokens as building blocks or Lego pieces that structure the code. Each token represents a specific element, like an instruction, register, or operand.
 
-1. **Organization:**
+**Organization:**
    - Tokens help organize the code into meaningful parts, making it easier for the computer to understand and process
 
-2. **Simplification:**
-   - It simplifies the code for analysis. Imagine reading a sentence without spaces; it would be challenging to grasp the meaning. Similarly, tokens create structure in the code
+**Simplification:**
+   - Similar to spaces in a sentence, tokens simplify the code, aiding in the analysis of its structure
 
-3. **Error Detection:**
+**Error Detection:**
    - Tokenization aids in spotting errors early on. By breaking the code into tokens, we can quickly identify where issues might arise
 
-4. **Efficient Parsing:**
-   - It makes parsing, or understanding the code's structure, more efficient. Parsing is like decoding a language, and tokens provide a clear guide
+**Efficient Parsing:**
+   - Parsing the code becomes more efficient with tokens, acting as a clear guide for decoding the language
 
 eg. 
 
 ```
-// Assembly code
-MOV R1, #1
-MOV R2, #2
-ADD R3, R1
+// Non-Tokenized Assembly Code:
+   {"MOV", "R1", "#1"},
+   {"MOV", "R2", "#2"},
+   {"ADD", "R3", "R1"}
 ```
 
 ```
-// Tokenized assembly code
-[(instruction, MOV), (register, R1), (immediate, #1)]
-[(instruction, MOV), (register, R2), (immediate, #2)]
-[(instruction, ADD), (register, R3), (register, R1)]
+// Tokenized Assembly Code
+   {Token("instruction", "MOV", 1, 1), Token("register", "R1", 1, 2), Token("immediate", "#1", 1, 3)},
+   {Token("instruction", "MOV", 2, 1), Token("register", "R2", 2, 2), Token("immediate", "#2", 2, 3)},
+   {Token("instruction", "ADD", 3, 1), Token("register", "R3", 3, 2), Token("register", "R1", 3, 3)}
 ```
 
+![diagram](/Documents/Appendices/tokenization.png)
 
+**Note:**
+
+The process for the tokenization is the following:
+
+   - The program will read the array line by line 
+   - Then it will check every word of the line and it will create a token with the type right type  and value according to the word
+   - Finally, it will replace each instruction, register and operand of the original array with the corresponding token
+
+Each token will be represented by a struct with the following attributes:
+
+   - **Type:** The type of the token (instruction, register, operand, etc...)
+   - **Value:** The value of the token (MOV, R1, #1, etc...)
+   - **Line:** The line where the token is located
+   - **Column:** The column where the token is located
+
+The tokenization will be the first filter to check if the assembly code is correct. In this step the program will be able to handle the most obvious errors like:
+   - Incorrect instructions
+   - Incorrect registers
+   - Incorrect operands
 
 ### Syntax analysis (Parsing)
 
@@ -561,6 +582,7 @@ The following are the coding design principles:
 - The system takes too long to execute
 - The system may have trouble translating the assembly code into machine code and it can result in an incorrect result
 - The system may not be able to detect major errors for instance: overflow, underflow, division by zero, etc
+- We assume that the user will not comment until the end of the line, if it does, the system may not be able to detect it
 
 
 ## XIII. Development Process
