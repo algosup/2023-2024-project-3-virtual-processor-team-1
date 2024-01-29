@@ -56,6 +56,7 @@
             - [10.3 NOT (Logical NOT)](#103-not-logical-not)
             - [10.4 OR (Logical OR)](#104-or-logical-or)
         - [11. Get Address (GAD)](#11-get-address-gad)
+        - [12. Error handling](#12-error-handling)
     - [IV. Test Cases](#iv-test-cases)
     - [V. Non-Functional Requirements](#v-non-functional-requirements)
     - [VI. Glossary](#vi-glossary)
@@ -933,6 +934,26 @@ GAD A1, R1   ; Get the memory address of R1 and store it in A1
 ```
 
 In this example, the `GAD A1, R1` instruction retrieves the memory address of register `R1` and stores it in register `A1`. Now, `A1` contains the memory address of `R1`, allowing you to perform operations that involve the address of R1, such as indirect addressing or memory manipulation.
+
+### 12. Error handling
+
+| Error Code | Type of Error                   | Message                                                                                                                       |
+|------------|---------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| 0x00       | Unexpected error                | Oops... a problem in the matrix has been detected. Go to GitHub issues for help.                                              |
+| 0x01       | File not found                  | The file was not found. Check the name and/or directory in which the file is located.                                         |
+| 0x02       | File secured with a password    | Unable to access the file, which is password-protected                                                                        |
+| 0x03       | Incorrect file extension        | The file you are trying to open is not a recognised file.                                                                     |
+| 0x04       | File corrupted                  | The file you are trying to open appears to be corrupted.                                                                      |
+| 0x05       | Empty file                      | The file you are trying to open contains no data.                                                                             |
+| 0xA0       | Unknown instruction or operator | Line number of the error + Code on the line + The operator or instruction does not exist.                                     |
+| 0xA1       | Unknown variable or register    | Line number of the error + Code on the line + The variable or register entered as a parameter does not exist                  |
+| 0xA2       | Unknown function or subroutine  | Line number of the error + Code on the line + The function or subroutine you are trying to CALL does not exist.               |
+| 0xB0       | Unexpected character            | Line number of the error + Code on the line + An unexpected character was spotted on the line.                                |
+| 0xC0       | Syntax error                    | Line number of the error + Code on the line + Too many parameters have been added. Syntax should be : ARGUMENT PARAM1, PARAM2 |
+| 0xC1       | Missing return/end              | An END or RET instruction is missing from the program.                                                                        |
+| 0xC2       | Division by 0                   | Line number of the error + Code on the line + It is impossible to divide by 0.                                                |
+| 0xC3       | Float number                    | Line number of the error + Code on the line + The language does not take floats into account.                                 |
+| 0xD0       | Overflow error                  | The programme was halted due to an overflow.                                                                                  |
 
 ## IV. Test Cases
 
