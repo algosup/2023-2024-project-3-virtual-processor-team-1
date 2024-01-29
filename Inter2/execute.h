@@ -13,12 +13,12 @@ void interpreteInstruction(instruction inst)
     if (isOperator(inst.opcode) == 0)
     {
         printf("Error: Invalid Operator\n");
-        return 1;
+        exit(1);
     }
     else if (isGeneralRegister(inst.destination) == 0 && isOperator(inst.opcode) != operatorToString(DISP))
     {
         printf("Error: Invalid Destination\n");
-        return 1;
+        exit(1);
     }
     // Addition, Subtraction, Multiplication and Division
     for(operators op = ADD; op <= DIV; op++)

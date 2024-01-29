@@ -21,7 +21,7 @@ int isImmediateOrNegative(char *str)
 // Remove the immediate or negative sign from str
 char* removeToken(char *str)
 {
-    if(isImmatiateOrNegative(str) == 1 || isImmatiateOrNegative(str) == 2)
+    if(isImmediateOrNegative(str) == 1 || isImmediateOrNegative(str) == 2)
     {
         str++;
     }
