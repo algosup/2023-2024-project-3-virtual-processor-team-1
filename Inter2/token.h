@@ -12,28 +12,31 @@
 
 // Define the maximal size of a program file
 #define MAX_PROGRAM_SIZE 100
+// MAX value of a register
+#define MAX_REGISTER_VALUE 3
 
-// Define separator characters
-#define SEPARATOR ','
-#define COMMENT ';'
-#define NEWLINE '\n'
-#define ENDLINE '\0'
-#define SPACE ' '
-#define IMMEDIATE '#'
-#define NEG '-'
-#define LABEL '.'
-#define END 'e', 'n', 'd'
-#define STRING '"'
+// Define separatorand signed characters
+#define SEPARATOR ',' // separator character
+#define COMMENT ';' // comment character
+#define NEWLINE '\n' // newline character
+#define ENDLINE '\0' // endline character
+#define SPACE ' ' // space character
+#define IMMEDIATE '#' // immediate character
+#define NEGATIVE '-' // negative character
+#define LABEL '.' // label character
+#define END 'e', 'n', 'd' // end character
+#define STRING '"' // string character
 
 // Define the maximal size of a token
-int token;
-char *src, *old_src;  
-int poolsize;        
-int line;
+int token; // current token
+char *src, *old_src; // pointer to source code string
+int poolsize; // default size of text/data/stack
+int line; // line number
 
-// Define the instruction structure
-typedef enum OPERATOR 
+// Define the data
+typedef enum DATA
 {
+    // operators
     MOV,
     ADD, 
     SUB, 
@@ -54,31 +57,36 @@ typedef enum OPERATOR
     XOR,
     NOT,
     GAD,
-    DISP
-} operators;
-
-// Define the register structure
-typedef enum GENERAL_REGISTER
-{
+    DISP,
+    // registers
     R1,
     R2,
     R3,
-    R4
-} general_registers;
-
-// Define the address register structure
-typedef enum ADDRESSE_REGISTER
-{
+    R4,
+    // address registers
     A1,
     A2,
     A3,
-    A4
-} address_registers;
+    A4,
+    // Value (integer or string)
+    VAL,
+} data;
 
-typedef struct {
-    int register1;
-    int register2;
+// define token structure
+typedef struct Token
+{
+    data type; // register, operator, address register, value
+    data value; // value of the token (register, operator, address register, value)
+    data line; // line number 
+    data column; // column number
+} token_t;
+
+// define instruction structure
+typedef struct Output
+{
+    int dest; // destination
+    int src; // source
     
-} output;
+} output_t; 
 
 #endif

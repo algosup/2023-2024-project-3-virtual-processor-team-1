@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "token.h"
-#include"parse.h"
+#include"setData.h"
 
 // Check if str is an immediate or negative value 
 // return 1 if immediate, 2 if negative
@@ -13,13 +13,13 @@ int isImmediateOrNegative(char *str)
     if (str[0] == IMMEDIATE)
 
         return 1;
-    else if (str[0] == NEG)
+    else if (str[0] == NEGATIVE)
         return 2;
     else
         return 0;
 }
 // Remove the immediate or negative sign from str
-char* removeToken(char *str)
+char* removeSigned(char *str)
 {
     if(isImmediateOrNegative(str) == 1 || isImmediateOrNegative(str) == 2)
     {
@@ -32,10 +32,9 @@ char* removeToken(char *str)
         
     return str;
 }
-
 // Function to convert enum to string
-const char* operatorToString(operators op) {
-    switch (op) {
+const char* operatorToString(data dt) {
+    switch (dt) {
         case MOV: return "MOV";
         case ADD: return "ADD";
         case SUB: return "SUB";
@@ -60,9 +59,9 @@ const char* operatorToString(operators op) {
         default: return NULL;
     }
 }
-
-const char* generalRegisterToString(general_registers reg) {
-    switch (reg) {
+// Function to convert enum to string
+const char* generalRegisterToString(data dt) {
+    switch (dt) {
         case R1: return "R1";
         case R2: return "R2";
         case R3: return "R3";
@@ -70,9 +69,9 @@ const char* generalRegisterToString(general_registers reg) {
         default: return NULL;
     }
 }
-
-const char* addressRegisterToString(address_registers reg) {
-    switch (reg) {
+// Function to convert enum to string
+const char* addressRegisterToString(data dt) {
+    switch (dt) {
         case A1: return "A1";
         case A2: return "A2";
         case A3: return "A3";
@@ -80,7 +79,6 @@ const char* addressRegisterToString(address_registers reg) {
         default: return NULL;
     }
 }
-
 // Function to check if str is a label
 int isLabel(char* str)
 {
@@ -96,8 +94,8 @@ int isLabel(char* str)
 // Function to check if str is an operator
 int isOperator(char* str)
 {
-    for (operators op = MOV; op <= DISP; op++) {
-        if (strcmp(str, operatorToString(op)) == 0) {
+    for (data dt = MOV; dt <= DISP; dt++) {
+        if (strcmp(str, operatorToString(dt)) == 0) {
             return 1;  // inst.opcode is in the operators enum
         }
     }
@@ -107,19 +105,18 @@ int isOperator(char* str)
 // Function to check if str is a general register
 int isGeneralRegister(char* str)
 {
-        for (general_registers reg = R1; reg <= R4; reg++) {
-        if (strcmp(str, operatorToString(reg)) == 0) {
+        for (data dt = R1; dt <= R4; dt++) {
+        if (strcmp(str, operatorToString(dt)) == 0) {
             return 1;  // inst.opcode is in the operators enum
         }
     }
     return 0;  // inst.opcode is not in the operators enum
 }
-
 // Function to check if str is an address register
 int isAddressRegister(char* str)
 {
-    for (address_registers reg = A1; reg <= A4; reg++) {
-        if (strcmp(str, operatorToString(reg)) == 0) {
+    for (data dt = A1; dt <= A4; dt++) {
+        if (strcmp(str, operatorToString(dt)) == 0) {
             return 1;  // inst.opcode is in the operators enum
         }
     }

@@ -1,14 +1,15 @@
 #include "header.h"
 
-int main(int argc, char *argv[]) {
+int main(void) {
     // Check if the user passed in a file name
-    if (argc != 2) {
+    char *arg = "C:/Users/SalaheddineNAMIR/Documents/GitHub/2023-2024-project-3-virtual-processor-team-1/Inter2/test.asm2";
+    if (arg == NULL) {
         printf("Error: Please pass in a file name\n");
         return 1;
     }
 
     // Open the file
-    FILE *file = fopen(argv[1], "r");
+    FILE *file = fopen(arg, "r");
     // Check if the file exists
     if (file == NULL) {
         printf("Error: File does not exist\n");
