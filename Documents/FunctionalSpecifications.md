@@ -950,6 +950,10 @@ In this example, the `GAD A1, R1` instruction retrieves the memory address of re
 | 0xA2       | Unknown function or subroutine  | Line number of the error + Code on the line + The function or subroutine you are trying to CALL does not exist.               |
 | 0xB0       | Unexpected character            | Line number of the error + Code on the line + An unexpected character was spotted on the line.                                |
 | 0xC0       | Syntax error                    | Line number of the error + Code on the line + Too many parameters have been added. Syntax should be : ARGUMENT PARAM1, PARAM2 |
+| 0xC1       | Missing return/end              | An END or RET instruction is missing from the program.                                                                        |
+| 0xC2       | Division by 0                   | Line number of the error + Code on the line + It is impossible to divide by 0.                                                |
+| 0xC3       | Float number                    | Line number of the error + Code on the line + The language does not take floats into account.                                 |
+| 0xD0       | Overflow error                  | The programme was halted due to an overflow.                                                                                  |
 
 ## IV. Test Cases
 
