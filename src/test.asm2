@@ -1,16 +1,16 @@
-MOV RA, #5
-DISP RA     ; expected 5
-MOV RB, #7   ; Test comment
+MOV R1, #5
+DISP R1     ; expected 5
+MOV R2, #7   ; Test comment
 
-DISP RB     ; expected 7
-ADD RA, RB
-DISP RA     ; expected 12
-SUB RB, #3
-DISP RB     ; 4
+DISP R2     ; expected 7
+ADD R1, R2
+DISP R1     ; expected 12
+SUB R2, #3
+DISP R2     ; 4
 
 DISP "Hello World, this is a test" ; expected Hello World
 
-; expected --> RA = 5, RB = 7, RA = 12, RB = 4
+; expected --> R1 = 5, R2 = 7, R1 = 12, R2 = 4
 
-    DISP "End of program"
+    DISP "End of progR1m"
     END
