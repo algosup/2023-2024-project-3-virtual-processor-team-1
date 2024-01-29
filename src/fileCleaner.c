@@ -29,31 +29,46 @@ void removeCommentsAndEmptyLines(char *str) {
     }
 }
 
-// Function to tokenize a line based on spaces and commas
-// This function tokenizes the input line and stores the tokens in a 2D array.
 void tokenizeLine(char *line, char cleanedLines[][3][1000], int *numLines) {
-    const char delimiters[] = ", ";
+    int inQuotedString = 0;
     int numTokens = 0;
+    char token[1000] = "";
 
-    // Tokenize the line only if it is not empty
-    if (line[0] == '\0' || line[0] == '\n' || line[0] == '\r') {
+    if (line[0] == '\0' || (line[0] == '\n' && line[1] == '\0')) {
+        // Skip empty lines
         return;
     }
 
-    // Tokenize the line and store each token in the 2D array
-    char *token = strtok(line, delimiters);
-    while (token != NULL && numTokens < 3) {
-        strcpy(cleanedLines[*numLines][numTokens], token);
-        numTokens++;
-        token = strtok(NULL, delimiters);
+    for (int i = 0; line[i] != '\0'; i++) {
+        if (line[i] == '"' && (i == 0 || line[i - 1] != '\\')) {
+            // Toggle inQuotedString when an unescaped double quote is encountered
+            inQuotedString = !inQuotedString;
+        } else if (isspace(line[i]) && !inQuotedString) {
+            // If space is encountered and not within quoted string, store token and reset
+            strcpy(cleanedLines[*numLines][numTokens], token);
+            memset(token, 0, sizeof(token));
+            numTokens++;
+        } else {
+            // Append character to the current token
+            strncat(token, &line[i], 1);
+        }
     }
 
-    // If fewer than 3 tokens are found, pad the remaining elements with empty strings
-    while (numTokens < 3) {
-        strcpy(cleanedLines[*numLines][numTokens], "");
-        numTokens++;
+    // Store the last token
+    strcpy(cleanedLines[*numLines][numTokens], token);
+
+    // If inQuotedString is still set, store the entire quoted string as a single element
+    if (inQuotedString) {
+        strcpy(cleanedLines[*numLines][0], "");
+        strcpy(cleanedLines[*numLines][1], "");
+        strcpy(cleanedLines[*numLines][2], "");
+        (*numLines)++;
+    } else {
+        // Increment numLines if there are tokens
+        if (numTokens > 0) {
+            (*numLines)++;
+        }
     }
-    (*numLines)++;
 }
 
 int main(int argc, char *argv[]) {

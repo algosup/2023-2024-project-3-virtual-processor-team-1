@@ -8,6 +8,6 @@ DISP RA     ; expected 12
 SUB RB, #3
 DISP RB     ; 4
 
-DISP "Hello World" ; expected Hello World
+DISP "Hello World, this is a test" ; expected Hello World
 
 ; expected --> RA = 5, RB = 7, RA = 12, RB = 4
