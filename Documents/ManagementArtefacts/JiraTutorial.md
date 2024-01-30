@@ -119,3 +119,8 @@ This tab gathers every management document made during the project.
 
 When you have an arrow present in front of a document, it means that there are linked documents. By clicking on the title, you can open the document. You also have the possibility to leave comments at a specific line.
 
+To get to know when appeared the modification of a document you can click on the "Page History" tab which going to lead you to the version page where you can see the dates and compare multiple versions of the document.
+
+![History tab](../Appendices/history.png)
+![Display of the version](../Appendices/version.png)
+
