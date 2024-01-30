@@ -93,10 +93,10 @@ void tokenizationFunction(char cleanedLines[][3][1000], int numLines){
                     printf("1 en C\n");
                     break;
                 case 2:
-                    printf("Coucou les musulmans, moi je mange la glace\n");
+                    printf("Zut\n");
                     break;
                 default:
-                    printf("ERROR PUTAIN");
+                    printf("Zut numero 2");
                     break;
                 }
         }
