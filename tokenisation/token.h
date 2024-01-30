@@ -57,12 +57,48 @@ typedef union data
     values_t values;
 } data_t;
 
+typedef enum typeofdata
+{
+    INSTRUCTION,
+    REGISTER,
+    ADDRESS_REGISTER,
+    VALUE
+
+} typeofdata_t;
+
 typedef struct token
 {
-    data_t type; // register, operator, address register, value
-    data_t parameter; // parameter of the token (register, operator, address register, value)
+    typeofdata_t type; // register, operator, address register, value
+    typeofdata_t parameter; // parameter of the token (register, operator, address register, value)
     int row; // row number 
     int column; // column number
 
 }token_t;
 
+int column = 0;
+int row = 0;
+
+void getEnum(int column, int row){      // This function permitte to find the type of instruction
+    
+}
+
+void tokenizationFunction(char cleanedLines[][3][1000], int numLines){
+    for(int i = 0; i < numLines; i++){
+        for(int c = 0; c < 3; c++){
+            switch(c){
+                case 0:
+                    getEnum(c, i);
+                    break;
+                case 1:
+                    printf("1 en C\n");
+                    break;
+                case 2:
+                    printf("Coucou les musulmans, moi je mange la glace\n");
+                    break;
+                default:
+                    printf("ERROR PUTAIN");
+                    break;
+                }
+        }
+    }
+}

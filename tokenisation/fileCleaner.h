@@ -56,7 +56,7 @@ void removeTrailingComma(char *token) {
     }
 }
 
-void splitLine(char *line, char cleanedLines[][3][1000], int *numLines) {
+void splitLine(char *lenghtLine, char cleanedLines[][3][1000], int *numLines) {
 
     /*
     Tokenizes a line. This function is called after the line has been
@@ -71,25 +71,25 @@ void splitLine(char *line, char cleanedLines[][3][1000], int *numLines) {
     char token[1000] = "";
 
     int i = 0;
-    while (line[i] == ' ' || line[i] == '\t') {
+    while (lenghtLine[i] == ' ' || lenghtLine[i] == '\t') {
         i++;
     }
 
-    if (line[i] == '\0' || (line[i] == '\n' && line[i + 1] == '\0')) {
+    if (lenghtLine[i] == '\0' || (lenghtLine[i] == '\n' && lenghtLine[i + 1] == '\0')) {
         // Skip empty lines
         return;
     }
 
-    for (; line[i] != '\0'; i++) {
-        if (line[i] == '"' && (i == 0 || line[i - 1] != '\\')) {
+    for (; lenghtLine[i] != '\0'; i++) {
+        if (lenghtLine[i] == '"' && (i == 0 || lenghtLine[i - 1] != '\\')) {
             inQuotedString = !inQuotedString;
-        } else if (isspace(line[i]) && !inQuotedString) {
+        } else if (isspace(lenghtLine[i]) && !inQuotedString) {
             removeTrailingComma(token);
             strcpy(cleanedLines[*numLines][numTokens], token);
             memset(token, 0, sizeof(token));
             numTokens++;
         } else {
-            strncat(token, &line[i], 1);
+            strncat(token, &lenghtLine[i], 1);
         }
     }
 

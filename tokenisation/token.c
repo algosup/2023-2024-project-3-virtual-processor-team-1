@@ -23,15 +23,15 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    char line[1000];
+    char lenghtLine[1000];
     char cleanedLines[100][3][1000];
     int numLines = 0;
 
     // Read the file line by line, clean each line, and tokenize each line
     int i = 0;
-    while (fgets(line, sizeof(line), file)) {
-        removeCommentsAndEmptyLines(line);
-        splitLine(line, cleanedLines, &numLines);
+    while (fgets(lenghtLine, sizeof(lenghtLine), file)) {
+        removeCommentsAndEmptyLines(lenghtLine);
+        splitLine(lenghtLine, cleanedLines, &numLines);
     }
 
     fclose(file);
@@ -41,5 +41,6 @@ int main(int argc, char *argv[]) {
         printf("%s \t %s \t %s \n", cleanedLines[i][0], cleanedLines[i][1], cleanedLines[i][2]);
     }
 
+    tokenizationFunction(cleanedLines, numLines);
     return 0;
 }
