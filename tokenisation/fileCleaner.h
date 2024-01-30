@@ -56,7 +56,7 @@ void removeTrailingComma(char *token) {
     }
 }
 
-void tokenizeLine(char *line, char cleanedLines[][3][1000], int *numLines) {
+void splitLine(char *line, char cleanedLines[][3][1000], int *numLines) {
 
     /*
     Tokenizes a line. This function is called after the line has been

@@ -20,7 +20,7 @@ typedef enum instruction
     XOR,
     NOT,
     GAD,
-    DISP,
+    DISP
 } instruction_t;
 
 typedef enum registers
@@ -65,6 +65,3 @@ typedef struct token
     data_t column; // column number
 
 }token_t;
-
-
-

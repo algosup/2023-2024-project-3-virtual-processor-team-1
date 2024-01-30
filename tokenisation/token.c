@@ -28,16 +28,17 @@ int main(int argc, char *argv[]) {
     int numLines = 0;
 
     // Read the file line by line, clean each line, and tokenize each line
+    int i = 0;
     while (fgets(line, sizeof(line), file)) {
         removeCommentsAndEmptyLines(line);
-        tokenizeLine(line, cleanedLines, &numLines);
+        splitLine(line, cleanedLines, &numLines);
     }
 
     fclose(file);
 
     // Print out the cleaned lines
     for (int i = 0; i < numLines; i++) {
-        printf("{\"%s\", \"%s\", \"%s\"}\n",
+        printf("%s %s %s\n",
                 cleanedLines[i][0],
                 cleanedLines[i][1],
                 cleanedLines[i][2]);
