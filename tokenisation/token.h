@@ -49,15 +49,6 @@ typedef enum values
 
 } values_t;
 
-typedef struct token
-{
-    data_t type; // register, operator, address register, value
-    data_t value; // value of the token (register, operator, address register, value)
-    data_t line; // line number 
-    data_t column; // column number
-
-}token_t;
-
 typedef union data
 {
     instruction_t instruction;
@@ -65,6 +56,15 @@ typedef union data
     address_registers_t address_registers;
     values_t values;
 } data_t;
+
+typedef struct token
+{
+    data_t type; // register, operator, address register, value
+    data_t parameter; // parameter of the token (register, operator, address register, value)
+    data_t line; // line number 
+    data_t column; // column number
+
+}token_t;
 
 
 
