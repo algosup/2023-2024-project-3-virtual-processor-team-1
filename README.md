@@ -30,7 +30,7 @@ C standard libraries.
 
 ## Management
 The management artifacts of this project are available on our [Jira project](https://virtual-processor.atlassian.net/jira/core/projects/VPT1/summary).
-Here is a [Tutorial](/Documents/JiraTutorial.md) to help you to find specific documents.
+Here is a [Tutorial](/Documents/ManagementArtefacts/JiraTutorial.md) to help you to find specific documents.
 
 ## Installation
 
