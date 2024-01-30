@@ -38,10 +38,7 @@ int main(int argc, char *argv[]) {
 
     // Print out the cleaned lines
     for (int i = 0; i < numLines; i++) {
-        printf("%s %s %s\n",
-                cleanedLines[i][0],
-                cleanedLines[i][1],
-                cleanedLines[i][2]);
+        printf("%s \t %s \t %s \n", cleanedLines[i][0], cleanedLines[i][1], cleanedLines[i][2]);
     }
 
     return 0;

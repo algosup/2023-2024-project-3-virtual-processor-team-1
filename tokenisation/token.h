@@ -61,7 +61,8 @@ typedef struct token
 {
     data_t type; // register, operator, address register, value
     data_t parameter; // parameter of the token (register, operator, address register, value)
-    int line; // line number 
+    int row; // row number 
     int column; // column number
 
 }token_t;
+
