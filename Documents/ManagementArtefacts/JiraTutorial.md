@@ -40,7 +40,7 @@ One notable advantage is Jira's free version, which presents a cost-effective so
 
 # 1 - Creation of an account
 
-![Sign up](./Appendices/sign.png)
+![Sign up](../Appendices/sign.png)
 
 [Atlassian - Sign up link](https://id.atlassian.com/signup)
 
@@ -68,13 +68,13 @@ After, you should receive an email that informs you of the end of the process.
 
 [Virtual Processor - Team 1](https://virtual-processor.atlassian.net/jira/core/projects/VPT1/summary)
 
-![Summary](./Appendices/summary.png)
+![Summary](../Appendices/summary.png)
 
 Now that you are part of the Jira project, you have access to multiple tabs that are used to organise and track the progress of the project.
 
 There are 3 main tabs that we would like you to take into account.
 
-![Tabs](./Appendices/tabs.png)
+![Tabs](../Appendices/tabs.png)
 
 ## List / Board
 
@@ -82,7 +82,7 @@ There are 3 main tabs that we would like you to take into account.
 
 These two tabs have the same information but not the same format. This allows people to choose their favourite or easiest way to see the information.
 
-![List](./Appendices/list.png)![Board](./Appendices/board.png)
+![List](../Appendices/list.png)![Board](../Appendices/board.png)
 
 In these tabs, you can find the tasks that have been assigned to the team. For each task you have:
 
@@ -103,7 +103,7 @@ There are two types of tasks, the main and the sub-tasks. When a task has an arr
 
 [Timeline link](https://virtual-processor.atlassian.net/jira/core/projects/VPT1/timeline?atlOrigin=eyJpIjoiMWQ4NWRlZmNmMTQwNGI5N2E5YjcxNTU2NTZmYzI5ZmUiLCJwIjoiaiJ9)
 
-![Timeline](./Appendices/timeline.png)
+![Timeline](../Appendices/timeline.png)
 
 In this tab, you can find a GANTT chart that shows the tasks in the time with all their dependencies.
 
@@ -115,6 +115,7 @@ In this tab, you can see the tasks by weeks, months or quarters.
 
 This tab gathers every management document made during the project.
 
-![Confluence](./Appendices/pages.png)
+![Confluence](../Appendices/pages.png)
 
 When you have an arrow present in front of a document, it means that there are linked documents. By clicking on the title, you can open the document. You also have the possibility to leave comments at a specific line.
+
