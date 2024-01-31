@@ -26,12 +26,16 @@
     - [Key functions, operations, and algorithms](#key-functions-operations-and-algorithms)
     - [Algorithms](#algorithms)
     - [File Cleaning and Reading](#file-cleaning-and-reading)
-    - [Lexical analysis (Tokenization)](#lexical-analysis-tokenization)
+    - [Lexical analysis (Tokenisation)](#lexical-analysis-tokenisation)
     - [Syntax analysis (Parsing)](#syntax-analysis-parsing)
+      - [Errors handling](#errors-handling)
     - [Semantic analysis](#semantic-analysis)
     - [Code generation](#code-generation)
       - [Instruction format](#instruction-format)
     - [Virtual processor](#virtual-processor)
+      - [Internal Components of a Computer](#internal-components-of-a-computer)
+      - [Memory](#memory)
+      - [Registers](#registers)
   - [VIII. Syntax and Structure](#viii-syntax-and-structure)
     - [Folder structure](#folder-structure)
     - [Program file structure](#program-file-structure)
@@ -70,7 +74,7 @@ Secondary audiences
 
 ## IV. Requirements 
 
-1. Create a minimal assembly language (This requirement is fully described in the [functional specifications](./FunctionalSpecifications.md.md))
+1. Create a minimal assembly language (This requirement is fully described in the [functional specifications](./FunctionalSpecifications.md))
    
 2. Develop a C program that reads assembly code from a file, checks for semantic correctness, and executes it on the virtual processor.
    
@@ -102,9 +106,9 @@ The project is divided into two parts:
 2. The second part is the interpreter. The purpose of the interpreter is to read the assembly code from a file, check for semantic correctness, transform it into machine code and execute it on the virtual processor. 
 
    The interpreter will have the following components:
-   - A lexical analyzer
+   - A lexical analyser
    - A parser
-   - A semantic analyzer
+   - A semantic analyser
    - A code generator
 
 
@@ -161,11 +165,11 @@ The output data will be the result of the execution of the assembly program or t
 
 Some of the key operations that the software will perform and that need to be represented via functions are: 
 
-- **Lexical Analysis (Tokenization):**
+- **Lexical Analysis (Tokenisation):**
    - Breaking down assembly code into tokens (instructions, registers, operands)
    - Removing whitespace and comments
 - **Syntax Analysis (Parsing):**
-   - Analyzing tokens and verifying adherence to the assembly language grammar
+   - Analysing tokens and verifying adherence to the assembly language grammar
    - Constructing an abstract syntax tree (AST) representing code structure
 - **Semantic Analysis:**
    - Checking for the correctness of the assembly code
@@ -192,7 +196,7 @@ Cleaning the file involves removing comments and whitespaces to facilitate easie
    - This dynamic allocation ensures flexibility, accommodating assembly programs of varying lengths without predefined size limitations.
 
 ```
-// Initialize variables
+// Initialise variables
 // Initial assumption of a reasonable maximum number of lines
 
 // Check for memory allocation success
@@ -218,7 +222,7 @@ Diagram of the cleaning function
 
 **Note:**
 - The initial assumption of the maximum number of lines provides a starting point for memory allocation.
-- Dynamic resizing after reading the file ensures efficient memory utilization based on the actual number of lines.
+- Dynamic resizing after reading the file ensures efficient memory utilisation based on the actual number of lines.
 - The program will read the file line by line and will check either if it's a carriage return or a line feed and remove it. Then, the program will remove the comments by checking if a ";" is present in the line and if it is, it will remove everything after it. Finally, this new file will be stored in a 2D array and will be used for the next step.
 
 
@@ -235,7 +239,7 @@ Diagram of the cleaning function
 **Output data**
 
    ```
-   arrayFile[3][10]= {
+   arrayFile[3][nbrLines]= {
       {"MOV", "R1", "#1"},
       {"MOV", "R2", "#2"},
       {"ADD", "R3", "R1"}
@@ -245,18 +249,18 @@ Diagram of the cleaning function
 
  
 
-### Lexical analysis (Tokenization)
+### Lexical analysis (Tokenisation)
 
-Tokenization plays a crucial role by breaking down the assembly code into manageable units called tokens. Think of tokens as building blocks or Lego pieces that structure the code. Each token represents a specific element, like an instruction, register, or operand.
+Tokenisation plays a crucial role by breaking down the assembly code into manageable units called tokens. Think of tokens as building blocks or Lego pieces that structure the code. Each token represents a specific element, like an instruction, register, or operand.
 
-**Organization:**
-   - Tokens help organize the code into meaningful parts, making it easier for the computer to understand and process
+**Organisation:**
+   - Tokens help organise the code into meaningful parts, making it easier for the computer to understand and process
 
 **Simplification:**
    - Similar to spaces in a sentence, tokens simplify the code, aiding in the analysis of its structure
 
 **Error Detection:**
-   - Tokenization aids in spotting errors early on. By breaking the code into tokens, we can quickly identify where issues might arise
+   - Tokenisation aids in spotting errors early on. By breaking the code into tokens, we can quickly identify where issues might arise
 
 **Efficient Parsing:**
    - Parsing the code becomes more efficient with tokens, acting as a clear guide for decoding the language
@@ -264,14 +268,14 @@ Tokenization plays a crucial role by breaking down the assembly code into manage
 eg. 
 
 ```
-// Non-Tokenized Assembly Code:
+// Non-Tokenised Assembly Code:
    {"MOV", "R1", "#1"},
    {"MOV", "R2", "#2"},
    {"ADD", "R3", "R1"}
 ```
 
 ```
-// Tokenized Assembly Code
+// Tokenised Assembly Code
    {Token("instruction", "MOV", 1, 1), Token("register", "R1", 1, 2), Token("immediate", "#1", 1, 3)},
    {Token("instruction", "MOV", 2, 1), Token("register", "R2", 2, 2), Token("immediate", "#2", 2, 3)},
    {Token("instruction", "ADD", 3, 1), Token("register", "R3", 3, 2), Token("register", "R1", 3, 3)}
@@ -281,7 +285,7 @@ eg.
 
 **Note:**
 
-The process for the tokenization is the following:
+The process for the tokenisation is the following:
 
    - The program will read the array line by line 
    - Then it will check every word of the line and it will create a token with the type right type  and value according to the word
@@ -294,7 +298,7 @@ Each token will be represented by a struct with the following attributes:
    - **Line:** The line where the token is located
    - **Column:** The column where the token is located
 
-The tokenization will be the first filter to check if the assembly code is correct. In this step the program will be able to handle the most obvious errors like:
+The tokenisation will be the first filter to check if the assembly code is correct. In this step the program will be able to handle the most obvious errors like:
    - Incorrect instructions
    - Incorrect registers
    - Incorrect operands
@@ -318,7 +322,73 @@ The parser acts like a language detective. It takes the tokens, which are like t
 In a nutshell, the parser is like a language teacher and an instruction manual combined. It ensures the computer understands the code's structure, checks for mistakes, and creates a clear plan for smooth execution. In our project, having a reliable parser is key to making the virtual processor and interpreter work seamlessly.
 
 ```
-// Tokenized assembly code
+<ADD> ::= <register> "," <register> | <register> "," <immediate> 
+<MOV> ::= <register> "," <register> | <register> "," <immediate> | <register> "," <adress>
+<AND> ::= <register> "," <register> | <register> "," <immediate>
+<XOR> ::= <register> "," <register> | <register> "," <immediate>
+<OR>  ::= <register> "," <register> | <register> "," <immediate>
+<NOT> ::= <register> "," <register> | <register> "," <immediate>
+<GAD> ::= <register> "," <register> | <register> "," <immediate>
+<SUB> ::= <register> "," <register> | <register> "," <immediate>
+<MUL> ::= <register> "," <register> | <register> "," <immediate>
+<DIV> ::= <register> "," <register> | <register> "," <immediate>
+<CMP> ::= <register> "," <register> | <register> "," <immediate>
+<JMP> ::= <label>
+<JE>  ::= <label>
+<JNE> ::= <label>
+<JG>  ::= <label>
+<JGE> ::= <label>
+<JL>  ::= <label>
+<JLE> ::= <label>
+<CALL>::= <label>
+<RET> ::=
+<END> ::=
+<label> ::= "." <identifier>
+<identifier> ::= <letter> | <identifier> <letter> | <identifier> <digit>
+<letter> ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
+<digit> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+```
+
+Above is the grammar rule for the assembly language. The parser will check if the assembly code follows the grammar rules. If there's a mistake, it will raise an error. 
+
+#### Errors handling
+
+The parser will be able to handle the following errors:
+
+**Unexpected Token:**
+   - **Error Message:** "Unexpected token '{token}' found at line {print(line)}."
+   - **Description:** This error occurs when the parser encounters a token that is unexpected based on the current context. The error message specifies the token and the line where the issue is located.
+  
+**Unexpected End of File:**
+   - **Error Message:** "Unexpected end of file. Expected more tokens to complete the syntax."
+   - **Description:** This error is raised when the parser reaches the end of the file but expects additional tokens to complete a syntactic structure. The message indicates an unexpected termination.
+
+**Mismatched Types:**
+   - **Error Message:** "Type mismatch: Expected {expected_type}, but found {actual_type} at line {line}, column {column}."
+   - **Description:** This error occurs when there is a mismatch between expected and actual data types. The message specifies the expected and actual types, along with the error location.
+
+**Invalid Syntax:**
+   - **Error Message:** "Invalid syntax at line {line}, column {column}. Unable to parse the provided code."
+   - **Description:** This generic error indicates that the parser encountered a syntax that doesn't conform to the language's grammar rules. The message communicates the location of the syntax error.
+
+**Redundant Tokens:**
+   - **Error Message:** "Redundant tokens found at line {line}, column {column}. Remove or correct the extra tokens."
+   - **Description:** This error signals the presence of extra or redundant tokens in the code. The message advises removing or correcting the surplus tokens at the specified location.
+
+**Undefined Variable or Identifier:**
+   - **Error Message:** "Undefined {variable/identifier} '{name}' at line {line}, column {column}."
+   - **Description:** When the parser encounters an undeclared variable or identifier, this error is raised. The message indicates the type (variable or identifier) and the name of the undefined entity.
+
+**Unexpected Expression:**
+   - **Error Message:** "Unexpected expression found at line {line}, column {column}. Expressions are not allowed in this context."
+   - **Description:** This error occurs when an expression is encountered in a context where expressions are not allowed. The message informs about the unexpected expression and its location.
+
+Implementing a comprehensive set of error messages ensures that developers receive clear and actionable feedback during the debugging process, aiding in the identification and resolution of issues in the code.
+
+eg.
+
+```
+// Tokenised assembly code
 [(instruction, MOV), (register, R1), (immediate, #1)]
 [(instruction, MOV), (register, R2), (immediate, #2)]
 [(instruction, ADD), (register, R3), (register, R1)]
@@ -340,27 +410,24 @@ ADD(instruction)
 
 
 ### Semantic analysis
+Semantic analysis ensures the computer comprehends the intended meaning behind assembly code, going beyond mere rule-following.
 
-Semantic analysis is like having a wise friend who not only understands what you say but also ensures you're making sense. It helps the computer not just follow the rules but also understand the meaning behind the assembly code.
+**Meaningful Understanding:**
+   - It ensures the computer grasps the intended meaning of the code, aligning everyone on the same page
 
-1. **Meaningful Understanding:**
-   - Semantic analysis ensures that the computer doesn't just mechanically process code; it grasps the intended meaning. It's like making sure everyone is on the same page.
+**Correct Usage of Instructions:**
+   - Like a wise friend correcting language misuse, semantic analysis checks for correct assembly instruction usage
 
-2. **Correct Usage of Instructions:**
-   - Just as our wise friend corrects us if we use a word in the wrong context, semantic analysis checks if we're using assembly instructions correctly. It ensures the code makes logical sense.
+**Operands Compatibility:**
+   - Similar to preventing illogical comparisons, semantic analysis ensures compatible operands, avoiding confusion for the computer
 
-3. **Operands Compatibility:**
-   - It's like our friend making sure we don't compare apples to oranges. Semantic analysis checks if the operands used in instructions are compatible, avoiding confusion for the computer.
+**Preventing Confusion:**
+   - By understanding the code's meaning, semantic analysis prevents confusion, ensuring correct execution
 
-4. **Preventing Confusion:**
-   - By understanding the meaning of the code, semantic analysis prevents confusion. It ensures the computer doesn't get lost in translation and executes the instructions correctly.
-
-
-
-In the case of semantically incorrect assembly programs, the program will:
-    - Provide detailed error messages pinpointing the nature and location of the semantic errors.
-    - Halt the execution of the assembly program to prevent undefined behavior.
-    - Avoid taking corrective actions that may compromise the integrity of subsequent instructions.
+For semantically incorrect assembly programs, the program will:
+   - Provide detailed error messages specifying the nature and location of semantic errors.
+   - Halt program execution to prevent undefined behavior.
+   - Avoid compromising subsequent instructions' integrity with corrective actions.
 
 
 ### Code generation
@@ -449,11 +516,23 @@ Each assembly language instruction is mapped to corresponding C functions or ope
 
 ### Virtual processor
 
+In this section, we're constructing a virtual machine (VM) with its own instruction set to serve as the target platform for our interpreter's code generation phase. Similar to the JVM and bytecode concept, but in a much simpler form.
 
+#### Internal Components of a Computer
 
+We focus on three main components: CPU, registers, and memory. Instructions, represented as binary data, reside in memory. The CPU retrieves and executes instructions sequentially, and the machine's running state is stored in registers.
 
+#### Memory
+- Memory stores data, including code and other information.
+- Segments: `text` (code), `data` (initialized data), `bss` (uninitialized data), `stack` (function call states), `heap` (dynamic memory allocation).
+- For simplicity, we merge `data` and `bss`, using `data` for string literals.
 
-
+#### Registers
+- `PC` (Program Counter): Stores the memory address of the next instruction.
+- `SP` (Stack Pointer): Points to the top of the stack, used for function calls.
+- `BP` (Base Pointer): Points to elements on the stack, aiding function calls.
+- `AX`: General register storing instruction results.
+- `cycle`: Virtual machine cycle count.
 
 
 ## VIII. Syntax and Structure
@@ -463,23 +542,23 @@ Each assembly language instruction is mapped to corresponding C functions or ope
 ```
 📦2023-2024-project-3-virtual-processor
 └── 📁.github
-    └── 📁ISSUE_TEMPLATE
-        └── 📄 bug_report.yml
+|    └── 📁ISSUE_TEMPLATE
+|    |   └── 📄 bug_report.yml
 └── 📁Documents
-    └── 📁Appendices
-    └── 📝 ProjectCharter.md
-    └── 📝 TechnicalSpecifications.md
-    └── 📝 FunctionalSpecifications.md
-    └── 📝 TestPlan.md
-    └── 📁QaArtefacts 
-    └── 📁ManagementArtefacts 
+|    └── 📁Appendices
+|    └── 📝 ProjectCharter.md
+|    └── 📝 TechnicalSpecifications.md
+|    └── 📝 FunctionalSpecifications.md
+|    └── 📝 TestPlan.md
+|    └── 📁QaArtefacts 
+|    └── 📁ManagementArtefacts 
 └── 📁Src
-    └── 📄 vm.h
-    └── 📄 lexical.h
-    └── 📄 parser.h
-    └── 📄 global.h
-    └── 📄 assemblyCode.asm2
-    └── 📄 interpreter.c
+|    └── 📄 vm.h
+|    └── 📄 lexical.h
+|    └── 📄 parser.h
+|    └── 📄 global.h
+|    └── 📄 assemblyCode.asm2
+|    └── 📄 interpreter.c
 └── 📄 .gitignore
 └── 📄 LICENSE
 └── 📝 README.MD 
@@ -491,7 +570,7 @@ Each assembly language instruction is mapped to corresponding C functions or ope
 
 **parser.h** - Header file for the parser
 
-**global.h** - Header file for the global variables and centralized point for all the header files import
+**global.h** - Header file for the global variables and centralised point for all the header files import
 
 **assemblyCode.asm2** - Assembly code file
 
@@ -555,7 +634,7 @@ Each function should be preceded by a block comment prologue that gives a short 
 The following are the coding design principles: 
 
  - No use of third-party libraries
- - Emphasize improved algorithmic complexity over micro-optimization 
+ - Emphasise improved algorithmic complexity over micro-optimisation 
  - Use unit tests to ensure correctness during development
 
 
@@ -568,7 +647,7 @@ The following are the coding design principles:
 
 ## XI. Challenges
 
-- Developing a robust lexer and parser for precise assembly code tokenization, and managing diverse language constructs, poses a significant challenge
+- Developing a robust lexer and parser for precise assembly code tokenisation, and managing diverse language constructs, poses a significant challenge
 - Enforcing correct usage of assembly instructions and operands through semantic analysis requires careful consideration to detect and prevent potential runtime errors
 - Implementing parsing by string comparison is relatively straightforward; the true challenge lies in the conversion to machine code
 - Handling labels and function calls within the assembly code introduces an additional challenge, requiring effective management of addresses, offsets, and the intricacies of control flow
