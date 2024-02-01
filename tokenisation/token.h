@@ -84,92 +84,92 @@ int row = 0;
 void getEnum(char cleanedLines[1000], token_t *token) {
     // Instructions
     if (strcmp(cleanedLines, "MOV") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "MOV");
     } else if (strcmp(cleanedLines, "ADD") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "ADD");
     } else if (strcmp(cleanedLines, "SUB") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "SUB");
     } else if (strcmp(cleanedLines, "MUL") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "MUL");
     } else if (strcmp(cleanedLines, "DIV") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "DIV");
     } else if (strcmp(cleanedLines, "JMP") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "JMP");
     } else if (strcmp(cleanedLines, "JE") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "JE");
     } else if (strcmp(cleanedLines, "JNE") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "JNE");
     } else if (strcmp(cleanedLines, "JG") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "JG");
     } else if (strcmp(cleanedLines, "JGE") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "JGE");
     } else if (strcmp(cleanedLines, "JL") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "JL");
     } else if (strcmp(cleanedLines, "JLE") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "JLE");
     } else if (strcmp(cleanedLines, "RET") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "RET");
     } else if (strcmp(cleanedLines, "CMP") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "CMP");
     } else if (strcmp(cleanedLines, "CALL") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "CALL");
     } else if (strcmp(cleanedLines, "AND") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "AND");
     } else if (strcmp(cleanedLines, "OR") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "OR");
     } else if (strcmp(cleanedLines, "XOR") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "XOR");
     } else if (strcmp(cleanedLines, "NOT") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "NOT");
     } else if (strcmp(cleanedLines, "GAD") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "GAD");
     } else if (strcmp(cleanedLines, "DISP") == 0) {
-        strcpy(token->type, "instruction");
+        strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "DISP");
-    } 
+    }
     else if (strcmp(cleanedLines, "R1") == 0) {
-        strcpy(token->type, "register");
+        strcpy(token->type, "REGISTER");
         strcpy(token->value, "R1");
     } else if (strcmp(cleanedLines, "R2") == 0) {
-        strcpy(token->type, "register");
+        strcpy(token->type, "REGISTER");
         strcpy(token->value, "R2");
     } else if (strcmp(cleanedLines, "R3") == 0) {
-        strcpy(token->type, "register");
+        strcpy(token->type, "REGISTER");
         strcpy(token->value, "R3");
     } else if (strcmp(cleanedLines, "R4") == 0) {
-        strcpy(token->type, "register");
+        strcpy(token->type, "REGISTER");
         strcpy(token->value, "R4");
     } else if (strcmp(cleanedLines, "A1") == 0) {
-        strcpy(token->type, "address_register");
+        strcpy(token->type, "ADDRESS_REGISTER");
         strcpy(token->value, "A1");
     } else if (strcmp(cleanedLines, "A2") == 0) {
-        strcpy(token->type, "address_register");
+        strcpy(token->type, "ADDRESS_REGISTER");
         strcpy(token->value, "A2");
     } else if (strcmp(cleanedLines, "A3") == 0) {
-        strcpy(token->type, "address_register");
+        strcpy(token->type, "ADDRESS_REGISTER");
         strcpy(token->value, "A3");
     } else if (strcmp(cleanedLines, "A4") == 0) {
-        strcpy(token->type, "address_register");
+        strcpy(token->type, "ADDRESS_REGISTER");
         strcpy(token->value, "A4");
     } else if (cleanedLines[0] == '-') {
         strcpy(token->type, "NE");
@@ -179,14 +179,14 @@ void getEnum(char cleanedLines[1000], token_t *token) {
         strcpy(token->value, cleanedLines);
     }
     else if (cleanedLines[0] == '#') {
-        strcpy(token->type, "immediate");
+        strcpy(token->type, "IMMEDIATE");
         strcpy(token->value, cleanedLines);
     }
 
     // Default case if none matched
     else {
-        strcpy(token->type, "void");
-        strcpy(token->value, "void");
+        strcpy(token->type, "VOID");
+        strcpy(token->value, "VOID");
     }
 }
 
