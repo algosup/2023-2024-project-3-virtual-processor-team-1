@@ -291,15 +291,27 @@ The process for the tokenisation is the following:
 
 Each token will be represented by a struct with the following attributes:
 
-   - **Type:** The type of the token (instruction, register, operand, etc...)
+   - **Type:** The type of the token (instruction, register, operand, etc...) 
    - **Value:** The value of the token (MOV, R1, #1, etc...)
    - **Line:** The line where the token is located
    - **Column:** The column where the token is located
+  
+```mermaid
+classDiagram
+class Token {
+  +TokenType type
+  +TokenValue value
+  +int line
+  +int column
+}
+```
+
 
 The tokenisation will be the first filter to check if the assembly code is correct. In this step the program will be able to handle the most obvious errors like:
    - Incorrect instructions
    - Incorrect registers
    - Incorrect operands
+
 
 ### Syntax analysis (Parsing)
 
@@ -328,8 +340,28 @@ The process of the parsing is the following:
 
 - Initialize a parsing pointer to the beginning of the token array.
   Set up data structures to represent the abstract syntax tree (AST) 
+  ```mermaid
+  classDiagram
+  class ASTNode {
+    +TokenType type
+    +TokenValue value
+    +ASTNode[] children
+    +int numChildren
+  }
 
-- Implement parsing rules based on those: 
+  class ASTBuilder {
+    +initializeAST(): ASTNode
+    +createASTNode(type: TokenType, value: TokenValue): ASTNode
+    +addChild(parent: ASTNode, child: ASTNode): void
+    +cleanupAST(root: ASTNode): void
+  }
+
+   ASTBuilder <|-- ASTNode
+
+  ```
+
+
+- Implement parsing rules based on those Backus–Naur Form (BNF) rules: 
 ```
 <MOV> ::= <register> "," <register> | <register> "," <immediate> | <register> "," <adress>
 <ADD> ::= <register> "," <register> | <register> "," <immediate> 
@@ -361,7 +393,7 @@ These rules guide the parser in constructing the AST.
 
 - Employ a top-down parsing approach, where the parsing process starts from the highest-level constructs and gradually descends to lower-level details. This aligns with the hierarchical nature of an assembly language. 
 
-- The strategy typically follows a leftmost derivation, meaning that when multiple choices are available, the leftmost non-terminal is chosen.
+- The strategy follows an LL parsing algorithm, meaning that when multiple choices are available, the leftmost non-terminal is chosen.
 
 - When an error is detected, the parser should provide error messages, including the printing of the line and the nature of the error. The error handling will be described in detail in the next section.
 
@@ -388,7 +420,7 @@ graph TD
 The parser will be able to handle the following errors:
 
 **Unexpected Token:**
-   - **Error Message:** "Unexpected token '{token}' found at line {print(line)}."
+   - **Error Message:** "Unexpected token '{token}' found at line {line}."
    - **Description:** This error occurs when the parser encounters a token that is unexpected based on the current context. The error message specifies the token and the line where the issue is located.
   
 **Unexpected End of File:**
@@ -396,27 +428,27 @@ The parser will be able to handle the following errors:
    - **Description:** This error is raised when the parser reaches the end of the file but expects additional tokens to complete a syntactic structure. The message indicates an unexpected termination.
 
 **Mismatched Types:**
-   - **Error Message:** "Type mismatch: Expected {expected_type}, but found {actual_type} at line {print(line)}."
+   - **Error Message:** "Type mismatch: Expected {expected_type}, but found {actual_type} at line {line}."
    - **Description:** This error occurs when there is a mismatch between expected and actual data types. The message specifies the expected and actual types, along with the error location.
 
 **Invalid Syntax:**
-   - **Error Message:** "Invalid syntax at line {print(line)}. Unable to parse the provided code."
+   - **Error Message:** "Invalid syntax at line {line}. Unable to parse the provided code."
    - **Description:** This generic error indicates that the parser encountered a syntax that doesn't conform to the language's grammar rules. The message communicates the location of the syntax error.
 
 **Redundant Tokens:**
-   - **Error Message:** "Redundant tokens found at line {print(line)}. Remove or correct the extra tokens."
+   - **Error Message:** "Redundant tokens found at line {line}. Remove or correct the extra tokens."
    - **Description:** This error signals the presence of extra or redundant tokens in the code. The message advises removing or correcting the surplus tokens at the specified location.
 
 **Undefined label:**
-   - **Error Message:** "Undefined {label} '{name}' at line {print(line)}."
+   - **Error Message:** "Undefined {label} '{name}' at line {line}."
    - **Description:** When the parser encounters an undeclared label, this error is raised. The message indicates the type (variable or identifier) and the name of the undefined entity.
 
 **Duplicate label:**
-   - **Error Message:** "Duplicate {label} '{name}' at line {print(line)}."
+   - **Error Message:** "Duplicate {label} '{name}' at line {line}."
    - **Description:** This error occurs when the parser encounters a duplicate label. The message specifies the type (variable or identifier) and the name of the duplicate entity.
 
 **Invalid Operand:**
-   - **Error Message:** "Invalid operand '{operand}' at line {print(line)}."
+   - **Error Message:** "Invalid operand '{operand}' at line {line}."
    - **Description:** This error indicates that the parser encountered an invalid operand. The message specifies the operand and the location of the error.
 
 ---
@@ -690,7 +722,17 @@ The following are the coding design principles:
 - **breadth-first approach** -  A breadth-first approach is a graph traversal method that starts at the root node and visits all the neighboring nodes. Then for each of those nearest nodes, it visits their unexplored neighbor nodes, and so on, until it finds the goal.
 -  **Virtual processor** - A vCPU is a processor simulated within a virtual machine, allowing the execution of one processor thread. These vCPUs are allocated from the physical CPU resources of the host machine.
 -  **Lexical analysis** - lexical analysis is the process of converting a sequence of characters (such as in a computer program or web page) into a sequence of tokens (strings with an identified "meaning").
+-  **LL Parsing Algorithm** -LL parsing is a top-down parsing method that processes input from left to right, aiming to construct a parse tree through leftmost derivations. It utilizes a predictive parsing table, often in LL(1) parsers, to make parsing decisions based on the leftmost non-terminal and a limited number of lookahead symbols.
+- **BNF** - A BNF specification is a set of derivation rules, written as:
+  
+   ```<symbol> ::= __expression__```
 
+   where:
 
+   ```<symbol>``` is a nonterminal variable that is always enclosed between the pair <>.
+
+   ::= means that the symbol on the left must be replaced with the expression on the right.
+
+   ```__expression__``` consists of one or more sequences of either terminal or nonterminal symbols where each sequence is separated by a vertical bar "|" indicating a choice, the whole being a possible substitution for the symbol on the left.
 
 
