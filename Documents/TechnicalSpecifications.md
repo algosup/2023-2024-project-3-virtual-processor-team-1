@@ -345,7 +345,8 @@ The process of the parsing is the following:
   class ASTNode {
     +TokenType type
     +TokenValue value
-    +ASTNode[] children
+    +ASTNode* childrenRight
+    +ASTNode* childrenLeft
     +int numChildren
   }
 
@@ -402,6 +403,7 @@ These rules guide the parser in constructing the AST.
 
 - Once the entire token sequence is successfully parsed and the AST is constructed, the parsing phase concludes. The AST becomes the basis for further processing.
 
+eg.
 
 ```mermaid
 graph TD
@@ -412,6 +414,25 @@ graph TD
   A -->|Instruction| C1[Add]
   C1 -->|Operand| C2[Register 'R2']
   C1 -->|Operand| C3[Register 'R1']
+```
+
+---
+eg.
+
+```mermaid
+graph TD
+  A[AST]
+  A -->|Instruction| B1[MOV]
+  B1 -->|Operand| B2[Register 'R1']
+  B1 -->|Operand| B3[Immediate '#10']
+  A -->|Instruction| C1[.loop]
+  C1 -->|Instruction| C2[Add]
+   C2 -->|Operand| C3[Register 'R1']
+   C2 -->|Operand| C5[immediate '#2']
+  C1 -->|Instruction| C4[MOV]
+   C4 -->|Operand| C7[Register 'R3']
+   C4 -->|Operand| C8[Register 'R1']
+  C1 -->|Instruction| C6[JMP .loop]
 ```
 
 
