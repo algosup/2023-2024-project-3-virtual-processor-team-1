@@ -1,7 +1,6 @@
 
 **Technical Specifications - 2023-2024-project-3-virtual-processor**
 
-*Document Version: 1.0*
 
 ---
 
@@ -70,7 +69,6 @@ Secondary audiences
 
  The goal of the project is to create a virtual processor and an interpreter for running assembly code on that processor.
  
-
 
 ## IV. Requirements 
 
@@ -276,8 +274,8 @@ eg.
 
 ```
 // Tokenised Assembly Code
-   {Token("instruction", "MOV", 1, 1), Token("register", "R1", 1, 2), Token("immediate", "#1", 1, 3)},
-   {Token("instruction", "MOV", 2, 1), Token("register", "R2", 2, 2), Token("immediate", "#2", 2, 3)},
+   {Token("instruction", "MOV", 1, 1), Token("register", "R1", 1, 2), Token("immediate", "1", 1, 3)},
+   {Token("instruction", "MOV", 2, 1), Token("register", "R2", 2, 2), Token("immediate", "2", 2, 3)},
    {Token("instruction", "ADD", 3, 1), Token("register", "R3", 3, 2), Token("register", "R1", 3, 3)}
 ```
 
@@ -288,7 +286,7 @@ eg.
 The process for the tokenisation is the following:
 
    - The program will read the array line by line 
-   - Then it will check every word of the line and it will create a token with the type right type  and value according to the word
+   - Then it will check every word of the line and it will create a token with the right type  and value according to the word. For this step, the "strcpm" function will be used to compare the word with the list of instructions, registers and operands. It's easy to implement and it's efficient.
    - Finally, it will replace each instruction, register and operand of the original array with the corresponding token
 
 Each token will be represented by a struct with the following attributes:
@@ -311,8 +309,7 @@ The parser acts like a language detective. It takes the tokens, which are like t
    - The parser helps the computer understand the structure of the assembly code. It's like teaching it the rules of the language so it can follow along.
 
 2. **Error Checking:**
-   - Just like a teacher correcting grammar mistakes, the parser checks if the code follows the correct assembly language rules. If there's a mistake, it raises a flag.
-
+   - Just like a teacher correcting grammar mistakes, the parser checks if the code follows the correct assembly language rules. 
 3. **Creating a Plan:**
    - Once the parser understands the code structure, it creates a plan or a roadmap for the computer on how to execute the instructions. It's like giving directions for a task.
 
@@ -321,18 +318,30 @@ The parser acts like a language detective. It takes the tokens, which are like t
 
 In a nutshell, the parser is like a language teacher and an instruction manual combined. It ensures the computer understands the code's structure, checks for mistakes, and creates a clear plan for smooth execution. In our project, having a reliable parser is key to making the virtual processor and interpreter work seamlessly.
 
+
+
+
+**Note**
+
+The process of the parsing is the following:
+- Receive the tokenized assembly code obtained from the lexical analysis (tokenization) phase.
+
+- Initialize a parsing pointer to the beginning of the token array.
+  Set up data structures to represent the abstract syntax tree (AST) 
+
+- Implement parsing rules based on those: 
 ```
-<ADD> ::= <register> "," <register> | <register> "," <immediate> 
 <MOV> ::= <register> "," <register> | <register> "," <immediate> | <register> "," <adress>
-<AND> ::= <register> "," <register> | <register> "," <immediate>
-<XOR> ::= <register> "," <register> | <register> "," <immediate>
-<OR>  ::= <register> "," <register> | <register> "," <immediate>
-<NOT> ::= <register> "," <register> | <register> "," <immediate>
-<GAD> ::= <register> "," <register> | <register> "," <immediate>
+<ADD> ::= <register> "," <register> | <register> "," <immediate> 
 <SUB> ::= <register> "," <register> | <register> "," <immediate>
 <MUL> ::= <register> "," <register> | <register> "," <immediate>
 <DIV> ::= <register> "," <register> | <register> "," <immediate>
+<AND> ::= <register> "," <register> | <register> "," <immediate>
+<XOR> ::= <register> "," <register> | <register> "," <immediate>
+<OR>  ::= <register> "," <register> | <register> "," <immediate>
 <CMP> ::= <register> "," <register> | <register> "," <immediate>
+<NOT> ::= <register> 
+<GAD> ::= <register> 
 <JMP> ::= <label>
 <JE>  ::= <label>
 <JNE> ::= <label>
@@ -348,8 +357,31 @@ In a nutshell, the parser is like a language teacher and an instruction manual c
 <letter> ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
 <digit> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
 ```
+These rules guide the parser in constructing the AST.
 
-Above is the grammar rule for the assembly language. The parser will check if the assembly code follows the grammar rules. If there's a mistake, it will raise an error. 
+- Employ a top-down parsing approach, where the parsing process starts from the highest-level constructs and gradually descends to lower-level details. This aligns with the hierarchical nature of an assembly language. 
+
+- The strategy typically follows a leftmost derivation, meaning that when multiple choices are available, the leftmost non-terminal is chosen.
+
+- When an error is detected, the parser should provide error messages, including the printing of the line and the nature of the error. The error handling will be described in detail in the next section.
+
+- As the parsing progresses successfully, construct the abstract syntax tree (AST) by linking nodes according to the hierarchical structure of the assembly language. Each node in the AST represents a syntactic construct, such as an instruction or operand.
+
+
+- Once the entire token sequence is successfully parsed and the AST is constructed, the parsing phase concludes. The AST becomes the basis for further processing.
+
+
+```mermaid
+graph TD
+  A[AST]
+  A -->|Instruction| B1[Mov]
+  B1 -->|Operand| B2[Register 'R1']
+  B1 -->|Operand| B3[Immediate '#10']
+  A -->|Instruction| C1[Add]
+  C1 -->|Operand| C2[Register 'R2']
+  C1 -->|Operand| C3[Register 'R1']
+```
+
 
 #### Errors handling
 
@@ -364,49 +396,32 @@ The parser will be able to handle the following errors:
    - **Description:** This error is raised when the parser reaches the end of the file but expects additional tokens to complete a syntactic structure. The message indicates an unexpected termination.
 
 **Mismatched Types:**
-   - **Error Message:** "Type mismatch: Expected {expected_type}, but found {actual_type} at line {line}, column {column}."
+   - **Error Message:** "Type mismatch: Expected {expected_type}, but found {actual_type} at line {print(line)}."
    - **Description:** This error occurs when there is a mismatch between expected and actual data types. The message specifies the expected and actual types, along with the error location.
 
 **Invalid Syntax:**
-   - **Error Message:** "Invalid syntax at line {line}, column {column}. Unable to parse the provided code."
+   - **Error Message:** "Invalid syntax at line {print(line)}. Unable to parse the provided code."
    - **Description:** This generic error indicates that the parser encountered a syntax that doesn't conform to the language's grammar rules. The message communicates the location of the syntax error.
 
 **Redundant Tokens:**
-   - **Error Message:** "Redundant tokens found at line {line}, column {column}. Remove or correct the extra tokens."
+   - **Error Message:** "Redundant tokens found at line {print(line)}. Remove or correct the extra tokens."
    - **Description:** This error signals the presence of extra or redundant tokens in the code. The message advises removing or correcting the surplus tokens at the specified location.
 
-**Undefined Variable or Identifier:**
-   - **Error Message:** "Undefined {variable/identifier} '{name}' at line {line}, column {column}."
-   - **Description:** When the parser encounters an undeclared variable or identifier, this error is raised. The message indicates the type (variable or identifier) and the name of the undefined entity.
+**Undefined label:**
+   - **Error Message:** "Undefined {label} '{name}' at line {print(line)}."
+   - **Description:** When the parser encounters an undeclared label, this error is raised. The message indicates the type (variable or identifier) and the name of the undefined entity.
 
-**Unexpected Expression:**
-   - **Error Message:** "Unexpected expression found at line {line}, column {column}. Expressions are not allowed in this context."
-   - **Description:** This error occurs when an expression is encountered in a context where expressions are not allowed. The message informs about the unexpected expression and its location.
+**Duplicate label:**
+   - **Error Message:** "Duplicate {label} '{name}' at line {print(line)}."
+   - **Description:** This error occurs when the parser encounters a duplicate label. The message specifies the type (variable or identifier) and the name of the duplicate entity.
 
-Implementing a comprehensive set of error messages ensures that developers receive clear and actionable feedback during the debugging process, aiding in the identification and resolution of issues in the code.
+**Invalid Operand:**
+   - **Error Message:** "Invalid operand '{operand}' at line {print(line)}."
+   - **Description:** This error indicates that the parser encountered an invalid operand. The message specifies the operand and the location of the error.
 
-eg.
+---
 
-```
-// Tokenised assembly code
-[(instruction, MOV), (register, R1), (immediate, #1)]
-[(instruction, MOV), (register, R2), (immediate, #2)]
-[(instruction, ADD), (register, R3), (register, R1)]
-```
 
-```
-// Parse tree
-MOV(instruction)
-               ├── R1(register)
-               └── #1(immediate)
-MOV(instruction)
-               ├── R2(register)
-               └── #2(immmediate)
-ADD(instruction)
-               ├── R3(register)
-               └── R1(register)
-
-```
 
 
 ### Semantic analysis
@@ -459,7 +474,7 @@ Each assembly language instruction is mapped to corresponding C functions or ope
 |MUL R1, R2|    0x30         |
 |MUL R1, 0X332| 0x31         |
 |DIV R1, R2    |0x40         |
-|#DIV R1, 0X332|0x41         |
+|DIV R1, 0X332|0x41         |
 |-|          -               |
 |.label|       0x99          |
 |END|          0x98          |
