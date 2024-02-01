@@ -25,6 +25,3 @@ git clone <https://github.com/algosup/2023-2024-project-3-virtual-processor-team
 cd <2023-2024-project-3-virtual-processor-team-1>
 ./vCPU
 ```
-
-
-
