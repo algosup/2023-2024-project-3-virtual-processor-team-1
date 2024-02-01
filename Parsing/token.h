@@ -1,3 +1,5 @@
+#ifndef TOKEN_H
+#define TOKEN_H
 #define MAX_LINES 1000
 #define MAX_TOKENS 3
 
@@ -23,7 +25,8 @@ typedef enum instruction
     XOR,
     NOT,
     GAD,
-    DISP
+    DISP,
+    END
 } instruction_t;
 
 typedef enum registers
@@ -71,7 +74,7 @@ typedef enum typeofdata
 
 typedef struct token {
     char type[20];    // String representation of the type
-    char value[20];   // String representation of the value
+    char value[100];   // String representation of the value
     int row;          // Row number 
     int column;       // Column number
 } token_t;
@@ -80,6 +83,51 @@ typedef struct token {
 token_t tokens[MAX_LINES][MAX_TOKENS];
 int column = 0;
 int row = 0;
+
+void handleString(char *source, char *destination){
+    int length = strlen(source);
+    if (length > 98){
+        printf("Error: String too long\n");
+        strcpy(destination, "ERREUR");
+        return;
+    }
+    int j = 0;
+    for(int i = 1; i < length - 1; i++){
+        if (source[i] == '\\'){
+            i++;
+            switch (source[i])
+            {
+            case 'n':
+                destination[j] = '\n';
+                break;
+            case 't':
+                destination[j] = '\t';
+                break;
+            case 'r':
+                destination[j] = '\r';
+                break;
+            case '0':
+                destination[j] = '\0';
+                break;
+            case '\\':
+                destination[j] = '\\';
+                break;
+            case '"':
+                destination[j] = '"';
+                break;
+            default:
+                printf("Error: Invalid escape sequence\n");
+                strcpy(destination, "ERREUR");
+                return;
+            }
+        } else {
+            destination[j] = source[i];
+        }
+        j++; // Incrémentation de j
+    }
+    destination[j] = '\0';
+}
+
 
 void getEnum(char cleanedLines[1000], token_t *token) {
     // Instructions
@@ -146,6 +194,9 @@ void getEnum(char cleanedLines[1000], token_t *token) {
     } else if (strcmp(cleanedLines, "DISP") == 0) {
         strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "DISP");
+    } else if(strcmp(cleanedLines, "END") == 0){
+        strcpy(token->type, "INSTRUCTION");
+        strcpy(token->value, "END");
     }
     else if (strcmp(cleanedLines, "R1") == 0) {
         strcpy(token->type, "REGISTER");
@@ -176,13 +227,12 @@ void getEnum(char cleanedLines[1000], token_t *token) {
         strcpy(token->value, cleanedLines);
     } else if (cleanedLines[0] == '"') {
         strcpy(token->type, "STR");
-        strcpy(token->value, cleanedLines);
+        handleString(cleanedLines, token->value);
     }
     else if (cleanedLines[0] == '#') {
         strcpy(token->type, "IMMEDIATE");
         strcpy(token->value, cleanedLines);
     }
-
     // Default case if none matched
     else {
         strcpy(token->type, "VOID");
@@ -197,23 +247,38 @@ void getEnum(char cleanedLines[1000], token_t *token) {
 void tokenizationFunction(char cleanedLines[][3][1000], int numLines, token_t *tokens) {
     int tokenIndex = 0;
     for(int i = 0; i < numLines; i++){
+        // Vérifier si le premier token de la ligne est "VOID"
+        if (strcmp(cleanedLines[i][0], "VOID") == 0) {
+            continue;
+        }
         for(int c = 0; c < 3; c++){
-            tokens[tokenIndex].row = i +1;
-            tokens[tokenIndex].column = c +1;
+            tokens[tokenIndex].row = i + 1;
+            tokens[tokenIndex].column = c + 1;
             getEnum(cleanedLines[i][c], &tokens[tokenIndex]);
             tokenIndex++;
         }
     }
 }
 
-void printTokenization(token_t *tokens, int numTokens){
-    for (int i = 0; i < numTokens; i++){
-            printf("Token(\"%s\", \"%s\", %d, %d)", tokens[i].type, tokens[i].value, tokens[i].row, tokens[i].column);
-            if (i % MAX_TOKENS < MAX_TOKENS - 1){
-                printf(", ");
+void printTokenization(token_t *tokens, int numTokens) {
+    for (int i = 0; i < numTokens; i += MAX_TOKENS) {
+        bool allVoid = true;
+        for (int j = 0; j < MAX_TOKENS; j++) {
+            if (strcmp(tokens[i + j].type, "VOID") != 0) {
+                allVoid = false;
+                break;
             }
-            else{
-                printf("\n");
+        }
+
+        if (!allVoid) {
+            for (int j = 0; j < MAX_TOKENS; j++) {
+                printf("Token(\"%s\", \"%s\", %d, %d)", tokens[i + j].type, tokens[i + j].value, tokens[i + j].row, tokens[i + j].column);
+                if (j < MAX_TOKENS - 1) {
+                    printf(", ");
+                }
             }
+            printf("\n");
+        }
     }
 }
+#endif

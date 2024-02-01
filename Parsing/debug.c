@@ -1,5 +1,9 @@
+#include <stdbool.h>
 #include "fileCleaner.h"
-#include "token.h"
+// #include "token.h"
+#include "parsing.h"
+
+
 
 #if _WIN32
 #include <windows.h>
@@ -80,12 +84,15 @@ int main(void)
     fclose(file);
 
     // Print out the cleaned lines
-    for (int i = 0; i < numLines; i++) {
-        printf("%s \t %s \t %s \n", cleanedLines[i][0], cleanedLines[i][1], cleanedLines[i][2]);
-    }
+    // for (int i = 0; i < numLines; i++) {
+    //     printf("%s \t %s \t %s \n", cleanedLines[i][0], cleanedLines[i][1], cleanedLines[i][2]);
+    // }
 
     token_t tokens[MAX_LINES * MAX_TOKENS];
-    tokenizationFunction(cleanedLines, numLines,tokens);
+    tokenizationFunction(cleanedLines, numLines, tokens);
     printTokenization(tokens, numLines * MAX_TOKENS);
+    int numTokens = numLines * MAX_TOKENS;
+    node_t *node = createTree(tokens, numTokens);
+    printNode(node);
     return 0;
 }

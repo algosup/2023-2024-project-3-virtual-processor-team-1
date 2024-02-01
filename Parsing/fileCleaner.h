@@ -1,3 +1,5 @@
+#ifndef FILECLEANER_H
+#define FILECLEANER_H
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -104,3 +106,4 @@ void splitLine(char *lengthLine, char cleanedLines[][3][1000], int *numLines) {
     // Increment numLines even if there's only one token
     (*numLines)++;
 }
+#endif
