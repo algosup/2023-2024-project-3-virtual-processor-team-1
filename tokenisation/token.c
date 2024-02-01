@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include "fileCleaner.h"
 #include "token.h"
 
