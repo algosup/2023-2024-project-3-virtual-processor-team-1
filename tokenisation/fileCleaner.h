@@ -83,6 +83,7 @@ void splitLine(char *lenghtLine, char cleanedLines[][3][1000], int *numLines) {
     for (; lenghtLine[i] != '\0'; i++) {
         if (lenghtLine[i] == '"' && (i == 0 || lenghtLine[i - 1] != '\\')) {
             inQuotedString = !inQuotedString;
+            strncat(token, &lenghtLine[i], 1);
         } else if (isspace(lenghtLine[i]) && !inQuotedString) {
             removeTrailingComma(token);
             strcpy(cleanedLines[*numLines][numTokens], token);
