@@ -260,7 +260,6 @@ void tokenizationFunction(char cleanedLines[][3][1000], int numLines, token_t *t
 
 void printTokenization(token_t *tokens, int numTokens) {
     for (int i = 0; i < numTokens; i += MAX_TOKENS) {
-        // Vérifier si tous les tokens de la ligne sont "VOID"
         bool allVoid = true;
         for (int j = 0; j < MAX_TOKENS; j++) {
             if (strcmp(tokens[i + j].type, "VOID") != 0) {
@@ -269,7 +268,6 @@ void printTokenization(token_t *tokens, int numTokens) {
             }
         }
 
-        // Si tous les tokens de la ligne ne sont pas "VOID", les imprimer
         if (!allVoid) {
             for (int j = 0; j < MAX_TOKENS; j++) {
                 printf("Token(\"%s\", \"%s\", %d, %d)", tokens[i + j].type, tokens[i + j].value, tokens[i + j].row, tokens[i + j].column);
