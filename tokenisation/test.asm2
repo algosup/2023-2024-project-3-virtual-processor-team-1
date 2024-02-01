@@ -8,9 +8,9 @@ DISP R1     ; expected 12
 SUB R2, #3
 DISP R2     ; 4
 
-DISP "Hello World, this is a test" ; expected Hello World
+DISP "Hello World" ; expected Hello World
 
 ; expected --> R1 = 5, R2 = 7, R1 = 12, R2 = 4
 
-    ;DISP "End of progR1m"
-    ;END
+    DISP "End of program"
+    END
