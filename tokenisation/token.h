@@ -1,3 +1,6 @@
+#define MAX_LINES 1000
+#define MAX_TOKENS 3
+
 typedef enum instruction
 {
     ADD, 
@@ -73,6 +76,8 @@ typedef struct token {
     int column;       // Column number
 } token_t;
 
+
+token_t tokens[MAX_LINES][MAX_TOKENS];
 int column = 0;
 int row = 0;
 
@@ -189,20 +194,26 @@ void getEnum(char cleanedLines[1000], token_t *token) {
 
 // Output:
 // {Token("instruction", "MOV", 1, 1), Token("register", "R1", 1, 2), Token("immediate", "#5", 1, 3)}
-void tokenizationFunction(char cleanedLines[][3][1000], int numLines) {
-    for (int i = 0; i < numLines; i++) {
-        for (int c = 0; c < 3; c++) {
-            token_t token;
-            token.row = i + 1;  // Rows and columns should start from 1 for this output format
-            token.column = c + 1;
-            getEnum(cleanedLines[i][c], &token);
+void tokenizationFunction(char cleanedLines[][3][1000], int numLines, token_t *tokens) {
+    int tokenIndex = 0;
+    for(int i = 0; i < numLines; i++){
+        for(int c = 0; c < 3; c++){
+            tokens[tokenIndex].row = i +1;
+            tokens[tokenIndex].column = c +1;
+            getEnum(cleanedLines[i][c], &tokens[tokenIndex]);
+            tokenIndex++;
+        }
+    }
+}
 
-            // Output the token information
-            printf("Token(\"%s\", \"%s\", %d, %d)", token.type, token.value, token.row, token.column);
-            if (c < 2) {
+void printTokenization(token_t *tokens, int numTokens){
+    for (int i = 0; i < numTokens; i++){
+            printf("Token(\"%s\", \"%s\", %d, %d)", tokens[i].type, tokens[i].value, tokens[i].row, tokens[i].column);
+            if (i % MAX_TOKENS < MAX_TOKENS - 1){
                 printf(", ");
             }
-        }
-        printf("\n");
+            else{
+                printf("\n");
+            }
     }
 }

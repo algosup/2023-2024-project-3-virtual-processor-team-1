@@ -37,10 +37,12 @@ int main(int argc, char *argv[]) {
     fclose(file);
 
     // Print out the cleaned lines
-    for (int i = 0; i < numLines; i++) {
-        printf("%s \t %s \t %s \n", cleanedLines[i][0], cleanedLines[i][1], cleanedLines[i][2]);
-    }
+    // for (int i = 0; i < numLines; i++) {
+    //     printf("%s \t %s \t %s \n", cleanedLines[i][0], cleanedLines[i][1], cleanedLines[i][2]);
+    // }
 
-    tokenizationFunction(cleanedLines, numLines);
+    token_t tokens[MAX_LINES * MAX_TOKENS];
+    tokenizationFunction(cleanedLines, numLines, tokens);
+    printTokenization(tokens, numLines * MAX_TOKENS);
     return 0;
 }
