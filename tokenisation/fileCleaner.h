@@ -6,15 +6,7 @@
 void removeCommentsAndEmptyLines(char *str) {
 
     /* 
-    Pretty simple function that removes comments and empty lines to make
-    parsing easier. It also removes trailing whitespace and newlines.
-
-    ; = start of comment
-    \n or \r = end of a line
-
-    Small special case: if a line ends with a comment, the comment is
-    removed and all trailing whitespace is removed. This is to make
-    parsing easier.
+    Removes comments and empty lines from a line.
     */
 
     int inCommentLine = 0;
@@ -56,7 +48,7 @@ void removeTrailingComma(char *token) {
     }
 }
 
-void splitLine(char *lenghtLine, char cleanedLines[][3][1000], int *numLines) {
+void splitLine(char *lengthLine, char cleanedLines[][3][1000], int *numLines) {
 
     /*
     Tokenizes a line. This function is called after the line has been
@@ -71,26 +63,31 @@ void splitLine(char *lenghtLine, char cleanedLines[][3][1000], int *numLines) {
     char token[1000] = "";
 
     int i = 0;
-    while (lenghtLine[i] == ' ' || lenghtLine[i] == '\t') {
+    while (lengthLine[i] == ' ' || lengthLine[i] == '\t') {
         i++;
     }
 
-    if (lenghtLine[i] == '\0' || (lenghtLine[i] == '\n' && lenghtLine[i + 1] == '\0')) {
-        // Skip empty lines
+    // Check for empty lines
+    if (lengthLine[i] == '\0' || (lengthLine[i] == '\n' && lengthLine[i + 1] == '\0')) {
+        // Add an empty line to cleanedLines
+        strcpy(cleanedLines[*numLines][0], "");
+        strcpy(cleanedLines[*numLines][1], "");
+        strcpy(cleanedLines[*numLines][2], "");
+        (*numLines)++;
         return;
     }
 
-    for (; lenghtLine[i] != '\0'; i++) {
-        if (lenghtLine[i] == '"' && (i == 0 || lenghtLine[i - 1] != '\\')) {
+    for (; lengthLine[i] != '\0'; i++) {
+        if (lengthLine[i] == '"' && (i == 0 || lengthLine[i - 1] != '\\')) {
             inQuotedString = !inQuotedString;
-            strncat(token, &lenghtLine[i], 1);
-        } else if (isspace(lenghtLine[i]) && !inQuotedString) {
+            strncat(token, &lengthLine[i], 1);
+        } else if (isspace(lengthLine[i]) && !inQuotedString) {
             removeTrailingComma(token);
             strcpy(cleanedLines[*numLines][numTokens], token);
             memset(token, 0, sizeof(token));
             numTokens++;
         } else {
-            strncat(token, &lenghtLine[i], 1);
+            strncat(token, &lengthLine[i], 1);
         }
     }
 
@@ -98,12 +95,12 @@ void splitLine(char *lenghtLine, char cleanedLines[][3][1000], int *numLines) {
     strcpy(cleanedLines[*numLines][numTokens], token);
 
     if (inQuotedString) {
+        // Reset tokens if the line ends with an open quote
         strcpy(cleanedLines[*numLines][0], "");
         strcpy(cleanedLines[*numLines][1], "");
         strcpy(cleanedLines[*numLines][2], "");
-        (*numLines)++;
-    } else {
-        // Increment numLines even if there's only one token
-        (*numLines)++;
     }
+
+    // Increment numLines even if there's only one token
+    (*numLines)++;
 }
