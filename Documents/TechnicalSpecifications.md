@@ -1,7 +1,6 @@
 
 **Technical Specifications - 2023-2024-project-3-virtual-processor**
 
-
 ---
 
 # DEADLINE 9/2 5pm  
@@ -52,44 +51,42 @@
 
 </details>
 
-
 ## I. Audience
 
 This document is primarily intended for:
 
 - Software developer - to understand the user and technical requirements, and to guide decision-making and planning. Help them understand risks and challenges, customer requirements, and additional technical requirements and choices made  
-  
+
 Secondary audiences
+
 - Program manager - to validate against the functional specification, and the client expectations
 - QA - to aid in preparing the test plan and to use it for validating issues.
 - Project manager - to help identify risks and dependencies
 
-
-## II. Deliverable 
+## II. Deliverable
 
  The goal of the project is to create a virtual processor and an interpreter for running assembly code on that processor.
- 
 
-## IV. Requirements 
+## IV. Requirements
 
 1. Create a minimal assembly language (This requirement is fully described in the [functional specifications](./FunctionalSpecifications.md))
-   
+
 2. Develop a C program that reads assembly code from a file, checks for semantic correctness, and executes it on the virtual processor.
-   
+
 3. Implement a virtual system call for displaying text in a virtual terminal, that can be accessed from the assembly code  
-   
+
 4. Implement a virtual processor that can execute the assembly code
-   
-5. Write a small assembly program conceptually similar to unit tests to showcase that everything is working 
 
+5. Write a small assembly program conceptually similar to unit tests to showcase that everything is working
 
+## III. Details
 
-## III. Details 
-
-The project will be developed in plain, portable, C language without using any external library besides C standard libraries. 
+The project will be developed in plain, portable, C language without using any external library besides C standard libraries.
 
 The project is divided into two parts:
+
 1. The first part is the virtual processor. The virtual processor will have the following components:
+
    - 4 general-purpose registers
    - 4 address registers
    - 1 instruction register
@@ -100,8 +97,8 @@ The project is divided into two parts:
    - 1 stack memory
    - 1 virtual terminal
    - 32-bit architecture
- 
-2. The second part is the interpreter. The purpose of the interpreter is to read the assembly code from a file, check for semantic correctness, transform it into machine code and execute it on the virtual processor. 
+
+2. The second part is the interpreter. The purpose of the interpreter is to read the assembly code from a file, check for semantic correctness, transform it into machine code and execute it on the virtual processor.
 
    The interpreter will have the following components:
    - A lexical analyser
@@ -109,21 +106,17 @@ The project is divided into two parts:
    - A semantic analyser
    - A code generator
 
-
-
 ## V. Nice to have
 
 - Have a built-in debugger
 - I/O operations inside the virtual terminal
 - Have a wiki page with a detailed description of the more complex algorithms used in the project
 
-
 ## VI. Priorities
 
 1. Smooth performance, each assembly instruction should be executed in the same amount of time
 2. Correctness, the program should be able to run any semantically correct assembly program
 3. Flexibility, the system should be designed to handle various assembly constructs and provide a foundation for potential future extensions
-
 
 ## VII. Technical Architecture
 
@@ -135,17 +128,15 @@ The project is divided into two parts:
 - Integrated Development Environment (IDE): Visual Studio Code
 - No additional libraries can be used besides C standard libraries
 
-
 ### Input data
 
 One file on the command line.
-- Arg[0] -  The input data will be a text file containing a program written in the assembly language. The program will be read by the interpreter and executed on the virtual processor.
 
+- Arg[0] -  The input data will be a text file containing a program written in the assembly language. The program will be read by the interpreter and executed on the virtual processor.
 
 ### Output data
 
 The output data will be the result of the execution of the assembly program or the errors returned by the program. The result will be displayed in the virtual terminal.
-
 
 ### Non-requirements / Out of scope
 
@@ -157,11 +148,9 @@ The output data will be the result of the execution of the assembly program or t
 - The program should be able to run on any modern operating system with support for C development (e.g., Linux, Windows, macOS)
 - The program should be able to run on any modern computer with a 64-bit processor.
 
-
-
 ### Key functions, operations, and algorithms
 
-Some of the key operations that the software will perform and that need to be represented via functions are: 
+Some of the key operations that the software will perform and that need to be represented via functions are:
 
 - **Lexical Analysis (Tokenisation):**
    - Breaking down assembly code into tokens (instructions, registers, operands)
@@ -179,21 +168,20 @@ Some of the key operations that the software will perform and that need to be re
    - Implementing a virtual processor with registers, memory, and an execution pipeline
    - Executing generated machine code
 
-
 ### Algorithms  
 
 The following section describes the algorithms described above in depth. Furthermore, it describes the skeleton of the program and the order in which the algorithms will be implemented.
-
 
 ### File Cleaning and Reading
 
 Cleaning the file involves removing comments and whitespaces to facilitate easier reading. The size of the array storing the cleaned assembly code needs to be managed dynamically, considering potential memory constraints.
 
 **Dynamic Array Allocation:**
+
    - The program will dynamically allocate memory for the array based on the size of the cleaned assembly code.
    - This dynamic allocation ensures flexibility, accommodating assembly programs of varying lengths without predefined size limitations.
 
-```
+```txt
 // Initialise variables
 // Initial assumption of a reasonable maximum number of lines
 
@@ -219,14 +207,14 @@ Diagram of the cleaning function
 ![diagram](/Documents/Appendices/cleaning.png)
 
 **Note:**
+
 - The initial assumption of the maximum number of lines provides a starting point for memory allocation.
 - Dynamic resizing after reading the file ensures efficient memory utilisation based on the actual number of lines.
 - The program will read the file line by line and will check either if it's a carriage return or a line feed and remove it. Then, the program will remove the comments by checking if a ";" is present in the line and if it is, it will remove everything after it. Finally, this new file will be stored in a 2D array and will be used for the next step.
 
-
 **Input data**
-      
-   ```
+
+   ```asm2
    MOV R1, #1
    MOV R2, #2
 
@@ -236,7 +224,7 @@ Diagram of the cleaning function
 
 **Output data**
 
-   ```
+   ```terminal
    arrayFile[3][nbrLines]= {
       {"MOV", "R1", "#1"},
       {"MOV", "R2", "#2"},
@@ -244,35 +232,36 @@ Diagram of the cleaning function
    }
    ```
 
-
- 
-
 ### Lexical analysis (Tokenisation)
 
 Tokenisation plays a crucial role by breaking down the assembly code into manageable units called tokens. Think of tokens as building blocks or Lego pieces that structure the code. Each token represents a specific element, like an instruction, register, or operand.
 
 **Organisation:**
+
    - Tokens help organise the code into meaningful parts, making it easier for the computer to understand and process
 
 **Simplification:**
+
    - Similar to spaces in a sentence, tokens simplify the code, aiding in the analysis of its structure
 
 **Error Detection:**
+
    - Tokenisation aids in spotting errors early on. By breaking the code into tokens, we can quickly identify where issues might arise
 
 **Efficient Parsing:**
+
    - Parsing the code becomes more efficient with tokens, acting as a clear guide for decoding the language
 
-eg. 
+eg.
 
-```
+```terminal
 // Non-Tokenised Assembly Code:
    {"MOV", "R1", "#1"},
    {"MOV", "R2", "#2"},
    {"ADD", "R3", "R1"}
 ```
 
-```
+```terminal
 // Tokenised Assembly Code
    {Token("instruction", "MOV", 1, 1), Token("register", "R1", 1, 2), Token("immediate", "1", 1, 3)},
    {Token("instruction", "MOV", 2, 1), Token("register", "R2", 2, 2), Token("immediate", "2", 2, 3)},
@@ -291,7 +280,7 @@ The process for the tokenisation is the following:
 
 Each token will be represented by a struct with the following attributes:
 
-   - **Type:** The type of the token (instruction, register, operand, etc...) 
+   - **Type:** The type of the token (instruction, register, operand, etc...)
    - **Value:** The value of the token (MOV, R1, #1, etc...)
    - **Line:** The line where the token is located
    - **Column:** The column where the token is located
@@ -308,10 +297,10 @@ class Token {
 
 
 The tokenisation will be the first filter to check if the assembly code is correct. In this step the program will be able to handle the most obvious errors like:
+
    - Incorrect instructions
    - Incorrect registers
    - Incorrect operands
-
 
 ### Syntax analysis (Parsing)
 
@@ -321,7 +310,7 @@ The parser acts like a language detective. It takes the tokens, which are like t
    - The parser helps the computer understand the structure of the assembly code. It's like teaching it the rules of the language so it can follow along.
 
 2. **Error Checking:**
-   - Just like a teacher correcting grammar mistakes, the parser checks if the code follows the correct assembly language rules. 
+   - Just like a teacher correcting grammar mistakes, the parser checks if the code follows the correct assembly language rules.
 3. **Creating a Plan:**
    - Once the parser understands the code structure, it creates a plan or a roadmap for the computer on how to execute the instructions. It's like giving directions for a task.
 
@@ -330,16 +319,15 @@ The parser acts like a language detective. It takes the tokens, which are like t
 
 In a nutshell, the parser is like a language teacher and an instruction manual combined. It ensures the computer understands the code's structure, checks for mistakes, and creates a clear plan for smooth execution. In our project, having a reliable parser is key to making the virtual processor and interpreter work seamlessly.
 
-
-
-
 **Note**
 
 The process of the parsing is the following:
+
 - Receive the tokenized assembly code obtained from the lexical analysis (tokenization) phase.
 
 - Initialize a parsing pointer to the beginning of the token array.
-  Set up data structures to represent the abstract syntax tree (AST) 
+  Set up data structures to represent the abstract syntax tree (AST)
+
   ```mermaid
   classDiagram
   class ASTNode {
@@ -361,9 +349,9 @@ The process of the parsing is the following:
 
   ```
 
+- Implement parsing rules based on those Backus–Naur Form (BNF) rules:
 
-- Implement parsing rules based on those Backus–Naur Form (BNF) rules: 
-```
+```txt
 <MOV> ::= <register> "," <register> | <register> "," <immediate> | <register> "," <adress>
 <ADD> ::= <register> "," <register> | <register> "," <immediate> 
 <SUB> ::= <register> "," <register> | <register> "," <immediate>
@@ -390,16 +378,16 @@ The process of the parsing is the following:
 <letter> ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
 <digit> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
 ```
+
 These rules guide the parser in constructing the AST.
 
-- Employ a top-down parsing approach, where the parsing process starts from the highest-level constructs and gradually descends to lower-level details. This aligns with the hierarchical nature of an assembly language. 
+- Employ a top-down parsing approach, where the parsing process starts from the highest-level constructs and gradually descends to lower-level details. This aligns with the hierarchical nature of an assembly language.
 
 - The strategy follows an LL parsing algorithm, meaning that when multiple choices are available, the leftmost non-terminal is chosen.
 
 - When an error is detected, the parser should provide error messages, including the printing of the line and the nature of the error. The error handling will be described in detail in the next section.
 
 - As the parsing progresses successfully, construct the abstract syntax tree (AST) by linking nodes according to the hierarchical structure of the assembly language. Each node in the AST represents a syntactic construct, such as an instruction or operand.
-
 
 - Once the entire token sequence is successfully parsed and the AST is constructed, the parsing phase concludes. The AST becomes the basis for further processing.
 
@@ -435,90 +423,100 @@ graph TD
   C1 -->|Instruction| C6[JMP .loop]
 ```
 
-
 #### Errors handling
 
 The parser will be able to handle the following errors:
 
 **Unexpected Token:**
+
    - **Error Message:** "Unexpected token '{token}' found at line {line}."
    - **Description:** This error occurs when the parser encounters a token that is unexpected based on the current context. The error message specifies the token and the line where the issue is located.
   
 **Unexpected End of File:**
+
    - **Error Message:** "Unexpected end of file. Expected more tokens to complete the syntax."
    - **Description:** This error is raised when the parser reaches the end of the file but expects additional tokens to complete a syntactic structure. The message indicates an unexpected termination.
 
 **Mismatched Types:**
+
    - **Error Message:** "Type mismatch: Expected {expected_type}, but found {actual_type} at line {line}."
    - **Description:** This error occurs when there is a mismatch between expected and actual data types. The message specifies the expected and actual types, along with the error location.
 
 **Invalid Syntax:**
+
    - **Error Message:** "Invalid syntax at line {line}. Unable to parse the provided code."
    - **Description:** This generic error indicates that the parser encountered a syntax that doesn't conform to the language's grammar rules. The message communicates the location of the syntax error.
 
 **Redundant Tokens:**
+
    - **Error Message:** "Redundant tokens found at line {line}. Remove or correct the extra tokens."
    - **Description:** This error signals the presence of extra or redundant tokens in the code. The message advises removing or correcting the surplus tokens at the specified location.
 
 **Undefined label:**
+
    - **Error Message:** "Undefined {label} '{name}' at line {line}."
    - **Description:** When the parser encounters an undeclared label, this error is raised. The message indicates the type (variable or identifier) and the name of the undefined entity.
 
 **Duplicate label:**
+
    - **Error Message:** "Duplicate {label} '{name}' at line {line}."
    - **Description:** This error occurs when the parser encounters a duplicate label. The message specifies the type (variable or identifier) and the name of the duplicate entity.
 
 **Invalid Operand:**
+
    - **Error Message:** "Invalid operand '{operand}' at line {line}."
    - **Description:** This error indicates that the parser encountered an invalid operand. The message specifies the operand and the location of the error.
 
 ---
 
-
-
-
 ### Semantic analysis
+
 Semantic analysis ensures the computer comprehends the intended meaning behind assembly code, going beyond mere rule-following.
 
 **Meaningful Understanding:**
+
    - It ensures the computer grasps the intended meaning of the code, aligning everyone on the same page
 
 **Correct Usage of Instructions:**
+
    - Like a wise friend correcting language misuse, semantic analysis checks for correct assembly instruction usage
 
 **Operands Compatibility:**
+
    - Similar to preventing illogical comparisons, semantic analysis ensures compatible operands, avoiding confusion for the computer
 
 **Preventing Confusion:**
+
    - By understanding the code's meaning, semantic analysis prevents confusion, ensuring correct execution
 
 For semantically incorrect assembly programs, the program will:
+
    - Provide detailed error messages specifying the nature and location of semantic errors.
    - Halt program execution to prevent undefined behavior.
    - Avoid compromising subsequent instructions' integrity with corrective actions.
 
-
 ### Code generation
+
 The AST is translated into an intermediate representation or machine code.
 Each assembly language instruction is mapped to corresponding C functions or operations.
-
 
 - **Assembly Code Size:** Each instruction in the assembly code is in 32-bit format.
 - **Instruction Width:** Every instruction is 64 bits wide.
 - **Data Storage:** Data is stored in little-endian format.
 
 #### Instruction format
+
 - **Opcode (Byte 1):** The first byte signifies the opcode of the instruction.
 - **Register (Byte 2):** The second byte represents the register.
 - **Data Bytes (Bytes 3-6):** The third, fourth, fifth, and sixth bytes collectively encode the data associated with the instruction.
 
-**Opcodes**  
+**Opcodes**
 
 |**Instruction**| **Opcode** |
 |-----------|----------------|
 |MOV R1, 0X332| 0x10         |
 |MOV A1, adress|0x11         |
-|MOV R1, R2|    0x12         | 
+|MOV R1, R2|    0x12         |
 |-|       -                  |
 |ADD R1, R2|    0x20         |
 |ADD R1, 0X332 |0x22         |
@@ -527,7 +525,7 @@ Each assembly language instruction is mapped to corresponding C functions or ope
 |MUL R1, R2|    0x30         |
 |MUL R1, 0X332| 0x31         |
 |DIV R1, R2    |0x40         |
-|DIV R1, 0X332|0x41         |
+|DIV R1, 0X332|0x41          |
 |-|          -               |
 |.label|       0x99          |
 |END|          0x98          |
@@ -544,7 +542,7 @@ Each assembly language instruction is mapped to corresponding C functions or ope
 |JGE .label|   0x64          |
 |JL .label|    0x65          |
 |JLE .label|   0x66          |
-|-|-                         | 
+|-|-                         |
 |AND R1, R2|   0x70          |
 |AND R1, 0X332|0x71          |
 |XOR R1, R2|   0x72          |
@@ -555,17 +553,15 @@ Each assembly language instruction is mapped to corresponding C functions or ope
 |GAD R1|       0x77          |
 |-|       -                  |
 |**General Register**|       |
-|R1 |          0x01          | 
-|R2 |          0x02          | 
-|R3 |          0x03          | 
-|R4 |          0x04          | 
-|**Adress register** |       | 
-|A1 |          0x11          | 
-|A2 |          0x12          | 
+|R1 |          0x01          |
+|R2 |          0x02          |
+|R3 |          0x03          |
+|R4 |          0x04          |
+|**Adress register** |       |
+|A1 |          0x11          |
+|A2 |          0x12          |
 |A3 |          0x13          |
 |A4 |          0x14          |
-       
-
 
 **Example of MOV instruction**
 
@@ -574,13 +570,10 @@ Each assembly language instruction is mapped to corresponding C functions or ope
 |MOV | R1  | Unused| Unused| Unused| R2|
 |OPCODE| REGISTER | DATA | DATA | DATA | DATA |
 
-
 |0x10| 0x01| 0x00| 0x00| 0x19| 0x23|
 |----|-----|-----|-----|-----|-----|
 |MOV | R1  | Unused| Unused| 25 | 35 |
 |OPCODE| REGISTER | DATA | DATA | DATA | DATA |
-
-
 
 ### Virtual processor
 
@@ -591,23 +584,24 @@ In this section, we're constructing a virtual machine (VM) with its own instruct
 We focus on three main components: CPU, registers, and memory. Instructions, represented as binary data, reside in memory. The CPU retrieves and executes instructions sequentially, and the machine's running state is stored in registers.
 
 #### Memory
+
 - Memory stores data, including code and other information.
 - Segments: `text` (code), `data` (initialized data), `bss` (uninitialized data), `stack` (function call states), `heap` (dynamic memory allocation).
 - For simplicity, we merge `data` and `bss`, using `data` for string literals.
 
 #### Registers
+
 - `PC` (Program Counter): Stores the memory address of the next instruction.
 - `SP` (Stack Pointer): Points to the top of the stack, used for function calls.
 - `BP` (Base Pointer): Points to elements on the stack, aiding function calls.
 - `AX`: General register storing instruction results.
 - `cycle`: Virtual machine cycle count.
 
-
 ## VIII. Syntax and Structure
 
 ### Folder structure
 
-```
+```txt
 📦2023-2024-project-3-virtual-processor
 └── 📁.github
 |    └── 📁ISSUE_TEMPLATE
@@ -644,7 +638,7 @@ We focus on three main components: CPU, registers, and memory. Instructions, rep
 
 **interpreter.c** - Main file for the interpreter
 
-### Program file structure 
+### Program file structure
 
 1. **Prologue:**
    - Start the file with a prologue describing the purpose of objects (functions, data declarations, etc.)
@@ -669,11 +663,9 @@ We focus on three main components: CPU, registers, and memory. Instructions, rep
    - Group similar functions together for clarity
    - Consider alphabetical order for large sets of independent utility functions
 
-
-### Function declaration 
+### Function declaration
 
 Each function should be preceded by a block comment prologue that gives a short description of what the function does.
-
 
 ### Naming
 
@@ -684,11 +676,11 @@ Each function should be preceded by a block comment prologue that gives a short 
 - **Macro "functions"** are in all CAPS
 - **Typedef** names should have "`_t`" appended to their name
 
-
-### Comments 
+### Comments
 
 - Putting comments at the top of a 3-10 line section telling what it does
-```
+
+```txt
 /*
 * Here is a block comment.
 * The comment text should be tabbed or spaced over uniformly.
@@ -696,22 +688,25 @@ Each function should be preceded by a block comment prologue that gives a short 
 */ 
 ```
 
-
 ## IX. Code Design Principles
 
-The following are the coding design principles: 
+The following are the coding design principles:
 
  - No use of third-party libraries
- - Emphasise improved algorithmic complexity over micro-optimisation 
+ - Emphasise improved algorithmic complexity over micro-optimisation
  - Use unit tests to ensure correctness during development
 
-
 ## X. Ideas and Hypotheses
-//TODO
+
+<!-- TODO -->
+
 ### Unproven hypotheses
-//TODO
+
+<!-- TODO -->
+
 ### Proven Hypotheses
-//TODO
+
+<!-- TODO -->
 
 ## XI. Challenges
 
@@ -719,8 +714,6 @@ The following are the coding design principles:
 - Enforcing correct usage of assembly instructions and operands through semantic analysis requires careful consideration to detect and prevent potential runtime errors
 - Implementing parsing by string comparison is relatively straightforward; the true challenge lies in the conversion to machine code
 - Handling labels and function calls within the assembly code introduces an additional challenge, requiring effective management of addresses, offsets, and the intricacies of control flow
-
-
 
 ## XII. Possible Bugs
 
@@ -731,19 +724,40 @@ The following are the coding design principles:
 - The system may not be able to detect major errors for instance: overflow, underflow, division by zero, etc
 - We assume that the user will not comment until the end of the line, if it does, the system may not be able to detect it
 
-
 ## XIII. Development Process
 
-//todo
+In our pursuit of crafting a robust and dependable system, we have delineated a systematic development process:
 
+1. **Create a Minimal Assembly Language:**
+   - Establishing the groundwork involves the formulation of a concise assembly language. This serves as the fundamental framework for subsequent stages.
 
+2. **Interpret Assembly Code in C:**
+   - We will undertake the challenge of interpreting the assembly code directly within the C programming language. This step enables an initial evaluation of code functionality.
+
+3. **Artificially Clean Assembly Code:**
+   - In the quest for clarity, the assembly code undergoes a refinement process. Extraneous elements such as comments and whitespaces are deliberately removed to enhance readability for the interpreter.
+
+4. **Develop Lexer and Parser:**
+   - To facilitate deeper analysis, we embark on creating a lexer and parser specifically designed for the assembly code. These components play a vital role in deciphering the structure and syntax of the code.
+
+5. **Implement Semantic Analyzer:**
+   - Building on the parsing foundation, we introduce a semantic analyzer tailored to scrutinize the meaning and context of the assembly code. This analytical step ensures a more nuanced understanding of the code's functionality.
+
+6. **Generate Machine Code:**
+   - The development process advances to the generation of machine code from the refined assembly version. This transformation is a pivotal step in preparing the code for execution on a virtual processor.
+
+7. **Run Machine Code on Virtual Processor:**
+   - The generated machine code is executed on a virtual processor, providing a simulated environment for testing and validation.
+
+8. **Test with Assembly Programs:**
+   - Rigorous testing ensues, employing assembly programs as unit tests. This meticulous verification process guarantees the correctness and reliability of the system throughout its developmental stages.
 
 ## XIV. Glossary
 
 - **breadth-first approach** -  A breadth-first approach is a graph traversal method that starts at the root node and visits all the neighboring nodes. Then for each of those nearest nodes, it visits their unexplored neighbor nodes, and so on, until it finds the goal.
--  **Virtual processor** - A vCPU is a processor simulated within a virtual machine, allowing the execution of one processor thread. These vCPUs are allocated from the physical CPU resources of the host machine.
--  **Lexical analysis** - lexical analysis is the process of converting a sequence of characters (such as in a computer program or web page) into a sequence of tokens (strings with an identified "meaning").
--  **LL Parsing Algorithm** -LL parsing is a top-down parsing method that processes input from left to right, aiming to construct a parse tree through leftmost derivations. It utilizes a predictive parsing table, often in LL(1) parsers, to make parsing decisions based on the leftmost non-terminal and a limited number of lookahead symbols.
+- **Virtual processor** - A vCPU is a processor simulated within a virtual machine, allowing the execution of one processor thread. These vCPUs are allocated from the physical CPU resources of the host machine.
+- **Lexical analysis** - lexical analysis is the process of converting a sequence of characters (such as in a computer program or web page) into a sequence of tokens (strings with an identified "meaning").
+- **LL Parsing Algorithm** -LL parsing is a top-down parsing method that processes input from left to right, aiming to construct a parse tree through leftmost derivations. It utilizes a predictive parsing table, often in LL(1) parsers, to make parsing decisions based on the leftmost non-terminal and a limited number of lookahead symbols.
 - **BNF** - A BNF specification is a set of derivation rules, written as:
   
    ```<symbol> ::= __expression__```
@@ -755,5 +769,3 @@ The following are the coding design principles:
    ::= means that the symbol on the left must be replaced with the expression on the right.
 
    ```__expression__``` consists of one or more sequences of either terminal or nonterminal symbols where each sequence is separated by a vertical bar "|" indicating a choice, the whole being a possible substitution for the symbol on the left.
-
-
