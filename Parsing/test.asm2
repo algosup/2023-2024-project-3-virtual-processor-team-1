@@ -1,6 +1,18 @@
+.seumInternational
+    MOV R2, "No."
+RET
+
+.function
+    MOV R1, "Seum"
+    CALL .seumInternational
+    DISP R1
+END
+
 MOV R1, -5
 DISP R1     ; expected 5
 MOV R2, #7   ; Test comment
+
+CALL .function
 
 DISP R2     ; expected 7
 ADD R1, R2
@@ -12,5 +24,4 @@ DISP "Hello World" ; expected Hello World
 
 ; expected --> R1 = 5, R2 = 7, R1 = 12, R2 = 4
 
-    DISP "End of program"
-    END
+DISP "End of program"
