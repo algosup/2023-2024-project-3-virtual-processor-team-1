@@ -41,9 +41,6 @@
     - [Naming](#naming)
     - [Comments](#comments)
   - [IX. Code Design Principles](#ix-code-design-principles)
-  - [X. Ideas and Hypotheses](#x-ideas-and-hypotheses)
-    - [Unproven hypotheses](#unproven-hypotheses)
-    - [Proven Hypotheses](#proven-hypotheses)
   - [XI. Challenges](#xi-challenges)
   - [XII. Possible Bugs](#xii-possible-bugs)
   - [XIII. Development Process](#xiii-development-process)
@@ -83,28 +80,28 @@ Secondary audiences
 
 The project will be developed in plain, portable, C language without using any external library besides C standard libraries.
 
-The project is divided into two parts:
+Project divided into virtual processor and interpreter:
 
-1. The first part is the virtual processor. The virtual processor will have the following components:
+ 1. Virtual processor components detailed:
+      - 4 general-purpose registers
+      - 4 address registers
+      - 1 instruction register
+      - 1 program counter
+      - 1 stack pointer
+      - 1 data memory
+      - 1 instruction memory
+      - 1 stack memory
+      - 1 virtual terminal
+      - 32-bit architecture
 
-   - 4 general-purpose registers
-   - 4 address registers
-   - 1 instruction register
-   - 1 program counter
-   - 1 stack pointer
-   - 1 data memory
-   - 1 instruction memory
-   - 1 stack memory
-   - 1 virtual terminal
-   - 32-bit architecture
 
-2. The second part is the interpreter. The purpose of the interpreter is to read the assembly code from a file, check for semantic correctness, transform it into machine code and execute it on the virtual processor.
-
-   The interpreter will have the following components:
-   - A lexical analyser
-   - A parser
-   - A semantic analyser
-   - A code generator
+ 2. The second part is the interpreter. The purpose of the interpreter is to read the assembly code from a file, check for semantic correctness, transform it into machine code and execute it on the virtual processor.
+   
+      Interpreter components detailed:
+      - A lexical analyser
+      - A parser
+      - A semantic analyser
+      - A code generator
 
 ## V. Nice to have
 
@@ -319,6 +316,8 @@ The parser acts like a language detective. It takes the tokens, which are like t
 
 In a nutshell, the parser is like a language teacher and an instruction manual combined. It ensures the computer understands the code's structure, checks for mistakes, and creates a clear plan for smooth execution. In our project, having a reliable parser is key to making the virtual processor and interpreter work seamlessly.
 
+![diagram](/Documents/Appendices/parser.png)
+
 **Note**
 
 The process of the parsing is the following:
@@ -395,7 +394,7 @@ eg.
 
 ```mermaid
 graph TD
-  A[AST]
+  A[Root]
   A -->|Instruction| B1[Mov]
   B1 -->|Operand| B2[Register 'R1']
   B1 -->|Operand| B3[Immediate '#10']
@@ -409,7 +408,7 @@ eg.
 
 ```mermaid
 graph TD
-  A[AST]
+  A[Root]
   A -->|Instruction| B1[MOV]
   B1 -->|Operand| B2[Register 'R1']
   B1 -->|Operand| B3[Immediate '#10']
@@ -696,17 +695,7 @@ The following are the coding design principles:
  - Emphasise improved algorithmic complexity over micro-optimisation
  - Use unit tests to ensure correctness during development
 
-## X. Ideas and Hypotheses
 
-<!-- TODO -->
-
-### Unproven hypotheses
-
-<!-- TODO -->
-
-### Proven Hypotheses
-
-<!-- TODO -->
 
 ## XI. Challenges
 
@@ -726,31 +715,17 @@ The following are the coding design principles:
 
 ## XIII. Development Process
 
-In our pursuit of crafting a robust and dependable system, we have delineated a systematic development process:
-
-1. **Create a Minimal Assembly Language:**
-   - Establishing the groundwork involves the formulation of a concise assembly language. This serves as the fundamental framework for subsequent stages.
-
-2. **Interpret Assembly Code in C:**
-   - We will undertake the challenge of interpreting the assembly code directly within the C programming language. This step enables an initial evaluation of code functionality.
-
-3. **Artificially Clean Assembly Code:**
-   - In the quest for clarity, the assembly code undergoes a refinement process. Extraneous elements such as comments and whitespaces are deliberately removed to enhance readability for the interpreter.
-
-4. **Develop Lexer and Parser:**
-   - To facilitate deeper analysis, we embark on creating a lexer and parser specifically designed for the assembly code. These components play a vital role in deciphering the structure and syntax of the code.
-
-5. **Implement Semantic Analyzer:**
-   - Building on the parsing foundation, we introduce a semantic analyzer tailored to scrutinize the meaning and context of the assembly code. This analytical step ensures a more nuanced understanding of the code's functionality.
-
-6. **Generate Machine Code:**
-   - The development process advances to the generation of machine code from the refined assembly version. This transformation is a pivotal step in preparing the code for execution on a virtual processor.
-
-7. **Run Machine Code on Virtual Processor:**
-   - The generated machine code is executed on a virtual processor, providing a simulated environment for testing and validation.
-
-8. **Test with Assembly Programs:**
-   - Rigorous testing ensues, employing assembly programs as unit tests. This meticulous verification process guarantees the correctness and reliability of the system throughout its developmental stages.
+- Begin development with a minimal tokenization parser and a basic virtual processor
+  
+- Limit the virtual processor to handle only 2 or 3 instructions initially
+  
+- Focus on understanding key concepts like tokenization, parsing, and basic execution
+  
+- Gradually expand the implementation to include more instructions as comprehension grows
+  
+- Improve parsing rules and enhance the virtual processor's capabilities step by step
+  
+- Adopt an incremental approach to systematically handle the project's full-size development
 
 ## XIV. Glossary
 
