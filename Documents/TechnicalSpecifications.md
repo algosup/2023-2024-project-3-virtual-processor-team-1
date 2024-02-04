@@ -11,40 +11,39 @@
 - [DEADLINE 9/2 5pm](#deadline-92-5pm)
   - [I. Audience](#i-audience)
   - [II. Deliverable](#ii-deliverable)
-  - [IV. Requirements](#iv-requirements)
-  - [III. Details](#iii-details)
+  - [III. Requirements](#iii-requirements)
+  - [IV. Details](#iv-details)
   - [V. Nice to have](#v-nice-to-have)
   - [VI. Priorities](#vi-priorities)
   - [VII. Technical Architecture](#vii-technical-architecture)
-    - [Technology stack](#technology-stack)
-    - [Input data](#input-data)
-    - [Output data](#output-data)
-    - [Non-requirements / Out of scope](#non-requirements--out-of-scope)
-    - [Operating requirements](#operating-requirements)
-    - [Key functions, operations, and algorithms](#key-functions-operations-and-algorithms)
-    - [Algorithms](#algorithms)
-    - [File Cleaning and Reading](#file-cleaning-and-reading)
-    - [Lexical analysis (Tokenisation)](#lexical-analysis-tokenisation)
-    - [Syntax analysis (Parsing)](#syntax-analysis-parsing)
-      - [Errors handling](#errors-handling)
-    - [Semantic analysis](#semantic-analysis)
-    - [Code generation](#code-generation)
-      - [Instruction format](#instruction-format)
-    - [Virtual processor](#virtual-processor)
-      - [Internal Components of a Computer](#internal-components-of-a-computer)
-      - [Memory](#memory)
-      - [Registers](#registers)
+    - [1. Technology stack](#1-technology-stack)
+    - [2. Input data](#2-input-data)
+    - [3. Output data](#3-output-data)
+    - [4. Non-requirements / Out of scope](#4-non-requirements--out-of-scope)
+    - [5. Operating requirements](#5-operating-requirements)
+    - [6. Key functions, operations, and algorithms](#6-key-functions-operations-and-algorithms)
+    - [7. Algorithms](#7-algorithms)
+      - [7.1. File Cleaning and Reading](#71-file-cleaning-and-reading)
+      - [7.2. Lexical analysis (Tokenisation)](#72-lexical-analysis-tokenisation)
+      - [7.3. Syntax analysis (Parsing)](#73-syntax-analysis-parsing)
+      - [7.4. Semantic analysis](#74-semantic-analysis)
+      - [7.5. Code generation](#75-code-generation)
+        - [Instruction format](#instruction-format)
+      - [7.6. Virtual processor](#76-virtual-processor)
+        - [Internal Components of a Computer](#internal-components-of-a-computer)
+        - [Memory](#memory)
+        - [Registers](#registers)
   - [VIII. Syntax and Structure](#viii-syntax-and-structure)
-    - [Folder structure](#folder-structure)
-    - [Program file structure](#program-file-structure)
-    - [Function declaration](#function-declaration)
-    - [Naming](#naming)
-    - [Comments](#comments)
+    - [1. Folder structure](#1-folder-structure)
+    - [2. Program file structure](#2-program-file-structure)
+    - [3. Function declaration](#3-function-declaration)
+    - [4. Naming](#4-naming)
+    - [5. Comments](#5-comments)
   - [IX. Code Design Principles](#ix-code-design-principles)
-  - [XI. Challenges](#xi-challenges)
-  - [XII. Possible Bugs](#xii-possible-bugs)
-  - [XIII. Development Process](#xiii-development-process)
-  - [XIV. Glossary](#xiv-glossary)
+  - [X. Challenges](#x-challenges)
+  - [XI. Possible Bugs](#xi-possible-bugs)
+  - [XII. Development Process](#xii-development-process)
+  - [XIII. Glossary](#xiii-glossary)
 
 </details>
 
@@ -64,11 +63,11 @@ Secondary audiences
 
  The goal of the project is to create a virtual processor and an interpreter for running assembly code on that processor.
 
-## IV. Requirements
+## III. Requirements
 
 1. Create a minimal assembly language (This requirement is fully described in the [functional specifications](./FunctionalSpecifications.md))
 
-2. Develop a C program that reads assembly code from a file, checks for semantic correctness, and executes it on the virtual processor.
+2. Develop a C program that reads assembly code from a file, checks for semantic correctness, and executes it on the virtual processor. In the case of an error, the program should display an error message in the virtual terminal
 
 3. Implement a virtual system call for displaying text in a virtual terminal, that can be accessed from the assembly code  
 
@@ -76,7 +75,7 @@ Secondary audiences
 
 5. Write a small assembly program conceptually similar to unit tests to showcase that everything is working
 
-## III. Details
+## IV. Details
 
 The project will be developed in plain, portable, C language without using any external library besides C standard libraries.
 
@@ -117,7 +116,7 @@ Project divided into virtual processor and interpreter:
 
 ## VII. Technical Architecture
 
-### Technology stack
+### 1. Technology stack
 
 - Operating System: Any modern, widely used operating system with support for C development (e.g., Linux, Windows, macOS)
 - Programming Language: C17 (the most recent standard version)
@@ -125,27 +124,27 @@ Project divided into virtual processor and interpreter:
 - Integrated Development Environment (IDE): Visual Studio Code
 - No additional libraries can be used besides C standard libraries
 
-### Input data
+### 2. Input data
 
 One file on the command line.
 
 - Arg[0] -  The input data will be a text file containing a program written in the assembly language. The program will be read by the interpreter and executed on the virtual processor.
 
-### Output data
+### 3. Output data
 
 The output data will be the result of the execution of the assembly program or the errors returned by the program. The result will be displayed in the virtual terminal.
 
-### Non-requirements / Out of scope
+### 4. Non-requirements / Out of scope
 
 - Graphical debugger with visual representations of the register, data, and instruction memory
 - Implementation of flags  
 
-### Operating requirements
+### 5. Operating requirements
 
 - The program should be able to run on any modern operating system with support for C development (e.g., Linux, Windows, macOS)
 - The program should be able to run on any modern computer with a 64-bit processor.
 
-### Key functions, operations, and algorithms
+### 6. Key functions, operations, and algorithms
 
 Some of the key operations that the software will perform and that need to be represented via functions are:
 
@@ -165,11 +164,11 @@ Some of the key operations that the software will perform and that need to be re
    - Implementing a virtual processor with registers, memory, and an execution pipeline
    - Executing generated machine code
 
-### Algorithms  
+### 7. Algorithms  
 
 The following section describes the algorithms described above in depth. Furthermore, it describes the skeleton of the program and the order in which the algorithms will be implemented.
 
-### File Cleaning and Reading
+#### 7.1. File Cleaning and Reading
 
 Cleaning the file involves removing comments and whitespaces to facilitate easier reading. The size of the array storing the cleaned assembly code needs to be managed dynamically, considering potential memory constraints.
 
@@ -229,24 +228,20 @@ Diagram of the cleaning function
    }
    ```
 
-### Lexical analysis (Tokenisation)
+#### 7.2. Lexical analysis (Tokenisation)
 
 Tokenisation plays a crucial role by breaking down the assembly code into manageable units called tokens. Think of tokens as building blocks or Lego pieces that structure the code. Each token represents a specific element, like an instruction, register, or operand.
 
 **Organisation:**
-
    - Tokens help organise the code into meaningful parts, making it easier for the computer to understand and process
 
 **Simplification:**
-
    - Similar to spaces in a sentence, tokens simplify the code, aiding in the analysis of its structure
 
 **Error Detection:**
-
    - Tokenisation aids in spotting errors early on. By breaking the code into tokens, we can quickly identify where issues might arise
 
 **Efficient Parsing:**
-
    - Parsing the code becomes more efficient with tokens, acting as a clear guide for decoding the language
 
 eg.
@@ -299,7 +294,7 @@ The tokenisation will be the first filter to check if the assembly code is corre
    - Incorrect registers
    - Incorrect operands
 
-### Syntax analysis (Parsing)
+#### 7.3. Syntax analysis (Parsing)
 
 The parser acts like a language detective. It takes the tokens, which are like the words of our assembly code, and figures out the rules that govern their arrangement. Think of it as a grammar expert for computers.
 
@@ -382,9 +377,7 @@ These rules guide the parser in constructing the AST.
 
 - Employ a top-down parsing approach, where the parsing process starts from the highest-level constructs and gradually descends to lower-level details. This aligns with the hierarchical nature of an assembly language.
 
-- The strategy follows an LL parsing algorithm, meaning that when multiple choices are available, the leftmost non-terminal is chosen.
-
-- When an error is detected, the parser should provide error messages, including the printing of the line and the nature of the error. The error handling will be described in detail in the next section.
+- When an error is detected, the parser should provide error messages, including the position where is the line and the nature of the error. The error handling will be described in detail in the next section.
 
 - As the parsing progresses successfully, construct the abstract syntax tree (AST) by linking nodes according to the hierarchical structure of the assembly language. Each node in the AST represents a syntactic construct, such as an instruction or operand.
 
@@ -412,7 +405,7 @@ graph TD
   A -->|Instruction| B1[MOV]
   B1 -->|Operand| B2[Register 'R1']
   B1 -->|Operand| B3[Immediate '#10']
-  A -->|Instruction| C1[.loop]
+  A -->|Label| C1[.loop]
   C1 -->|Instruction| C2[Add]
    C2 -->|Operand| C3[Register 'R1']
    C2 -->|Operand| C5[immediate '#2']
@@ -422,79 +415,81 @@ graph TD
   C1 -->|Instruction| C6[JMP .loop]
 ```
 
-#### Errors handling
+**Errors handling**
 
 The parser will be able to handle the following errors:
 
 **Unexpected Token:**
-
    - **Error Message:** "Unexpected token '{token}' found at line {line}."
    - **Description:** This error occurs when the parser encounters a token that is unexpected based on the current context. The error message specifies the token and the line where the issue is located.
   
 **Unexpected End of File:**
-
    - **Error Message:** "Unexpected end of file. Expected more tokens to complete the syntax."
    - **Description:** This error is raised when the parser reaches the end of the file but expects additional tokens to complete a syntactic structure. The message indicates an unexpected termination.
 
-**Mismatched Types:**
-
-   - **Error Message:** "Type mismatch: Expected {expected_type}, but found {actual_type} at line {line}."
-   - **Description:** This error occurs when there is a mismatch between expected and actual data types. The message specifies the expected and actual types, along with the error location.
-
 **Invalid Syntax:**
-
    - **Error Message:** "Invalid syntax at line {line}. Unable to parse the provided code."
    - **Description:** This generic error indicates that the parser encountered a syntax that doesn't conform to the language's grammar rules. The message communicates the location of the syntax error.
-
+  
 **Redundant Tokens:**
-
    - **Error Message:** "Redundant tokens found at line {line}. Remove or correct the extra tokens."
    - **Description:** This error signals the presence of extra or redundant tokens in the code. The message advises removing or correcting the surplus tokens at the specified location.
 
-**Undefined label:**
-
-   - **Error Message:** "Undefined {label} '{name}' at line {line}."
-   - **Description:** When the parser encounters an undeclared label, this error is raised. The message indicates the type (variable or identifier) and the name of the undefined entity.
-
-**Duplicate label:**
-
-   - **Error Message:** "Duplicate {label} '{name}' at line {line}."
-   - **Description:** This error occurs when the parser encounters a duplicate label. The message specifies the type (variable or identifier) and the name of the duplicate entity.
-
 **Invalid Operand:**
-
    - **Error Message:** "Invalid operand '{operand}' at line {line}."
    - **Description:** This error indicates that the parser encountered an invalid operand. The message specifies the operand and the location of the error.
 
 ---
 
-### Semantic analysis
+#### 7.4. Semantic analysis
 
-Semantic analysis ensures the computer comprehends the intended meaning behind assembly code, going beyond mere rule-following.
+Semantic analysis is a vital stage in the compilation process. After the lexical and syntax analysis, the compiler moves on to the semantic analysis phase. This phase is responsible for checking the source code for semantic errors, which are errors in logic or meaning. For instance, it checks if the variables are declared before use if the function calls match the definitions, if the operators are applicable to the given operands, and so on.
 
 **Meaningful Understanding:**
-
    - It ensures the computer grasps the intended meaning of the code, aligning everyone on the same page
 
 **Correct Usage of Instructions:**
-
    - Like a wise friend correcting language misuse, semantic analysis checks for correct assembly instruction usage
 
 **Operands Compatibility:**
-
    - Similar to preventing illogical comparisons, semantic analysis ensures compatible operands, avoiding confusion for the computer
 
 **Preventing Confusion:**
-
    - By understanding the code's meaning, semantic analysis prevents confusion, ensuring correct execution
 
-For semantically incorrect assembly programs, the program will:
+```mermaid
+flowchart TD
+  A[Parse tree]
+  A --> B1[Semantic Analysis]
+   B1 --> B2[Semantically verified parse tree]
+```
 
-   - Provide detailed error messages specifying the nature and location of semantic errors.
-   - Halt program execution to prevent undefined behavior.
-   - Avoid compromising subsequent instructions' integrity with corrective actions.
 
-### Code generation
+
+
+
+**Note:**
+
+
+
+
+Errors recognized by semantic analyzer are as follows:
+
+**Mismatched Types:**
+   - **Error Message:** "Type mismatch: Expected {expected_type}, but found {actual_type} at line {line}."
+   - **Description:** This error occurs when there is a mismatch between expected and actual data types. The message specifies the expected and actual types, along with the error location.
+
+**Undefined label:**
+   - **Error Message:** "Undefined {label} '{name}' at line {line}."
+   - **Description:** When the parser encounters an undeclared label, this error is raised. The message indicates the type (variable or identifier) and the name of the undefined entity.
+
+**Duplicate label:**
+   - **Error Message:** "Duplicate {label} '{name}' at line {line}."
+   - **Description:** This error occurs when the parser encounters a duplicate label. The message specifies the type (variable or identifier) and the name of the duplicate entity.
+
+
+
+#### 7.5. Code generation
 
 The AST is translated into an intermediate representation or machine code.
 Each assembly language instruction is mapped to corresponding C functions or operations.
@@ -503,7 +498,7 @@ Each assembly language instruction is mapped to corresponding C functions or ope
 - **Instruction Width:** Every instruction is 64 bits wide.
 - **Data Storage:** Data is stored in little-endian format.
 
-#### Instruction format
+##### Instruction format
 
 - **Opcode (Byte 1):** The first byte signifies the opcode of the instruction.
 - **Register (Byte 2):** The second byte represents the register.
@@ -574,21 +569,21 @@ Each assembly language instruction is mapped to corresponding C functions or ope
 |MOV | R1  | Unused| Unused| 25 | 35 |
 |OPCODE| REGISTER | DATA | DATA | DATA | DATA |
 
-### Virtual processor
+#### 7.6. Virtual processor
 
 In this section, we're constructing a virtual machine (VM) with its own instruction set to serve as the target platform for our interpreter's code generation phase. Similar to the JVM and bytecode concept, but in a much simpler form.
 
-#### Internal Components of a Computer
+##### Internal Components of a Computer
 
 We focus on three main components: CPU, registers, and memory. Instructions, represented as binary data, reside in memory. The CPU retrieves and executes instructions sequentially, and the machine's running state is stored in registers.
 
-#### Memory
+##### Memory
 
 - Memory stores data, including code and other information.
 - Segments: `text` (code), `data` (initialized data), `bss` (uninitialized data), `stack` (function call states), `heap` (dynamic memory allocation).
 - For simplicity, we merge `data` and `bss`, using `data` for string literals.
 
-#### Registers
+##### Registers
 
 - `PC` (Program Counter): Stores the memory address of the next instruction.
 - `SP` (Stack Pointer): Points to the top of the stack, used for function calls.
@@ -598,7 +593,7 @@ We focus on three main components: CPU, registers, and memory. Instructions, rep
 
 ## VIII. Syntax and Structure
 
-### Folder structure
+### 1. Folder structure
 
 ```txt
 📦2023-2024-project-3-virtual-processor
@@ -637,7 +632,7 @@ We focus on three main components: CPU, registers, and memory. Instructions, rep
 
 **interpreter.c** - Main file for the interpreter
 
-### Program file structure
+### 2. Program file structure
 
 1. **Prologue:**
    - Start the file with a prologue describing the purpose of objects (functions, data declarations, etc.)
@@ -662,11 +657,11 @@ We focus on three main components: CPU, registers, and memory. Instructions, rep
    - Group similar functions together for clarity
    - Consider alphabetical order for large sets of independent utility functions
 
-### Function declaration
+### 3. Function declaration
 
 Each function should be preceded by a block comment prologue that gives a short description of what the function does.
 
-### Naming
+### 4. Naming
 
 - **File names**: should be in camelCase
 - **`#define`:** constants should be in all CAPS
@@ -675,7 +670,7 @@ Each function should be preceded by a block comment prologue that gives a short 
 - **Macro "functions"** are in all CAPS
 - **Typedef** names should have "`_t`" appended to their name
 
-### Comments
+### 5. Comments
 
 - Putting comments at the top of a 3-10 line section telling what it does
 
@@ -697,14 +692,14 @@ The following are the coding design principles:
 
 
 
-## XI. Challenges
+## X. Challenges
 
 - Developing a robust lexer and parser for precise assembly code tokenisation, and managing diverse language constructs, poses a significant challenge
 - Enforcing correct usage of assembly instructions and operands through semantic analysis requires careful consideration to detect and prevent potential runtime errors
 - Implementing parsing by string comparison is relatively straightforward; the true challenge lies in the conversion to machine code
 - Handling labels and function calls within the assembly code introduces an additional challenge, requiring effective management of addresses, offsets, and the intricacies of control flow
 
-## XII. Possible Bugs
+## XI. Possible Bugs
 
 - The system may not be able to handle large assembly programs
 - The system may not be able to handle complex assembly programs
@@ -713,7 +708,7 @@ The following are the coding design principles:
 - The system may not be able to detect major errors for instance: overflow, underflow, division by zero, etc
 - We assume that the user will not comment until the end of the line, if it does, the system may not be able to detect it
 
-## XIII. Development Process
+## XII. Development Process
 
 - Begin development with a minimal tokenization parser and a basic virtual processor
   
@@ -727,11 +722,12 @@ The following are the coding design principles:
   
 - Adopt an incremental approach to systematically handle the project's full-size development
 
-## XIV. Glossary
+## XIII. Glossary
 
 - **breadth-first approach** -  A breadth-first approach is a graph traversal method that starts at the root node and visits all the neighboring nodes. Then for each of those nearest nodes, it visits their unexplored neighbor nodes, and so on, until it finds the goal.
 - **Virtual processor** - A vCPU is a processor simulated within a virtual machine, allowing the execution of one processor thread. These vCPUs are allocated from the physical CPU resources of the host machine.
-- **Lexical analysis** - lexical analysis is the process of converting a sequence of characters (such as in a computer program or web page) into a sequence of tokens (strings with an identified "meaning").
+- **Opcode** -  Short for "operation code," it is a code that represents a specific machine language instruction.
+- **Little-Endian** - A format for storing binary data in which the least significant byte comes first.
 - **LL Parsing Algorithm** -LL parsing is a top-down parsing method that processes input from left to right, aiming to construct a parse tree through leftmost derivations. It utilizes a predictive parsing table, often in LL(1) parsers, to make parsing decisions based on the leftmost non-terminal and a limited number of lookahead symbols.
 - **BNF** - A BNF specification is a set of derivation rules, written as:
   
