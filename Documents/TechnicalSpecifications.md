@@ -27,9 +27,10 @@
       - [7.2. Lexical analysis (Tokenisation)](#72-lexical-analysis-tokenisation)
       - [7.3. Syntax analysis (Parsing)](#73-syntax-analysis-parsing)
       - [7.4. Semantic analysis](#74-semantic-analysis)
-      - [7.5. Code generation](#75-code-generation)
+      - [7.5 Error handling system](#75-error-handling-system)
+      - [7.6. Code generation](#76-code-generation)
         - [Instruction format](#instruction-format)
-      - [7.6. Virtual processor](#76-virtual-processor)
+      - [7.7. Virtual processor](#77-virtual-processor)
         - [Internal Components of a Computer](#internal-components-of-a-computer)
         - [Memory](#memory)
         - [Registers](#registers)
@@ -79,7 +80,7 @@ Secondary audiences
 
 The project will be developed in plain, portable, C language without using any external library besides C standard libraries.
 
-Project divided into virtual processor and interpreter:
+Project is divided into virtual processor and interpreter:
 
  1. Virtual processor components detailed:
       - 4 general-purpose registers
@@ -206,7 +207,10 @@ Diagram of the cleaning function
 
 - The initial assumption of the maximum number of lines provides a starting point for memory allocation.
 - Dynamic resizing after reading the file ensures efficient memory utilisation based on the actual number of lines.
-- The program will read the file line by line and will check either if it's a carriage return or a line feed and remove it. Then, the program will remove the comments by checking if a ";" is present in the line and if it is, it will remove everything after it. Finally, this new file will be stored in a 2D array and will be used for the next step.
+- The program will read the file line by line and will check either if it's a carriage return or 
+  a line feed and remove it. Then, the program will remove the comments by checking if a ";" is 
+  present in the line and if it is, it will remove everything after it. Finally, this new file 
+  will be stored in a 2D array and will be used for the next step.
 
 **Input data**
 
@@ -267,7 +271,10 @@ eg.
 The process for the tokenisation is the following:
 
    - The program will read the array line by line 
-   - Then it will check every word of the line and it will create a token with the right type  and value according to the word. For this step, the "strcpm" function will be used to compare the word with the list of instructions, registers and operands. It's easy to implement and it's efficient.
+   - Then it will check every word of the line and it will create a token with the right type 
+  and value according to the word. For this step, the "strcpm" function will be used to compare 
+  the word with the list of instructions, registers and operands. It's easy to implement and 
+  it's efficient.
    - Finally, it will replace each instruction, register and operand of the original array with the corresponding token
 
 Each token will be represented by a struct with the following attributes:
@@ -290,13 +297,24 @@ class Token {
 
 The tokenisation will be the first filter to check if the assembly code is correct. In this step the program will be able to handle the most obvious errors like:
 
-   - Incorrect instructions
-   - Incorrect registers
-   - Incorrect operands
+**Incorrect instructions:**
+  - **Error Message:** "Incorrect instructions '{instructions}' found at line {line}."
+  - **Description:** Incorrect instruction found at line {line}. 
+  
+**Incorrect registers:**
+  - **Error Message:** "Incorrect registers '{registers}' found at line {line}."
+  - **Description:** Incorrect registers found at line {line}.
+  
+**Incorrect operands:**
+   - **Error Message:** "Incorrect operands '{operands}' found at line {line}."
+   - **Description:** Incorrect operands found at line {line}.
+  
 
 #### 7.3. Syntax analysis (Parsing)
 
-The parser acts like a language detective. It takes the tokens, which are like the words of our assembly code, and figures out the rules that govern their arrangement. Think of it as a grammar expert for computers.
+The parser acts like a language detective. It takes the tokens, which are like the words of our 
+assembly code, and figures out the rules that govern their arrangement. Think of it as a grammar 
+expert for computers.
 
 1. **Understanding Structure:**
    - The parser helps the computer understand the structure of the assembly code. It's like teaching it the rules of the language so it can follow along.
@@ -309,7 +327,10 @@ The parser acts like a language detective. It takes the tokens, which are like t
 4. **Efficient Execution:**
    - By having a parser, the computer doesn't have to guess what the code means. It follows the parsed instructions step by step, ensuring efficient and accurate execution.
 
-In a nutshell, the parser is like a language teacher and an instruction manual combined. It ensures the computer understands the code's structure, checks for mistakes, and creates a clear plan for smooth execution. In our project, having a reliable parser is key to making the virtual processor and interpreter work seamlessly.
+In a nutshell, the parser is like a language teacher and an instruction manual combined. It 
+ensures the computer understands the code's structure, checks for mistakes, and creates a clear 
+plan for smooth execution. In our project, having a reliable parser is key to making the virtual 
+processor and interpreter work seamlessly.
 
 ![diagram](/Documents/Appendices/parser.png)
 
@@ -317,7 +338,7 @@ In a nutshell, the parser is like a language teacher and an instruction manual c
 
 The process of the parsing is the following:
 
-- Receive the tokenized assembly code obtained from the lexical analysis (tokenization) phase.
+- Receive the tokenised assembly code obtained from the lexical analysis (tokenization) phase.
 
 - Initialize a parsing pointer to the beginning of the token array.
   Set up data structures to represent the abstract syntax tree (AST)
@@ -375,13 +396,20 @@ The process of the parsing is the following:
 
 These rules guide the parser in constructing the AST.
 
-- Employ a top-down parsing approach, where the parsing process starts from the highest-level constructs and gradually descends to lower-level details. This aligns with the hierarchical nature of an assembly language.
+- Employ a top-down parsing approach, where the parsing process starts from the highest-level 
+  constructs and gradually descends to lower-level details. This aligns with the hierarchical 
+  nature of an assembly language.
 
-- When an error is detected, the parser should provide error messages, including the position where is the line and the nature of the error. The error handling will be described in detail in the next section.
+- When an error is detected, the parser should provide error messages, including the position 
+where is the line and the nature of the error. The error handling will be described in detail in 
+the next section.
 
-- As the parsing progresses successfully, construct the abstract syntax tree (AST) by linking nodes according to the hierarchical structure of the assembly language. Each node in the AST represents a syntactic construct, such as an instruction or operand.
+- As the parsing progresses successfully, construct the abstract syntax tree (AST) by linking 
+  nodes according to the hierarchical structure of the assembly language. Each node in the AST 
+  represents a syntactic construct, such as an instruction or operand.
 
-- Once the entire token sequence is successfully parsed and the AST is constructed, the parsing phase concludes. The AST becomes the basis for further processing.
+- Once the entire token sequence is successfully parsed and the AST is constructed, the parsing 
+  phase concludes. The AST becomes the basis for further processing.
 
 eg.
 
@@ -443,7 +471,11 @@ The parser will be able to handle the following errors:
 
 #### 7.4. Semantic analysis
 
-Semantic analysis is a vital stage in the compilation process. After the lexical and syntax analysis, the compiler moves on to the semantic analysis phase. This phase is responsible for checking the source code for semantic errors, which are errors in logic or meaning. For instance, it checks if the variables are declared before use if the function calls match the definitions, if the operators are applicable to the given operands, and so on.
+Semantic analysis is a vital stage in the compilation process. After the lexical and syntax 
+analysis, the compiler moves on to the semantic analysis phase. This phase is responsible for 
+checking the source code for semantic errors, which are errors in logic or meaning. For 
+instance, it checks if the variables are declared before use if the function calls match the 
+definitions, if the operators are applicable to the given operands, and so on.
 
 **Meaningful Understanding:**
    - It ensures the computer grasps the intended meaning of the code, aligning everyone on the same page
@@ -457,39 +489,102 @@ Semantic analysis is a vital stage in the compilation process. After the lexical
 **Preventing Confusion:**
    - By understanding the code's meaning, semantic analysis prevents confusion, ensuring correct execution
 
-```mermaid
-flowchart TD
-  A[Parse tree]
-  A --> B1[Semantic Analysis]
-   B1 --> B2[Semantically verified parse tree]
-```
 
+
+![diagram](/Documents/Appendices/semantic.png)
 
 
 
 
 **Note:**
 
+The process of the semantic analysis is the following:
+
+- The program will receive the AST obtained from the parsing phase.
+  
+- The program will check if the operands have the correct types. For this step, the program will 
+  compare the children of the same parent. For instance, if the instruction is ADD, the program will check if both operands are of the same type. If they are not, the 
+  program will return an error message. 
+  
+- The program will also check if the labels are declared before use and if the function calls
+ match the definitions. For this step, the program will use a hash table to store the labels and 
+ the function calls. If a label is declared before use, the program will store it in the hash 
+ table. If a function call is found, the program will check if the function is declared in the 
+ hash table. If it's not, the program will return an error message.
+  
+- If an error is detected, the program will provide an error message, including the position 
+  where is the line and the nature of the error. The error handling will be described in detail 
+  in the next section.
+  
+- If no error is detected, the program will move to the next step, the code generation.
 
 
 
-Errors recognized by semantic analyzer are as follows:
+**Errors handling**
+
+Errors recognized by the semantic analyser are as follows:
 
 **Mismatched Types:**
-   - **Error Message:** "Type mismatch: Expected {expected_type}, but found {actual_type} at line {line}."
-   - **Description:** This error occurs when there is a mismatch between expected and actual data types. The message specifies the expected and actual types, along with the error location.
+   - **Error Message:** "Type mismatch: Expected {expected_type}, but found {actual_type} at 
+   line {line}."
+   - **Description:** This error occurs when there is a mismatch between expected and actual 
+  data types. The message specifies the expected and actual types, along with the error location.
 
 **Undefined label:**
    - **Error Message:** "Undefined {label} '{name}' at line {line}."
-   - **Description:** When the parser encounters an undeclared label, this error is raised. The message indicates the type (variable or identifier) and the name of the undefined entity.
+   - **Description:** When the parser encounters an undeclared label, this error is raised. The 
+    message indicates the type (variable or identifier) and the name of the undefined entity.
 
 **Duplicate label:**
    - **Error Message:** "Duplicate {label} '{name}' at line {line}."
    - **Description:** This error occurs when the parser encounters a duplicate label. The message specifies the type (variable or identifier) and the name of the duplicate entity.
 
 
+#### 7.5 Error handling system
 
-#### 7.5. Code generation
+
+The interpreter incorporates an error handling system to ensure users receive clear and actionable feedback regarding assembly code issues. It detects and reports errors at multiple stages of the interpretation process, including lexical analysis, parsing, and semantic analysis.
+
+**Error Identification**
+
+Syntax and semantic errors are systematically identified and stored in an error array during parsing and interpretation.
+
+**Binary Transformation Check**
+
+Before generating machine code from the assembly, the interpreter checks the error array. If empty, signifying no errors, the process proceeds. If errors are present, the interpreter stops and initiates error handling.
+
+**Error Reporting**
+
+Detected errors are reported to the user through the virtual terminal. Details include the error nature and source code location.
+To open the virtual terminal we are going to use the system function from the C standard library.
+Here is an example of how to open a new terminal window with a message using the system function for Macos:
+
+```c
+#include <stdlib.h>
+#include <stdio.h>
+
+void openVirtualTerminal(char* message) {
+    char command[100];
+    
+    // Use osascript to open a new Terminal window with the specified message
+    sprintf(command, "osascript -e 'tell application \"Terminal\" to do script \"%s\"'", message);
+    system(command);
+}
+
+int main() {
+    // Example usage
+    openVirtualTerminal("echo Hello, this is a message!");
+
+    return 0;
+}
+```
+
+**Seamless Progression to Machine Code**
+
+If the error array is empty after the binary transformation check, the interpreter smoothly transitions to machine code generation. This ensures only valid code progresses for execution.
+
+
+#### 7.6. Code generation
 
 The AST is translated into an intermediate representation or machine code.
 Each assembly language instruction is mapped to corresponding C functions or operations.
@@ -569,7 +664,7 @@ Each assembly language instruction is mapped to corresponding C functions or ope
 |MOV | R1  | Unused| Unused| 25 | 35 |
 |OPCODE| REGISTER | DATA | DATA | DATA | DATA |
 
-#### 7.6. Virtual processor
+#### 7.7. Virtual processor
 
 In this section, we're constructing a virtual machine (VM) with its own instruction set to serve as the target platform for our interpreter's code generation phase. Similar to the JVM and bytecode concept, but in a much simpler form.
 
@@ -694,19 +789,27 @@ The following are the coding design principles:
 
 ## X. Challenges
 
-- Developing a robust lexer and parser for precise assembly code tokenisation, and managing diverse language constructs, poses a significant challenge
-- Enforcing correct usage of assembly instructions and operands through semantic analysis requires careful consideration to detect and prevent potential runtime errors
-- Implementing parsing by string comparison is relatively straightforward; the true challenge lies in the conversion to machine code
-- Handling labels and function calls within the assembly code introduces an additional challenge, requiring effective management of addresses, offsets, and the intricacies of control flow
+- Developing a robust lexer and parser for precise assembly code tokenisation, and managing 
+  diverse language constructs, poses a significant challenge
+- Enforcing correct usage of assembly instructions and operands through semantic analysis 
+  requires careful consideration to detect and prevent potential runtime errors
+- Implementing parsing by string comparison is relatively straightforward; the true challenge 
+  lies in the conversion to machine code
+- Handling labels and function calls within the assembly code introduces an additional 
+  challenge, requiring effective management of addresses, offsets, and the intricacies of 
+  control flow
 
 ## XI. Possible Bugs
 
 - The system may not be able to handle large assembly programs
 - The system may not be able to handle complex assembly programs
 - The system takes too long to execute
-- The system may have trouble translating the assembly code into machine code and it can result in an incorrect result
-- The system may not be able to detect major errors for instance: overflow, underflow, division by zero, etc
-- We assume that the user will not comment until the end of the line, if it does, the system may not be able to detect it
+- The system may have trouble translating the assembly code into machine code and it can result 
+  in an incorrect result
+- The system may not be able to detect major errors for instance: overflow, underflow, division 
+  by zero, etc
+- We assume that the user will not comment until the end of the line, if it does, the system may 
+  not be able to detect it
 
 ## XII. Development Process
 
@@ -724,11 +827,20 @@ The following are the coding design principles:
 
 ## XIII. Glossary
 
-- **breadth-first approach** -  A breadth-first approach is a graph traversal method that starts at the root node and visits all the neighboring nodes. Then for each of those nearest nodes, it visits their unexplored neighbor nodes, and so on, until it finds the goal.
-- **Virtual processor** - A vCPU is a processor simulated within a virtual machine, allowing the execution of one processor thread. These vCPUs are allocated from the physical CPU resources of the host machine.
-- **Opcode** -  Short for "operation code," it is a code that represents a specific machine language instruction.
-- **Little-Endian** - A format for storing binary data in which the least significant byte comes first.
-- **LL Parsing Algorithm** -LL parsing is a top-down parsing method that processes input from left to right, aiming to construct a parse tree through leftmost derivations. It utilizes a predictive parsing table, often in LL(1) parsers, to make parsing decisions based on the leftmost non-terminal and a limited number of lookahead symbols.
+- **breadth-first approach** -  A breadth-first approach is a graph traversal method that starts 
+  at the root node and visits all the neighbouring nodes. Then for each of those nearest nodes, 
+  it visits their unexplored neighbour nodes, and so on, until it finds the goal.
+- **Virtual processor** - A vCPU is a processor simulated within a virtual machine, allowing the 
+  execution of one processor thread. These vCPUs are allocated from the physical CPU resources 
+  of the host machine.
+- **Opcode** -  Short for "operation code," it is a code that represents a specific machine 
+  language instruction.
+- **Little-Endian** - A format for storing binary data in which the least significant byte comes 
+  first.
+- **LL Parsing Algorithm** -LL parsing is a top-down parsing method that processes input from 
+  left to right, aiming to construct a parse tree through leftmost derivations. It utilizes a 
+  predictive parsing table, often in LL(1) parsers, to make parsing decisions based on the 
+  leftmost non-terminal and a limited number of lookahead symbols.
 - **BNF** - A BNF specification is a set of derivation rules, written as:
   
    ```<symbol> ::= __expression__```
@@ -740,3 +852,24 @@ The following are the coding design principles:
    ::= means that the symbol on the left must be replaced with the expression on the right.
 
    ```__expression__``` consists of one or more sequences of either terminal or nonterminal symbols where each sequence is separated by a vertical bar "|" indicating a choice, the whole being a possible substitution for the symbol on the left.
+
+- **Standard Libraries:**
+   Standard libraries refer to pre-compiled, reusable code modules that provide a set of commonly used functions and procedures. These libraries aim to facilitate software development by offering a consistent and standardized set of tools and utilities.
+
+- **GCC (GNU Compiler Collection):**
+   GCC is a compiler system developed by the GNU Project. It includes compilers for various programming languages, such as C, C++, and Fortran. GCC is widely used in the open-source community and is a key tool for converting source code into executable programs.
+
+- **Top-Down:**
+   Top-down is an approach or methodology where a problem is broken down into smaller, more manageable sub-problems. The solution is then built by addressing these sub-problems from the highest level down to the most detailed level.
+
+3. **AST (Abstract Syntax Tree):**
+   An Abstract Syntax Tree is a hierarchical tree-like structure that represents the abstract syntactic structure of source code without the intricacies of specific syntax. ASTs are commonly used in compilers and interpreters to facilitate the analysis and transformation of code.
+
+4. **Virtual Machine:**
+   A virtual machine is a software-based emulation of a physical computer. It runs an operating system and applications, providing an isolated and consistent environment. Virtual machines are often used for testing, development, and running multiple operating systems on a single physical machine.
+
+5. **CPU (Central Processing Unit):**
+   The CPU, or central processing unit, is the primary component of a computer responsible for executing instructions stored in a computer program. It performs arithmetic and logic operations and manages data flow within a system.
+
+6. **Registers:**
+   Registers are small, high-speed storage locations within a CPU that store data temporarily during program execution. They are used to hold operands and intermediate results for quick access by the CPU, enhancing processing speed.
