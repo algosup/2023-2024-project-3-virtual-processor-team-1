@@ -298,16 +298,16 @@ class Token {
 The tokenisation will be the first filter to check if the assembly code is correct. In this step the program will be able to handle the most obvious errors like:
 
 **Incorrect instructions:**
-  - **Error Message:** "Incorrect instructions '{instructions}' found at line {line}."
-  - **Description:** Incorrect instruction found at line {line}. 
+  - **Error Message:** "Incorrect instructions '{instructions}' found at line {line}. \n print{line}"
+  - **Description:** Incorrect instruction found at the line. 
   
 **Incorrect registers:**
-  - **Error Message:** "Incorrect registers '{registers}' found at line {line}."
-  - **Description:** Incorrect registers found at line {line}.
+  - **Error Message:** "Incorrect registers '{registers}' found at line {line}. \n print{line}"
+  - **Description:** Incorrect registers found at the line.
   
 **Incorrect operands:**
-   - **Error Message:** "Incorrect operands '{operands}' found at line {line}."
-   - **Description:** Incorrect operands found at line {line}.
+   - **Error Message:** "Incorrect operands '{operands}' found at line {line}. \n print{line}"
+   - **Description:** Incorrect operands found at the line.
   
 
 #### 7.3. Syntax analysis (Parsing)
@@ -448,23 +448,23 @@ graph TD
 The parser will be able to handle the following errors:
 
 **Unexpected Token:**
-   - **Error Message:** "Unexpected token '{token}' found at line {line}."
+   - **Error Message:** "Unexpected token '{token}' found at line {line}. \n print{line}"
    - **Description:** This error occurs when the parser encounters a token that is unexpected based on the current context. The error message specifies the token and the line where the issue is located.
   
 **Unexpected End of File:**
-   - **Error Message:** "Unexpected end of file. Expected more tokens to complete the syntax."
+   - **Error Message:** "Unexpected end of file. Expected more tokens to complete the syntax. \n print{line}"
    - **Description:** This error is raised when the parser reaches the end of the file but expects additional tokens to complete a syntactic structure. The message indicates an unexpected termination.
 
 **Invalid Syntax:**
-   - **Error Message:** "Invalid syntax at line {line}. Unable to parse the provided code."
+   - **Error Message:** "Invalid syntax at line {line}. Unable to parse the provided code. \n print{line}"
    - **Description:** This generic error indicates that the parser encountered a syntax that doesn't conform to the language's grammar rules. The message communicates the location of the syntax error.
   
 **Redundant Tokens:**
-   - **Error Message:** "Redundant tokens found at line {line}. Remove or correct the extra tokens."
+   - **Error Message:** "Redundant tokens found at line {line}. Remove or correct the extra tokens. \n print{line}"
    - **Description:** This error signals the presence of extra or redundant tokens in the code. The message advises removing or correcting the surplus tokens at the specified location.
 
 **Invalid Operand:**
-   - **Error Message:** "Invalid operand '{operand}' at line {line}."
+   - **Error Message:** "Invalid operand '{operand}' at line {line}. \n print{line}"
    - **Description:** This error indicates that the parser encountered an invalid operand. The message specifies the operand and the location of the error.
 
 ---
@@ -526,17 +526,17 @@ Errors recognized by the semantic analyser are as follows:
 
 **Mismatched Types:**
    - **Error Message:** "Type mismatch: Expected {expected_type}, but found {actual_type} at 
-   line {line}."
+   line {line}. \n print{line}"
    - **Description:** This error occurs when there is a mismatch between expected and actual 
   data types. The message specifies the expected and actual types, along with the error location.
 
 **Undefined label:**
-   - **Error Message:** "Undefined {label} '{name}' at line {line}."
+   - **Error Message:** "Undefined {label} '{name}' at line {line}. \n print{line}"
    - **Description:** When the parser encounters an undeclared label, this error is raised. The 
     message indicates the type (variable or identifier) and the name of the undefined entity.
 
 **Duplicate label:**
-   - **Error Message:** "Duplicate {label} '{name}' at line {line}."
+   - **Error Message:** "Duplicate {label} '{name}' at line {line}. \n print{line}"
    - **Description:** This error occurs when the parser encounters a duplicate label. The message specifies the type (variable or identifier) and the name of the duplicate entity.
 
 
@@ -573,7 +573,7 @@ void openVirtualTerminal(char* message) {
 
 int main() {
     // Example usage
-    openVirtualTerminal("echo Hello, this is a message!");
+    openVirtualTerminal("Example of error message");
 
     return 0;
 }
@@ -586,12 +586,18 @@ If the error array is empty after the binary transformation check, the interpret
 
 #### 7.6. Code generation
 
-The AST is translated into an intermediate representation or machine code.
-Each assembly language instruction is mapped to corresponding C functions or operations.
+Once the assembly code is successfully parsed and analysed semantically, the interpreter proceeds to the code generation phase. This phase involves translating the abstract syntax tree (AST) into machine code, which the virtual processor can execute.
 
-- **Assembly Code Size:** Each instruction in the assembly code is in 32-bit format.
-- **Instruction Width:** Every instruction is 64 bits wide.
-- **Data Storage:** Data is stored in little-endian format.
+**Mapping Assembly Instructions to Machine Code:**
+   - Each assembly instruction is mapped to a corresponding machine code instruction. 
+   - The machine code is stored in an array, ready for execution.
+   
+
+  **Assembly Code Size:** Each instruction in the assembly code is in 32-bit format.
+
+  **Instruction Width:** Every instruction is 64 bits wide.
+
+  **Data Storage:** Data is stored in little-endian format.
 
 ##### Instruction format
 
@@ -854,22 +860,38 @@ The following are the coding design principles:
    ```__expression__``` consists of one or more sequences of either terminal or nonterminal symbols where each sequence is separated by a vertical bar "|" indicating a choice, the whole being a possible substitution for the symbol on the left.
 
 - **Standard Libraries:**
-   Standard libraries refer to pre-compiled, reusable code modules that provide a set of commonly used functions and procedures. These libraries aim to facilitate software development by offering a consistent and standardized set of tools and utilities.
+   Standard libraries refer to pre-compiled, reusable code modules that provide a set of 
+   commonly used functions and procedures. These libraries aim to facilitate software 
+   development by offering a consistent and standardized set of tools and utilities.
 
 - **GCC (GNU Compiler Collection):**
-   GCC is a compiler system developed by the GNU Project. It includes compilers for various programming languages, such as C, C++, and Fortran. GCC is widely used in the open-source community and is a key tool for converting source code into executable programs.
+   GCC is a compiler system developed by the GNU Project. It includes compilers for various 
+   programming languages, such as C, C++, and Fortran. GCC is widely used in the open-source 
+   community and is a key tool for converting source code into executable programs.
 
 - **Top-Down:**
-   Top-down is an approach or methodology where a problem is broken down into smaller, more manageable sub-problems. The solution is then built by addressing these sub-problems from the highest level down to the most detailed level.
+   Top-down is an approach or methodology where a problem is broken down into smaller, more 
+   manageable sub-problems. The solution is then built by addressing these sub-problems from the 
+   highest level down to the most detailed level.
 
 3. **AST (Abstract Syntax Tree):**
-   An Abstract Syntax Tree is a hierarchical tree-like structure that represents the abstract syntactic structure of source code without the intricacies of specific syntax. ASTs are commonly used in compilers and interpreters to facilitate the analysis and transformation of code.
+   An Abstract Syntax Tree is a hierarchical tree-like structure that represents the abstract 
+   syntactic structure of source code without the intricacies of specific syntax. ASTs are 
+   commonly used in compilers and interpreters to facilitate the analysis and transformation of 
+   code.
 
 4. **Virtual Machine:**
-   A virtual machine is a software-based emulation of a physical computer. It runs an operating system and applications, providing an isolated and consistent environment. Virtual machines are often used for testing, development, and running multiple operating systems on a single physical machine.
+   A virtual machine is a software-based emulation of a physical computer. It runs an operating 
+   system and applications, providing an isolated and consistent environment. Virtual machines 
+   are often used for testing, development, and running multiple operating systems on a single 
+   physical machine.
 
 5. **CPU (Central Processing Unit):**
-   The CPU, or central processing unit, is the primary component of a computer responsible for executing instructions stored in a computer program. It performs arithmetic and logic operations and manages data flow within a system.
+   The CPU, or central processing unit, is the primary component of a computer responsible for 
+   executing instructions stored in a computer program. It performs arithmetic and logic 
+   operations and manages data flow within a system.
 
 6. **Registers:**
-   Registers are small, high-speed storage locations within a CPU that store data temporarily during program execution. They are used to hold operands and intermediate results for quick access by the CPU, enhancing processing speed.
+   Registers are small, high-speed storage locations within a CPU that store data temporarily 
+   during program execution. They are used to hold operands and intermediate results for quick 
+   access by the CPU, enhancing processing speed.
