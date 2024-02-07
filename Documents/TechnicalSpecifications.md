@@ -3,48 +3,47 @@
 
 ---
 
-# DEADLINE 9/2 5pm  
-
 <details>
 <summary>Table of Contents</summary>
 
-- [DEADLINE 9/2 5pm](#deadline-92-5pm)
-  - [I. Audience](#i-audience)
-  - [II. Deliverable](#ii-deliverable)
-  - [III. Requirements](#iii-requirements)
-  - [IV. Details](#iv-details)
-  - [V. Nice to have](#v-nice-to-have)
-  - [VI. Priorities](#vi-priorities)
-  - [VII. Technical Architecture](#vii-technical-architecture)
-    - [1. Technology stack](#1-technology-stack)
-    - [2. Input data](#2-input-data)
-    - [3. Output data](#3-output-data)
-    - [4. Non-requirements / Out of scope](#4-non-requirements--out-of-scope)
-    - [5. Operating requirements](#5-operating-requirements)
-    - [6. Key functions, operations, and algorithms](#6-key-functions-operations-and-algorithms)
-    - [7. Algorithms](#7-algorithms)
-      - [7.1. File Cleaning and Reading](#71-file-cleaning-and-reading)
-      - [7.2. Lexical analysis (Tokenisation)](#72-lexical-analysis-tokenisation)
-      - [7.3. Syntax analysis (Parsing)](#73-syntax-analysis-parsing)
-      - [7.4. Semantic analysis](#74-semantic-analysis)
-      - [7.5 Error handling system](#75-error-handling-system)
-      - [7.6. Code generation](#76-code-generation)
-        - [Instruction format](#instruction-format)
-      - [7.7. Virtual processor](#77-virtual-processor)
-        - [Internal Components of a Computer](#internal-components-of-a-computer)
-        - [Memory](#memory)
-        - [Registers](#registers)
-  - [VIII. Syntax and Structure](#viii-syntax-and-structure)
-    - [1. Folder structure](#1-folder-structure)
-    - [2. Program file structure](#2-program-file-structure)
-    - [3. Function declaration](#3-function-declaration)
-    - [4. Naming](#4-naming)
-    - [5. Comments](#5-comments)
-  - [IX. Code Design Principles](#ix-code-design-principles)
-  - [X. Challenges](#x-challenges)
-  - [XI. Possible Bugs](#xi-possible-bugs)
-  - [XII. Development Process](#xii-development-process)
-  - [XIII. Glossary](#xiii-glossary)
+- [I. Audience](#i-audience)
+- [II. Deliverable](#ii-deliverable)
+- [III. Requirements](#iii-requirements)
+- [IV. Details](#iv-details)
+- [V. Nice to have](#v-nice-to-have)
+- [VI. Priorities](#vi-priorities)
+- [VII. Technical Architecture](#vii-technical-architecture)
+  - [1. Technology stack](#1-technology-stack)
+  - [2. Input data](#2-input-data)
+  - [3. Output data](#3-output-data)
+  - [4. Non-requirements / Out of scope](#4-non-requirements--out-of-scope)
+  - [5. Operating requirements](#5-operating-requirements)
+  - [6. Key functions, operations, and algorithms](#6-key-functions-operations-and-algorithms)
+  - [7. Algorithms](#7-algorithms)
+    - [7.1. File Cleaning and Reading](#71-file-cleaning-and-reading)
+    - [7.2. Lexical analysis (Tokenisation)](#72-lexical-analysis-tokenisation)
+    - [7.3. Syntax analysis (Parsing)](#73-syntax-analysis-parsing)
+    - [7.4. Semantic analysis](#74-semantic-analysis)
+    - [7.5 Error handling system](#75-error-handling-system)
+    - [7.6. Code generation](#76-code-generation)
+      - [7.6.1. Instruction format](#761-instruction-format)
+      - [7.6.2. Table of Opcodes](#762-table-of-opcodes)
+      - [7.6.3. Code generation process](#763-code-generation-process)
+    - [7.7. Virtual processor](#77-virtual-processor)
+      - [Internal Components of a Computer](#internal-components-of-a-computer)
+      - [Registers](#registers)
+    - [7.8. Architecture diagram](#78-architecture-diagram)
+- [VIII. Syntax and Structure](#viii-syntax-and-structure)
+  - [1. Folder structure](#1-folder-structure)
+  - [2. Program file structure](#2-program-file-structure)
+  - [3. Function declaration](#3-function-declaration)
+  - [4. Naming](#4-naming)
+  - [5. Comments](#5-comments)
+- [IX. Code Design Principles](#ix-code-design-principles)
+- [X. Challenges](#x-challenges)
+- [XI. Possible Bugs](#xi-possible-bugs)
+- [XII. Development Process](#xii-development-process)
+- [XIII. Glossary](#xiii-glossary)
 
 </details>
 
@@ -74,13 +73,11 @@ Secondary audiences
 
 4. Implement a virtual processor that can execute the assembly code
 
-5. Write a small assembly program conceptually similar to unit tests to showcase that everything is working
-
 ## IV. Details
 
 The project will be developed in plain, portable, C language without using any external library besides C standard libraries.
 
-Project is divided into virtual processor and interpreter:
+The project is divided into a virtual processor and an interpreter:
 
  1. Virtual processor components detailed:
       - 4 general-purpose registers
@@ -129,7 +126,7 @@ Project is divided into virtual processor and interpreter:
 
 One file on the command line.
 
-- Arg[0] -  The input data will be a text file containing a program written in the assembly language. The program will be read by the interpreter and executed on the virtual processor.
+- Arg[0] -  The input data will be an ASM2 file containing a program written in the assembly language. The file will be read by the interpreter and executed on the virtual processor.
 
 ### 3. Output data
 
@@ -138,7 +135,6 @@ The output data will be the result of the execution of the assembly program or t
 ### 4. Non-requirements / Out of scope
 
 - Graphical debugger with visual representations of the register, data, and instruction memory
-- Implementation of flags  
 
 ### 5. Operating requirements
 
@@ -232,6 +228,44 @@ Diagram of the cleaning function
    }
    ```
 
+**Errors handling**
+
+The file cleaning and reading process will be able to handle errors linked to the content of the file and the file itself:
+
+**Unexpected error:**
+- **Error code:** 0x00	
+- **Type of error:** Unexpected error
+- **Message:** Oops... a problem in the matrix has been detected. Go to GitHub issues for help.
+
+**File not found:**
+- **Error code:** 0x01	
+- **Type of error:** File not found
+- **Message:** The file was not found. Check the name and/or directory in which the file is located.
+
+
+**File secured with a password:**
+- **Error code:** 0x02	
+- **Type of error:** File secured with a password
+- **Message:** Unable to access the file, which is password-protected
+
+**Incorrect file extension:**
+- **Error code:** 0x03	
+- **Type of error:** Incorrect file extension
+- **Message:** The file you are trying to open is not a recognised file.
+
+
+**File corrupted:**
+- **Error code:** 0x04	
+- **Type of error:** File corrupted
+- **Message:** The file you are trying to open appears to be corrupted.
+
+
+**Empty file:**
+- **Error code:** 0x05	
+- **Type of error:** Empty file
+- **Message:** The file you are trying to open contains no data.
+
+
 #### 7.2. Lexical analysis (Tokenisation)
 
 Tokenisation plays a crucial role by breaking down the assembly code into manageable units called tokens. Think of tokens as building blocks or Lego pieces that structure the code. Each token represents a specific element, like an instruction, register, or operand.
@@ -275,6 +309,37 @@ The process for the tokenisation is the following:
   and value according to the word. For this step, the "strcpm" function will be used to compare 
   the word with the list of instructions, registers and operands. It's easy to implement and 
   it's efficient.
+
+  Here is an example of enum for the instruction. The same will be done for the registers and the operands.
+
+  ```C
+  typedef enum instruction
+{
+    ADD, 
+    MOV,
+    SUB, 
+    MUL,
+    DIV,
+    JMP,
+    JE,
+    JNE,
+    JG,
+    JGE,
+    JL,
+    JLE,
+    RET,
+    CMP,
+    CALL,
+    AND,
+    OR,
+    XOR,
+    NOT,
+    GAD,
+    DISP,
+    END
+} instruction_t;
+```
+   
    - Finally, it will replace each instruction, register and operand of the original array with the corresponding token
 
 Each token will be represented by a struct with the following attributes:
@@ -283,31 +348,26 @@ Each token will be represented by a struct with the following attributes:
    - **Value:** The value of the token (MOV, R1, #1, etc...)
    - **Line:** The line where the token is located
    - **Column:** The column where the token is located
-  
-```mermaid
-classDiagram
-class Token {
-  +TokenType type
-  +TokenValue value
-  +int line
-  +int column
-}
-```
 
+**Errors handling**
 
 The tokenisation will be the first filter to check if the assembly code is correct. In this step the program will be able to handle the most obvious errors like:
 
 **Incorrect instructions:**
-  - **Error Message:** "Incorrect instructions '{instructions}' found at line {line}. \n print{line}"
-  - **Description:** Incorrect instruction found at the line. 
+- **Error code:** 0xA0	
+- **Type of error:** Unknown instruction or operator	
+- **Message:** Line number of the error + Code on the line + The operator or instruction does not exist.
   
 **Incorrect registers:**
-  - **Error Message:** "Incorrect registers '{registers}' found at line {line}. \n print{line}"
-  - **Description:** Incorrect registers found at the line.
-  
-**Incorrect operands:**
-   - **Error Message:** "Incorrect operands '{operands}' found at line {line}. \n print{line}"
-   - **Description:** Incorrect operands found at the line.
+- **Error code:** 0xA1
+- **Type of error:** Unknown register 
+- **Message:** Line number of the error + Code on the line + The variable or register entered as a parameter does not exist
+ 
+**Unexpected character**
+- **Error code:** 0xB0
+- **Type of error:** Unexpected character
+- **Message:** Line number of the error + Code on the line + An unexpected character was spotted on the line.
+   
   
 
 #### 7.3. Syntax analysis (Parsing)
@@ -361,12 +421,11 @@ The process of the parsing is the following:
   }
 
    ASTBuilder <|-- ASTNode
-
-  ```
+   ```
 
 - Implement parsing rules based on those Backus–Naur Form (BNF) rules:
 
-```txt
+```bnf
 <MOV> ::= <register> "," <register> | <register> "," <immediate> | <register> "," <adress>
 <ADD> ::= <register> "," <register> | <register> "," <immediate> 
 <SUB> ::= <register> "," <register> | <register> "," <immediate>
@@ -411,6 +470,7 @@ the next section.
 - Once the entire token sequence is successfully parsed and the AST is constructed, the parsing 
   phase concludes. The AST becomes the basis for further processing.
 
+---
 eg.
 
 ```mermaid
@@ -443,29 +503,26 @@ graph TD
   C1 -->|Instruction| C6[JMP .loop]
 ```
 
+---
+
 **Errors handling**
 
 The parser will be able to handle the following errors:
 
-**Unexpected Token:**
-   - **Error Message:** "Unexpected token '{token}' found at line {line}. \n print{line}"
-   - **Description:** This error occurs when the parser encounters a token that is unexpected based on the current context. The error message specifies the token and the line where the issue is located.
+**Syntax error:**
+- **Error code:** 0xC0
+- **Type of error:** Syntax error
+- **Message:** Line number of the error + Code on the line + Too many parameters have been added. Syntax should be : ARGUMENT PARAM1, PARAM2
   
-**Unexpected End of File:**
-   - **Error Message:** "Unexpected end of file. Expected more tokens to complete the syntax. \n print{line}"
-   - **Description:** This error is raised when the parser reaches the end of the file but expects additional tokens to complete a syntactic structure. The message indicates an unexpected termination.
+**Missing return/end:**
+- **Error code:** 0xC1
+- **Type of error:** Missing return/end
+- **Message:** An END or RET instruction is missing from the program.
 
-**Invalid Syntax:**
-   - **Error Message:** "Invalid syntax at line {line}. Unable to parse the provided code. \n print{line}"
-   - **Description:** This generic error indicates that the parser encountered a syntax that doesn't conform to the language's grammar rules. The message communicates the location of the syntax error.
-  
-**Redundant Tokens:**
-   - **Error Message:** "Redundant tokens found at line {line}. Remove or correct the extra tokens. \n print{line}"
-   - **Description:** This error signals the presence of extra or redundant tokens in the code. The message advises removing or correcting the surplus tokens at the specified location.
-
-**Invalid Operand:**
-   - **Error Message:** "Invalid operand '{operand}' at line {line}. \n print{line}"
-   - **Description:** This error indicates that the parser encountered an invalid operand. The message specifies the operand and the location of the error.
+**Unknown function or subroutine:**
+- **Error code:** 0xA2
+- **Type of error:** Unknown function or subroutine
+- **Message:** Line number of the error + Code on the line + The function or subroutine you are trying to CALL does not exist.
 
 ---
 
@@ -524,20 +581,22 @@ The process of the semantic analysis is the following:
 
 Errors recognized by the semantic analyser are as follows:
 
-**Mismatched Types:**
-   - **Error Message:** "Type mismatch: Expected {expected_type}, but found {actual_type} at 
-   line {line}. \n print{line}"
-   - **Description:** This error occurs when there is a mismatch between expected and actual 
-  data types. The message specifies the expected and actual types, along with the error location.
+**Float number**
+- **Error code:** 0xC3
+- **Type of error:** Float number
+- **Message:** Line number of the error + Code on the line + The language does not take floats into account.
 
-**Undefined label:**
-   - **Error Message:** "Undefined {label} '{name}' at line {line}. \n print{line}"
-   - **Description:** When the parser encounters an undeclared label, this error is raised. The 
-    message indicates the type (variable or identifier) and the name of the undefined entity.
+**Mismatched Types:**
+- **Error code:** 0xC4
+- **Type of error:** Mismatched types
+- **Message:** Line number of the error + Code on the line + The operands are not of the same type.
+
 
 **Duplicate label:**
-   - **Error Message:** "Duplicate {label} '{name}' at line {line}. \n print{line}"
-   - **Description:** This error occurs when the parser encounters a duplicate label. The message specifies the type (variable or identifier) and the name of the duplicate entity.
+- **Error code:** 0xA3
+- **Type of error:** Duplicate label
+- **Message:** Line number of the error + Code on the line + The label you are trying to declare already exists.
+
 
 
 #### 7.5 Error handling system
@@ -588,24 +647,27 @@ If the error array is empty after the binary transformation check, the interpret
 
 Once the assembly code is successfully parsed and analysed semantically, the interpreter proceeds to the code generation phase. This phase involves translating the abstract syntax tree (AST) into machine code, which the virtual processor can execute.
 
+
 **Mapping Assembly Instructions to Machine Code:**
    - Each assembly instruction is mapped to a corresponding machine code instruction. 
    - The machine code is stored in an array, ready for execution.
    
 
-  **Assembly Code Size:** Each instruction in the assembly code is in 32-bit format.
+  **Assembly Code Size:** Each data in the assembly code is in 32-bit format.
 
-  **Instruction Width:** Every instruction is 64 bits wide.
+  **Instruction Width:** Every instruction is 48 bits wide.
 
   **Data Storage:** Data is stored in little-endian format.
 
-##### Instruction format
+##### 7.6.1. Instruction format
 
 - **Opcode (Byte 1):** The first byte signifies the opcode of the instruction.
 - **Register (Byte 2):** The second byte represents the register.
 - **Data Bytes (Bytes 3-6):** The third, fourth, fifth, and sixth bytes collectively encode the data associated with the instruction.
 
-**Opcodes**
+Here is the complete table of the instructions and the corresponding binary code:
+
+##### 7.6.2. Table of Opcodes
 
 |**Instruction**| **Opcode** |
 |-----------|----------------|
@@ -622,21 +684,21 @@ Once the assembly code is successfully parsed and analysed semantically, the int
 |DIV R1, R2    |0x40         |
 |DIV R1, 0X332|0x41          |
 |-|          -               |
-|.label|       0x99          |
+|.label|       0x99  + name  |
 |END|          0x98          |
 |RET|          0x97          |
-|CALL|         0x96          |
+|CALL|         0x96  + name  |
 |-|            -             |
 |CMP R1, R2|   0x50          |
 |CMP R1, 0X332|0x51          |
 |-|       -                  |
-|JMP .label|   0x60          |
-|JE .label|    0x61          |
-|JNE .label|   0x62          |
-|JG .label|    0x63          |
-|JGE .label|   0x64          |
-|JL .label|    0x65          |
-|JLE .label|   0x66          |
+|JMP .label|   0x60  + name  |
+|JE .label|    0x61  + name  |
+|JNE .label|   0x62  + name  |
+|JG .label|    0x63  + name  |
+|JGE .label|   0x64  + name  |
+|JL .label|    0x65  + name  |
+|JLE .label|   0x66  + name  |
 |-|-                         |
 |AND R1, R2|   0x70          |
 |AND R1, 0X332|0x71          |
@@ -658,17 +720,78 @@ Once the assembly code is successfully parsed and analysed semantically, the int
 |A3 |          0x13          |
 |A4 |          0x14          |
 
+
+Splitting the same instruction into different binary codes allows the virtual processor to know exactly what to do with the instruction. If we take the example of the MOV instruction, it's going to be split into three different binary codes. 
+
+The first one is going to be used when we want to move a value to a register, the second one is going to be used when we want to move a value to an address and the third one is going to be used when we want to move a value from a register to another register.
+
 **Example of MOV instruction**
 
 |0x12| 0x01| 0x00| 0x00| 0x00| 0x02|
 |----|-----|-----|-----|-----|-----|
-|MOV | R1  | Unused| Unused| Unused| R2|
+|MOV | R1  | R2| | | |
 |OPCODE| REGISTER | DATA | DATA | DATA | DATA |
 
-|0x10| 0x01| 0x00| 0x00| 0x19| 0x23|
+|0x10| 0x01| 0x00| 0x00| 0xE7| 0x09|
 |----|-----|-----|-----|-----|-----|
-|MOV | R1  | Unused| Unused| 25 | 35 |
+|MOV | R1  | 2535 | |  |  |
 |OPCODE| REGISTER | DATA | DATA | DATA | DATA |
+
+
+Each instruction linked to a label or a function call is going to be stored in a label table. The label table is going to be used to store the corresponding binary code for each label.
+
+**Example of label**
+
+|0x99| 0x00| 0x00| 0x00| 0xBA| 0x01|
+|----|-----|-----|-----|-----|-----|
+|.| l | o | o | p |  |
+|LABEL| NAME | NAME | NAME | NAME | NAME |
+
+In this example, |0xBA| 0x01| represents the sum of each ASCII code for each letter of the label. 
+So in this example, loop is equal to 108+111+111+112 = 442 = 0x01BA
+
+
+The label .loop is going to be stored in the label table with the corresponding binary code. The fact that the label is stored in the label table is going to allow the virtual processor to know exactly where to jump when it encounters a jump instruction. 
+
+##### 7.6.3. Code generation process
+
+---
+
+
+```mermaid
+flowchart TD
+    Start --> InitializeArray
+    InitializeArray --> TraverseAST
+    TraverseAST --> |For each node in AST| DetermineType
+    DetermineType --> |Instruction| GenerateCodeInstruction
+    DetermineType --> |Immediate| GenerateCodeImmediate
+    DetermineType --> |Label| GenerateCodeLabel
+    DetermineType --> |Regsiter| GenerateCodeRegister
+    GenerateCodeInstruction --> AppendArray
+    GenerateCodeImmediate --> AppendArray
+    GenerateCodeLabel --> AppendArray
+    GenerateCodeRegister --> AppendArray
+    AppendArray --> TraverseNextNode
+    TraverseNextNode --> TraverseAST
+    TraverseAST --> ReturnArray
+
+```
+---
+
+**Note:**
+
+The process of the code generation is the following:
+
+- The program will receive the AST obtained from the semantic analysis phase.
+- The program will traverse the AST and for each node, it will determine the type of the node. 
+  - If the node is an instruction, the program will generate the corresponding binary code. 
+  - If the node is an immediate, the program will generate the corresponding binary code. 
+  - If the node is a label, the program will transform the name of the label into ASCII code then it will sum all the ASCII code from letters and generate the binary code of this number.
+  - If the node is a register, the program will generate the corresponding binary code.
+- The program will append the binary code to an array.
+- The program will continue to traverse the AST until the end of the AST.
+- The program will return the array of the binary code.
+
 
 #### 7.7. Virtual processor
 
@@ -678,12 +801,6 @@ In this section, we're constructing a virtual machine (VM) with its own instruct
 
 We focus on three main components: CPU, registers, and memory. Instructions, represented as binary data, reside in memory. The CPU retrieves and executes instructions sequentially, and the machine's running state is stored in registers.
 
-##### Memory
-
-- Memory stores data, including code and other information.
-- Segments: `text` (code), `data` (initialized data), `bss` (uninitialized data), `stack` (function call states), `heap` (dynamic memory allocation).
-- For simplicity, we merge `data` and `bss`, using `data` for string literals.
-
 ##### Registers
 
 - `PC` (Program Counter): Stores the memory address of the next instruction.
@@ -691,6 +808,33 @@ We focus on three main components: CPU, registers, and memory. Instructions, rep
 - `BP` (Base Pointer): Points to elements on the stack, aiding function calls.
 - `AX`: General register storing instruction results.
 - `cycle`: Virtual machine cycle count.
+
+
+#### 7.8. Architecture diagram
+
+```mermaid
+flowchart TD
+    subgraph Interpreter System
+    ASM2-File --> File-Cleaning
+    File-Cleaning --> Lexer    
+    Lexer --> Parser
+    Parser --> Semantic-Analyzer
+    Semantic-Analyzer --> Error-Handler
+    Error-Handler --> Code-Generator
+    end
+
+    subgraph Virtual Processor
+    Instruction-Decoder --> Memory-Unit
+    Instruction-Decoder --> Register-File
+    Instruction-Decoder --> ALU
+    ALU --> Register-File
+    ALU --> Memory-Unit
+    Control-Unit --> ALU
+    end
+
+```
+
+
 
 ## VIII. Syntax and Structure
 
@@ -725,13 +869,13 @@ We focus on three main components: CPU, registers, and memory. Instructions, rep
 
 **lexical.h** - Header file for the lexical analysis
 
-**parser.h** - Header file for the parser
+**parser.h** - Header file for the parser and semantic analysis
 
 **global.h** - Header file for the global variables and centralised point for all the header files import
 
 **assemblyCode.asm2** - Assembly code file
 
-**interpreter.c** - Main file for the interpreter
+**interpreter.c** - Main file for the entire interpreter
 
 ### 2. Program file structure
 
