@@ -8,11 +8,12 @@
 
 - [I. Audience](#i-audience)
 - [II. Deliverable](#ii-deliverable)
-- [III. Requirements](#iii-requirements)
-- [IV. Details](#iv-details)
-- [V. Nice to have](#v-nice-to-have)
-- [VI. Priorities](#vi-priorities)
-- [VII. Technical Architecture](#vii-technical-architecture)
+- [III. Glossary](#iii-glossary)
+- [IV. Requirements](#iv-requirements)
+- [V. Details](#v-details)
+- [VI. Nice to have](#vi-nice-to-have)
+- [VII. Priorities](#vii-priorities)
+- [VIII. Technical Architecture](#viii-technical-architecture)
   - [1. Technology stack](#1-technology-stack)
   - [2. Input data](#2-input-data)
   - [3. Output data](#3-output-data)
@@ -30,20 +31,17 @@
       - [7.6.2. Table of Opcodes](#762-table-of-opcodes)
       - [7.6.3. Code generation process](#763-code-generation-process)
     - [7.7. Virtual processor](#77-virtual-processor)
-      - [Internal Components of a Computer](#internal-components-of-a-computer)
-      - [Registers](#registers)
     - [7.8. Architecture diagram](#78-architecture-diagram)
-- [VIII. Syntax and Structure](#viii-syntax-and-structure)
+- [IX. Syntax and Structure](#ix-syntax-and-structure)
   - [1. Folder structure](#1-folder-structure)
   - [2. Program file structure](#2-program-file-structure)
   - [3. Function declaration](#3-function-declaration)
   - [4. Naming](#4-naming)
   - [5. Comments](#5-comments)
-- [IX. Code Design Principles](#ix-code-design-principles)
-- [X. Challenges](#x-challenges)
-- [XI. Possible Bugs](#xi-possible-bugs)
-- [XII. Development Process](#xii-development-process)
-- [XIII. Glossary](#xiii-glossary)
+- [X. Code Design Principles](#x-code-design-principles)
+- [XI. Challenges](#xi-challenges)
+- [XII. Possible Bugs](#xii-possible-bugs)
+- [XIII. Development Process](#xiii-development-process)
 
 </details>
 
@@ -61,9 +59,31 @@ Secondary audiences
 
 ## II. Deliverable
 
- The goal of the project is to create a virtual processor and an interpreter for running assembly code on that processor.
+ The goal of the project is to create a virtual processor and an interpreter for running a new assembly language invented by the team. 
 
-## III. Requirements
+
+## III. Glossary
+
+| Term | Definition |
+|------|------------|
+|**breadth-first approach**| A breadth-first approach is a graph traversal method that starts at the root node and visits all the neighbouring nodes. Then for each of those nearest nodes, it visits their unexplored neighbour nodes, and so on, until it finds the goal.|
+|**virtual processor**| A virtual processor is a software-based emulation of a physical processor. It is used to execute instructions and perform operations on data.|
+|**opcode**| Short for "operation code," it is a code that represents a specific machine language instruction.|
+|**little-endian**| A format for storing binary data in which the least significant byte comes first.|
+|**LL Parsing Algorithm**| LL parsing is a top-down parsing method that processes input from left to right, aiming to construct a parse tree through leftmost derivations. It utilizes a predictive parsing table, often in LL(1) parsers, to make parsing decisions based on the leftmost non-terminal and a limited number of lookahead symbols.|
+|**BNF**| A BNF specification is a set of derivation rules, written as:<br> ```<symbol> ::= __expression__``` <br>where: ```<symbol>``` is a nonterminal variable that is always enclosed between the pair <>.<br> ```::=``` means that the symbol on the left must be replaced with the expression on the right.<br> ```__expression__``` consists of one or more sequences of either terminal or nonterminal symbols where each sequence is separated by a vertical bar "|" indicating a choice, the whole being a possible substitution for the symbol on the left.|
+|**Standard Libraries**| Standard libraries refer to pre-compiled, reusable code modules that provide a set of commonly used functions and procedures. These libraries aim to facilitate software development by offering a consistent and standardized set of tools and utilities.|
+|**GCC (GNU Compiler Collection)**| GCC is a compiler system developed by the GNU Project. It includes compilers for various programming languages, such as C, C++, and Fortran. GCC is widely used in the open-source community and is a key tool for converting source code into executable programs.|
+|**Top-Down**| Top-down is an approach or methodology where a problem is broken down into smaller, more manageable sub-problems. The solution is then built by addressing these sub-problems from the highest level down to the most detailed level.|
+|**AST (Abstract Syntax Tree)**| An Abstract Syntax Tree is a hierarchical tree-like structure that represents the abstract syntactic structure of source code without the intricacies of specific syntax. ASTs are commonly used in compilers and interpreters to facilitate the analysis and transformation of code.|
+|**Virtual Machine**| A virtual machine is a software-based emulation of a physical computer. It runs an operating system and applications, providing an isolated and consistent environment. Virtual machines are often used for testing, development, and running multiple operating systems on a single physical machine.|
+|**CPU (Central Processing Unit)**| The CPU, or central processing unit, is the primary component of a computer responsible for executing instructions stored in a computer program. It performs arithmetic and logic operations and manages data flow within a system.|
+|**Registers**| Registers are small, high-speed storage locations within a CPU that store data temporarily during program execution. They are used to hold operands and intermediate results for quick access by the CPU, enhancing processing speed.|
+
+
+
+
+## IV. Requirements
 
 1. Create a minimal assembly language (This requirement is fully described in the [functional specifications](./FunctionalSpecifications.md))
 
@@ -73,7 +93,7 @@ Secondary audiences
 
 4. Implement a virtual processor that can execute the assembly code
 
-## IV. Details
+## V. Details
 
 The project will be developed in plain, portable, C language without using any external library besides C standard libraries.
 
@@ -82,12 +102,6 @@ The project is divided into a virtual processor and an interpreter:
  1. Virtual processor components detailed:
       - 4 general-purpose registers
       - 4 address registers
-      - 1 instruction register
-      - 1 program counter
-      - 1 stack pointer
-      - 1 data memory
-      - 1 instruction memory
-      - 1 stack memory
       - 1 virtual terminal
       - 32-bit architecture
 
@@ -100,19 +114,19 @@ The project is divided into a virtual processor and an interpreter:
       - A semantic analyser
       - A code generator
 
-## V. Nice to have
+## VI. Nice to have
 
 - Have a built-in debugger
 - I/O operations inside the virtual terminal
 - Have a wiki page with a detailed description of the more complex algorithms used in the project
 
-## VI. Priorities
+## VII. Priorities
 
 1. Smooth performance, each assembly instruction should be executed in the same amount of time
 2. Correctness, the program should be able to run any semantically correct assembly program
 3. Flexibility, the system should be designed to handle various assembly constructs and provide a foundation for potential future extensions
 
-## VII. Technical Architecture
+## VIII. Technical Architecture
 
 ### 1. Technology stack
 
@@ -348,6 +362,30 @@ Each token will be represented by a struct with the following attributes:
    - **Value:** The value of the token (MOV, R1, #1, etc...)
    - **Line:** The line where the token is located
    - **Column:** The column where the token is located
+
+```mermaid
+classDiagram
+class Token {
+  +TokenType type
+  +TokenValue value
+  +int line
+  +int column
+}
+
+class TokenExample{
+   +TokenType Label
+   +TokenValue loop
+   +int 3
+   +int 1
+}
+
+class AnotherTokenExample{
+   +TokenType instruction
+   +TokenValue MOV
+   +int 1
+   +int 1
+}
+```
 
 **Errors handling**
 
@@ -792,22 +830,83 @@ The process of the code generation is the following:
 - The program will continue to traverse the AST until the end of the AST.
 - The program will return the array of the binary code.
 
+**Input data**
+
+```mermaid
+graph TD
+  A[Root]
+  A -->|Instruction| B1[Mov]
+  B1 -->|Operand| B2[Register 'R1']
+  B1 -->|Operand| B3[Immediate '#10']
+  A -->|Label| C1[.loop]
+  C1 -->|Instruction| C2[Add]
+   C2 -->|Operand| C3[Register 'R1']
+   C2 -->|Operand| C5[immediate '#2']
+  C1 -->|Instruction| C4[MOV]
+   C4 -->|Operand| C7[Register 'R3']
+   C4 -->|Operand| C8[Register 'R1']
+  C1 -->|Instruction| C6[JMP .loop]
+```
+
+**Output data**
+
+```terminal
+arrayBinaryCode[6]= {
+    0x120x010x000x000x000x02,
+    0x100x010x000x000x000x0A,
+    0x90x000x000x000x6C0x6F,
+    0x200x010x000x000x000x02,
+    0x200x030x000x000x000x01,
+    0x600x000x000x000x6C0x6F}
+```
+It's only a visual representation of the data don't take it as a real code.
+
 
 #### 7.7. Virtual processor
 
-In this section, we're constructing a virtual machine (VM) with its own instruction set to serve as the target platform for our interpreter's code generation phase. Similar to the JVM and bytecode concept, but in a much simpler form.
+This phase involves the implementation of the virtual processor, which is going to execute the machine code previously generated.
 
-##### Internal Components of a Computer
+**Registers:**
+   - The virtual processor will have 4 general-purpose registers (R1, R2, R3, R4) and 4 address registers (A1, A2, A3, A4)
 
-We focus on three main components: CPU, registers, and memory. Instructions, represented as binary data, reside in memory. The CPU retrieves and executes instructions sequentially, and the machine's running state is stored in registers.
+**Memory:**
+   - The virtual processor will have a memory unit to store data and instructions
+   - The memory unit will be implemented as an array of 48-bit words
+  
+- **Instruction Decoder:**
+   - The instruction decoder will decode the machine code instructions and determine the corresponding operation to execute
+   - It will also identify the operands and their types
+   - The instruction decoder will be implemented as a switch statement to handle each instruction type
+   - The instruction decoder will be responsible for fetching the next instruction from memory
+   - The instruction decoder will also handle the control flow instructions (JMP, JE, JNE, JG, JGE, JL, JLE, CALL, RET, END)
+   - The instruction decoder will be responsible for updating the program counter (PC) after each instruction execution
+  
 
-##### Registers
+  ```mermaid
+  classDiagram
+   class vCPU{
+   int *mem;
+	int max_mem;
 
-- `PC` (Program Counter): Stores the memory address of the next instruction.
-- `SP` (Stack Pointer): Points to the top of the stack, used for function calls.
-- `BP` (Base Pointer): Points to elements on the stack, aiding function calls.
-- `AX`: General register storing instruction results.
-- `cycle`: Virtual machine cycle count.
+	// registers
+	int pc;
+	int sp;
+	int r[8];
+	int ar[8];
+
+	// instruction parts
+	int inst;
+	int dest;
+	int  src;
+
+	// flags
+	int zero;
+	int ltz;
+	int gtz;
+   }
+```
+
+
 
 
 #### 7.8. Architecture diagram
@@ -836,7 +935,7 @@ flowchart TD
 
 
 
-## VIII. Syntax and Structure
+## IX. Syntax and Structure
 
 ### 1. Folder structure
 
@@ -927,7 +1026,7 @@ Each function should be preceded by a block comment prologue that gives a short 
 */ 
 ```
 
-## IX. Code Design Principles
+## X. Code Design Principles
 
 The following are the coding design principles:
 
@@ -937,7 +1036,7 @@ The following are the coding design principles:
 
 
 
-## X. Challenges
+## XI. Challenges
 
 - Developing a robust lexer and parser for precise assembly code tokenisation, and managing 
   diverse language constructs, poses a significant challenge
@@ -949,7 +1048,7 @@ The following are the coding design principles:
   challenge, requiring effective management of addresses, offsets, and the intricacies of 
   control flow
 
-## XI. Possible Bugs
+## XII. Possible Bugs
 
 - The system may not be able to handle large assembly programs
 - The system may not be able to handle complex assembly programs
@@ -961,7 +1060,7 @@ The following are the coding design principles:
 - We assume that the user will not comment until the end of the line, if it does, the system may 
   not be able to detect it
 
-## XII. Development Process
+## XIII. Development Process
 
 - Begin development with a minimal tokenization parser and a basic virtual processor
   
@@ -975,67 +1074,3 @@ The following are the coding design principles:
   
 - Adopt an incremental approach to systematically handle the project's full-size development
 
-## XIII. Glossary
-
-- **breadth-first approach** -  A breadth-first approach is a graph traversal method that starts 
-  at the root node and visits all the neighbouring nodes. Then for each of those nearest nodes, 
-  it visits their unexplored neighbour nodes, and so on, until it finds the goal.
-- **Virtual processor** - A vCPU is a processor simulated within a virtual machine, allowing the 
-  execution of one processor thread. These vCPUs are allocated from the physical CPU resources 
-  of the host machine.
-- **Opcode** -  Short for "operation code," it is a code that represents a specific machine 
-  language instruction.
-- **Little-Endian** - A format for storing binary data in which the least significant byte comes 
-  first.
-- **LL Parsing Algorithm** -LL parsing is a top-down parsing method that processes input from 
-  left to right, aiming to construct a parse tree through leftmost derivations. It utilizes a 
-  predictive parsing table, often in LL(1) parsers, to make parsing decisions based on the 
-  leftmost non-terminal and a limited number of lookahead symbols.
-- **BNF** - A BNF specification is a set of derivation rules, written as:
-  
-   ```<symbol> ::= __expression__```
-
-   where:
-
-   ```<symbol>``` is a nonterminal variable that is always enclosed between the pair <>.
-
-   ::= means that the symbol on the left must be replaced with the expression on the right.
-
-   ```__expression__``` consists of one or more sequences of either terminal or nonterminal symbols where each sequence is separated by a vertical bar "|" indicating a choice, the whole being a possible substitution for the symbol on the left.
-
-- **Standard Libraries:**
-   Standard libraries refer to pre-compiled, reusable code modules that provide a set of 
-   commonly used functions and procedures. These libraries aim to facilitate software 
-   development by offering a consistent and standardized set of tools and utilities.
-
-- **GCC (GNU Compiler Collection):**
-   GCC is a compiler system developed by the GNU Project. It includes compilers for various 
-   programming languages, such as C, C++, and Fortran. GCC is widely used in the open-source 
-   community and is a key tool for converting source code into executable programs.
-
-- **Top-Down:**
-   Top-down is an approach or methodology where a problem is broken down into smaller, more 
-   manageable sub-problems. The solution is then built by addressing these sub-problems from the 
-   highest level down to the most detailed level.
-
-3. **AST (Abstract Syntax Tree):**
-   An Abstract Syntax Tree is a hierarchical tree-like structure that represents the abstract 
-   syntactic structure of source code without the intricacies of specific syntax. ASTs are 
-   commonly used in compilers and interpreters to facilitate the analysis and transformation of 
-   code.
-
-4. **Virtual Machine:**
-   A virtual machine is a software-based emulation of a physical computer. It runs an operating 
-   system and applications, providing an isolated and consistent environment. Virtual machines 
-   are often used for testing, development, and running multiple operating systems on a single 
-   physical machine.
-
-5. **CPU (Central Processing Unit):**
-   The CPU, or central processing unit, is the primary component of a computer responsible for 
-   executing instructions stored in a computer program. It performs arithmetic and logic 
-   operations and manages data flow within a system.
-
-6. **Registers:**
-   Registers are small, high-speed storage locations within a CPU that store data temporarily 
-   during program execution. They are used to hold operands and intermediate results for quick 
-   access by the CPU, enhancing processing speed.
