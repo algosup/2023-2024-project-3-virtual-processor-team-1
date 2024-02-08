@@ -7,7 +7,7 @@
 <summary>Table of Contents</summary>
 
 - [I. Audience](#i-audience)
-- [II. Deliverable](#ii-deliverable)
+- [II. Overview](#ii-overview)
 - [III. Glossary](#iii-glossary)
 - [IV. Requirements](#iv-requirements)
 - [V. Details](#v-details)
@@ -31,7 +31,9 @@
       - [7.6.2. Table of Opcodes](#762-table-of-opcodes)
       - [7.6.3. Code generation process](#763-code-generation-process)
     - [7.7. Virtual processor](#77-virtual-processor)
-    - [7.8. Architecture diagram](#78-architecture-diagram)
+      - [7.7.1. vCPU structure](#771-vcpu-structure)
+      - [7.7.2. Running the vCPU](#772-running-the-vcpu)
+      - [7.7.3 Class diagram](#773-class-diagram)
 - [IX. Syntax and Structure](#ix-syntax-and-structure)
   - [1. Folder structure](#1-folder-structure)
   - [2. Program file structure](#2-program-file-structure)
@@ -57,7 +59,7 @@ Secondary audiences
 - QA - to aid in preparing the test plan and to use it for validating issues.
 - Project manager - to help identify risks and dependencies
 
-## II. Deliverable
+## II. Overview
 
  The goal of the project is to create a virtual processor and an interpreter for running a new assembly language invented by the team. 
 
@@ -640,7 +642,7 @@ Errors recognized by the semantic analyser are as follows:
 #### 7.5 Error handling system
 
 
-The interpreter incorporates an error handling system to ensure users receive clear and actionable feedback regarding assembly code issues. It detects and reports errors at multiple stages of the interpretation process, including lexical analysis, parsing, and semantic analysis.
+The interpreter incorporates an error handling system to ensure users receive clear and actionable errors regarding assembly code issues. It detects and reports errors at multiple stages of the interpretation process.
 
 **Error Identification**
 
@@ -675,10 +677,6 @@ int main() {
     return 0;
 }
 ```
-
-**Seamless Progression to Machine Code**
-
-If the error array is empty after the binary transformation check, the interpreter smoothly transitions to machine code generation. This ensures only valid code progresses for execution.
 
 
 #### 7.6. Code generation
@@ -776,14 +774,17 @@ The first one is going to be used when we want to move a value to a register, th
 |OPCODE| REGISTER | DATA | DATA | DATA | DATA |
 
 
-Each instruction linked to a label or a function call is going to be stored in a label table. The label table is going to be used to store the corresponding binary code for each label.
+Each label is going to be stored in a label table with its corresponding address. The label table is going to be used to store the corresponding binary code for each label.
+
+To simplify the process. We are going to create 2 tables. The first one is going to store the label and the second one is going to store the corresponding binary code for each label. Each label and address will have the same index in their respective table.
+
 
 **Example of label**
 
 |0x99| 0x00| 0x00| 0x00| 0xBA| 0x01|
 |----|-----|-----|-----|-----|-----|
 |.| l | o | o | p |  |
-|LABEL| NAME | NAME | NAME | NAME | NAME |
+|LABEL| UNUSED | NAME | NAME | NAME | NAME |
 
 In this example, |0xBA| 0x01| represents the sum of each ASCII code for each letter of the label. 
 So in this example, loop is equal to 108+111+111+112 = 442 = 0x01BA
@@ -866,21 +867,8 @@ It's only a visual representation of the data don't take it as a real code.
 
 This phase involves the implementation of the virtual processor, which is going to execute the machine code previously generated.
 
-**Registers:**
-   - The virtual processor will have 4 general-purpose registers (R1, R2, R3, R4) and 4 address registers (A1, A2, A3, A4)
 
-**Memory:**
-   - The virtual processor will have a memory unit to store data and instructions
-   - The memory unit will be implemented as an array of 48-bit words
-  
-- **Instruction Decoder:**
-   - The instruction decoder will decode the machine code instructions and determine the corresponding operation to execute
-   - It will also identify the operands and their types
-   - The instruction decoder will be implemented as a switch statement to handle each instruction type
-   - The instruction decoder will be responsible for fetching the next instruction from memory
-   - The instruction decoder will also handle the control flow instructions (JMP, JE, JNE, JG, JGE, JL, JLE, CALL, RET, END)
-   - The instruction decoder will be responsible for updating the program counter (PC) after each instruction execution
-  
+##### 7.7.1. vCPU structure
 
   ```mermaid
   classDiagram
@@ -891,8 +879,8 @@ This phase involves the implementation of the virtual processor, which is going 
 	// registers
 	int pc;
 	int sp;
-	int r[8];
-	int ar[8];
+	int r[4];
+	int ar[4];
 
 	// instruction parts
 	int inst;
@@ -906,32 +894,121 @@ This phase involves the implementation of the virtual processor, which is going 
    }
 ```
 
+This structure represents the state of the CPU and contains various fields:
 
+- mem: A pointer to the array containing the binary code representing the memory of the CPU.
+- max_mem: The maximum size of the memory.
+- pc: Program counter, holds the memory address of the current instruction being executed.
+- sp: Stack pointer, holds the memory address of the top of the stack.
+- r: An array representing the general-purpose registers.
+- ar: An array representing the floating-point registers.
+- inst, dest, and src: Variables to hold parts of the current instruction being executed.
+- zero, ltz, and gtz: Flags to indicate whether the result of the previous operation was zero, negative, or positive, respectively.
 
+##### 7.7.2. Running the vCPU
 
-#### 7.8. Architecture diagram
+The vCPU will execute the machine code by following these steps:
+
+**Initialisation:**
+   - Allocate memory for the vCPU
+   - Initialise the memory, registers, and flags to their default values
+   - The program counter (PC) will be set to the first memory address
+   - The stack pointer (SP) will be set to the top of the memory
+   - The general-purpose registers (R1-R4) and the address registers (A1-A4) will be set to zero
+
+**Fetching the next instruction:**
+   - The vCPU will fetch the next instruction from memory using the program counter (PC)
+   - The instruction will be stored in the inst variable
+   - The destination and source operands will be stored in the dest and src variables, respectively ( in the case of a label or a function call, the name of the label or the function will be stored in the dest variable)
+   - The program counter (PC) will be incremented to point to the next instruction
+   - The vCPU will decode the instruction and determine the operation to execute
+
+**Execute the operation:**
+   - The vCPU will execute the operation based on the binary code of the instruction ( the use of a switch statement will be used to handle each instruction type) 
+   - The vCPU will update the flags based on the result of the arithmetic operation
+   - The vCPU will update the program counter (PC) to point to the next instruction
+
+**Run the vCPU:**
+   - The vCPU will run the machine code by fetching and executing instructions
+   - The vCPU will continue to execute instructions until the program counter (PC) points to the end of the memory
+
+##### 7.7.3 Class diagram
+
+Here is the class diagram of the vCPU:
 
 ```mermaid
-flowchart TD
-    subgraph Interpreter System
-    ASM2-File --> File-Cleaning
-    File-Cleaning --> Lexer    
-    Lexer --> Parser
-    Parser --> Semantic-Analyzer
-    Semantic-Analyzer --> Error-Handler
-    Error-Handler --> Code-Generator
-    end
+classDiagram
+    class vCPU {
+        - int *mem
+        - int max_mem
+        - int pc
+        - int sp
+        - int r[4]
+        - int ar[4]
+        - int inst
+        - int dest
+        - int src
+        - int zero
+        - int ltz
+        - int gtz
+        --
+        + void initialise()
+        + void fetchNextInstruction()
+        + void executeInstruction()
+        + void run()
+        + void freeCPU()
+    }
 
-    subgraph Virtual Processor
-    Instruction-Decoder --> Memory-Unit
-    Instruction-Decoder --> Register-File
-    Instruction-Decoder --> ALU
-    ALU --> Register-File
-    ALU --> Memory-Unit
-    Control-Unit --> ALU
-    end
+    vCPU --|> vCPU : Composition
 
+    class Initialisation {
+        - Allocate memory for vCPU
+        - Initialise memory, registers, and flags
+        - Set PC to first memory address
+        - Set SP to top of memory
+        - Set R1-R4 and A1-A4 to zero
+    }
+
+    class FetchInstruction {
+        - Fetch next instruction from memory
+        - Store instruction, dest, and src
+        - Increment PC
+    }
+
+    class ExecuteOperation {
+        - Execute operation based on instruction
+        - Update flags based on operation result
+        - Update PC to point to next instruction
+    }
+
+    class RunCPU {
+        - Run vCPU by fetching and executing instructions
+        - Continue until PC points to end of memory
+    }
+
+    Initialisation --> vCPU : <<create>>
+    FetchInstruction --> vCPU : <<use>>
+    ExecuteOperation --> vCPU : <<use>>
+    RunCPU --> vCPU : <<use>>
 ```
+
+**Error handling**
+
+**Division by 0**
+- **Error code:** 0xC2
+- **Type of error:** Division by 0
+- **Message:** Line number of the error + Code on the line + It is impossible to divide by 0.
+
+**Overflow error**
+- **Error code:** 0xD0
+- **Type of error:** Overflow error
+- **Message:** Overflow error	The program was halted due to an overflow.
+
+**Floating number error**
+- **Error code:** 0xC3
+- **Type of error:** Floating number error
+- **Message:** Line number of the error + Code on the line + The language does not take floats into account.
+
 
 
 
