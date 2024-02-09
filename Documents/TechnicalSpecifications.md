@@ -34,6 +34,7 @@
       - [7.7.1. vCPU structure](#771-vcpu-structure)
       - [7.7.2. Running the vCPU](#772-running-the-vcpu)
       - [7.7.3 Class diagram](#773-class-diagram)
+    - [7.8. Sequence diagram](#78-sequence-diagram)
 - [IX. Syntax and Structure](#ix-syntax-and-structure)
   - [1. Folder structure](#1-folder-structure)
   - [2. Program file structure](#2-program-file-structure)
@@ -1010,7 +1011,34 @@ classDiagram
 - **Message:** Line number of the error + Code on the line + The language does not take floats into account.
 
 
+#### 7.8. Sequence diagram
 
+```mermaid
+sequenceDiagram
+    participant User
+    participant Program
+    participant CleaningFunction
+    participant TokenizationFunction
+    participant ParsingFunction
+    participant SemanticAnalysisFunction
+    participant CodeGenerationFunction
+    participant VirtualProcessor
+
+    User->>Program: Provides input assembly code
+    Program->>CleaningFunction: Sends assembly code for cleaning
+    CleaningFunction-->>Program: Returns cleaned assembly code
+    Program->>TokenizationFunction: Sends cleaned assembly code
+    TokenizationFunction-->>Program: Returns tokenized assembly code
+    Program->>ParsingFunction: Sends tokenized assembly code
+    ParsingFunction-->>Program: Returns abstract syntax tree (AST)
+    Program->>SemanticAnalysisFunction: Sends AST
+    SemanticAnalysisFunction-->>Program: Returns semantic analysis result
+    Program->>CodeGenerationFunction: Sends semantic analysis result
+    CodeGenerationFunction-->>Program: Returns binary machine code
+    Program->>VirtualProcessor: Sends binary machine code
+    VirtualProcessor-->>Program: Executes binary machine code
+    Program-->>User: Provides output or error messages
+```
 
 ## IX. Syntax and Structure
 
