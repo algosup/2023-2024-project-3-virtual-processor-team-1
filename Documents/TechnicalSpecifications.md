@@ -987,10 +987,10 @@ classDiagram
         - Continue until PC points to end of memory
     }
 
-    Initialisation --> vCPU : <<create>>
-    FetchInstruction --> vCPU : <<use>>
-    ExecuteOperation --> vCPU : <<use>>
-    RunCPU --> vCPU : <<use>>
+    Initialisation --> vCPU 
+    FetchInstruction --> vCPU 
+    ExecuteOperation --> vCPU 
+    RunCPU --> vCPU 
 ```
 
 **Error handling**
