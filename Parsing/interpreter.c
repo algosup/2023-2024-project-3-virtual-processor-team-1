@@ -1,15 +1,4 @@
-#include <stdbool.h>
-#include "fileCleaner.h"
-#include "token.h"
-#include "parsing.h"
-
-/*
-Input:
-{"MOV", "R1", "#5"}
-
-Output:
-{Token("instruction", "MOV", 1, 1), Token("register", "R1", 1, 2), Token("immediate", "#5", 1, 3)},
-*/
+#include "global.h"
 
 int main(int argc, char *argv[]) {
 

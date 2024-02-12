@@ -1,7 +1,4 @@
-#include <stdbool.h>
-#include "fileCleaner.h"
-#include "token.h"
-#include "parsing.h"
+#include "global.h"
 
 
 
@@ -35,7 +32,7 @@ int main(void)
     if (lastSlash != NULL) 
     {  // put here the name of the file you want to open 
        // in the same folder as the executable
-    strcpy(lastSlash + 1, "test.asm2");
+    strcpy(lastSlash + 1, "assemblyCode.asm2");
     } 
     else 
     {
@@ -95,7 +92,7 @@ int main(void)
     int numNode = numTokens;
     astNode_t *root = buildAST(tokens, numLines * MAX_TOKENS);
     //printAST(root, 0);
-    checkSyntax(root);
+    //checkSyntax(root);
     freeAST(root);
     return 0;
 }
