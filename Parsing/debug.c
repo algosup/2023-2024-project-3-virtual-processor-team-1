@@ -1,6 +1,6 @@
 #include <stdbool.h>
 #include "fileCleaner.h"
-// #include "token.h"
+#include "token.h"
 #include "parsing.h"
 
 
@@ -93,7 +93,8 @@ int main(void)
     printTokenization(tokens, numLines * MAX_TOKENS);
     int numTokens = numLines * MAX_TOKENS;
     int numNode = numTokens;
-    mainNode_t *mainNode = newMainNode(tokens, numNode);
-    printMainNode(mainNode);
+    astNode_t *root = buildAST(tokens, numLines * MAX_TOKENS);
+    printAST(root, 0);
+    freeAST(root);
     return 0;
 }
