@@ -315,7 +315,7 @@ eg.
    {Token("instruction", "ADD", 3, 1), Token("register", "R3", 3, 2), Token("register", "R1", 3, 3)}
 ```
 
-![diagram](/Documents/Appendices/tokenization.png)
+![diagram](/Documents/Appendices/tokenisation.png)
 
 **Note:**
 
@@ -439,7 +439,7 @@ processor and interpreter work seamlessly.
 
 The process of the parsing is the following:
 
-- Receive the tokenised assembly code obtained from the lexical analysis (tokenization) phase.
+- Receive the tokenised assembly code obtained from the lexical analysis (tokenisation) phase.
 
 - Initialise a parsing pointer to the beginning of the token array.
   Set up data structures to represent the abstract syntax tree (AST)
@@ -621,7 +621,7 @@ The process of the semantic analysis is the following:
 
 **Errors handling**
 
-Errors recognized by the semantic analyser are as follows:
+Errors recognised by the semantic analyser are as follows:
 
 **Float number**
 - **Error code:** 0xC3
