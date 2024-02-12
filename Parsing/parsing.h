@@ -89,33 +89,18 @@ void freeAST(astNode_t *node) {
 
 void labelLastChild(astNode_t* node)
 {
-    int i = node->numChildren-1;
-    int trig = 0;
-    if(strcmp(node->children[i]->token.value,"RET")== 0 ||strcmp(node->children[i]->token.value,"END")== 0)
-    {
-        for(int j; j<= node->numChildren; i++)
-        {
-            char* last = node->children[i]->token.value;
-            if(strcmp(node->children[i]->token.value,"END")== 0 && strcmp(node->children[j]->token.value,"CALL") ==0)
-            {
-                trig++;
-            }
-            else if (j == i-1 && trig == 0 )
-            {
-                printf("error line %d: END token must has a CALL token on the same LABEL\n",node->children[i]->token.row);
-            }
-        }
-    
-    }
-    else
-    {
-        printf("error line %d: LABEL must finish with RET or END token\n",node->children[i]->token.row);
-    }
+
 }
 
 // Traverse the AST to check the syntax
 void checkSyntax(astNode_t* node) 
 {
+    // ************************************************************************
+    // current parent token type
+    bool inRoot = false;
+    bool inLabel = false;
+    bool inInstruction = false;
+    // *************************************************************************
     // If the node is NULL, return
     if (node == NULL) 
     {
@@ -124,37 +109,18 @@ void checkSyntax(astNode_t* node)
     // Check the syntax of current node and of the children of the current node
     for(int i = 0; i < node->numChildren; i++)
     {
-        // c=child, p=parent
-        char* pType = node->token.type; // parent node type
-        char* pValue = node->token.value; // parent node value
-        int pNumb = node->numChildren; // parent node number of children
-        char* cType = node->children[i]->token.type; // child node type
-        char* cValue = node->children[i]->token.value; // child node value
-        int cNumb = node->children[i]->numChildren; // child node number of children
-        
-        if (strcmp(pType,"ROOT")== 0 && pNumb >=0)
+        if(strcmp(node->token.type,"ROOT")==0)
         {
-            if (strcmp(cType,"LABEL")== 0 ||strcmp(cType,"INSTRUCTION")== 0)
-            {
-                
-            }
-            else
-            {
-                printf("error line %d: invalide ROOT syntax\n",node->children[i]->token.row);
-            }
+            inRoot = true;
         }
-        else if (strcmp(pType,"LABEL")== 0 && pNumb >=1)
+        else if(strcmp(node->token.type,"LABEL")==0)
         {
-            if (strcmp(cType,"LABEL")==0||strcmp(cType,"INSTRUCTION")==0)
-            {
-                labelLastChild(node);
-            }
-            else
-            {
-                printf("error line %d: invalide LABEL syntax\n",node->children[i]->token.row);
-            }
+            inLabel = true;
         }
-
+        else if(strcmp(node->token.type,"INSTRUCTION")==0)
+        {
+            inInstruction = true;
+        }
     }
     for(int i = 0; i < node->numChildren; i++)
     {

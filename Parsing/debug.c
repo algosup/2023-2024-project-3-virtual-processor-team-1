@@ -90,11 +90,12 @@ int main(void)
 
     token_t tokens[MAX_LINES * MAX_TOKENS];
     tokenizationFunction(cleanedLines, numLines, tokens);
-    printTokenization(tokens, numLines * MAX_TOKENS);
+    //printTokenization(tokens, numLines * MAX_TOKENS);
     int numTokens = numLines * MAX_TOKENS;
     int numNode = numTokens;
     astNode_t *root = buildAST(tokens, numLines * MAX_TOKENS);
-    printAST(root, 0);
+    //printAST(root, 0);
+    checkSyntax(root);
     freeAST(root);
     return 0;
 }
