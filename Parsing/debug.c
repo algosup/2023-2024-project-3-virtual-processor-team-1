@@ -92,7 +92,7 @@ int main(void)
     int numNode = numTokens;
     astNode_t *root = buildAST(tokens, numLines * MAX_TOKENS);
     //printAST(root, 0);
-    //checkSyntax(root);
+    syntaxCheck(root);
     freeAST(root);
     return 0;
 }

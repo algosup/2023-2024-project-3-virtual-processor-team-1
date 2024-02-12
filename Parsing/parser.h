@@ -86,3 +86,95 @@ void freeAST(astNode_t *node) {
     free(node->children);
     free(node);
 }
+
+void rootSyntax(astNode_t* root)
+{
+    for(int i = 0; 0 < root->numChildren; i++)
+    {
+        if(strcmp(root->children[i]->token.type,"LABEL") == 0)
+        {
+
+        }
+        else if(strcmp(root->children[i]->token.type,"INSTRUCTION")==0)
+        {
+
+        }
+        else
+        {
+            printf("error line %d: %c is unvalide token on ROOT\n", root->children[i]->token.row, root->children[i]->token.value);
+        }
+    }
+}
+
+void labelSyntax(astNode_t* label)
+{
+    for(int i = 0; i < label->numChildren; i++)
+    {
+        if(strcmp(label->children[i]->token.type,"LABEL")==0)
+        {
+
+        }
+        else if(strcmp(label->children[i]->token.type,"INSTRUCTION")==0)
+        {
+
+        }
+        else
+        {
+            printf("error line %d: %c is unvalide token on LABEL\n", label->children[i]->token.row, label->children[i]->token.value);
+        }
+
+        if(strcmp(label->children[label->numChildren-1]->token.value,"RET")==0)
+        {
+
+        }
+        else if(strcmp(label->children[label->numChildren-1]->token.value,"END")==0)
+        {
+
+        }
+        else
+        {
+            printf("error line %d:in %c LABEL, END or RET token at the end is expected \n", label->token.row, label->token.value);
+        }
+    
+    }
+}
+
+void syntaxCheck(astNode_t* node)
+{
+    bool inROOT;
+    bool inLABEL;
+    bool inINSTRUCTION;
+    bool inCALL;
+    bool inDISP;
+    
+    for(int i = 0; 0 < node->numChildren; i++)
+    {
+        if(strcmp(node->token.type,"ROOT")==0)
+        {
+            inROOT= true;
+            rootSyntax(node);
+        }
+        else if(strcmp(node->token.type,"LABEL")==0)
+        {
+            inLABEL= true;
+            labelSyntax(node);
+        }
+        else if(strcmp(node->token.type,"INSTRUCTION")==0)
+        {
+            inINSTRUCTION= true;
+        }
+        else if(strcmp(node->token.value,"CALL")==0)
+        {
+            inCALL= true;
+        }
+        else if(strcmp(node->token.value,"DISP")==0)
+        {
+            inDISP= true;
+        }
+    }
+
+    for(int i = 0; 0 < node->numChildren; i++)
+    {
+        syntaxCheck(node->children[i]);
+    }
+}

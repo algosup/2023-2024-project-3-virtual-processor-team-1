@@ -1,7 +1,7 @@
 .hello
     MOV R2, "Hello, World!"
     DISP R2
-RET
+;RET
 
 .function
     MOV R1, "Hello you"
