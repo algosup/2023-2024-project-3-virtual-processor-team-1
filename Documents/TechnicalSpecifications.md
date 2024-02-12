@@ -73,9 +73,9 @@ Secondary audiences
 |**virtual processor**| A virtual processor is a software-based emulation of a physical processor. It is used to execute instructions and perform operations on data.|
 |**opcode**| Short for "operation code," it is a code that represents a specific machine language instruction.|
 |**little-endian**| A format for storing binary data in which the least significant byte comes first.|
-|**LL Parsing Algorithm**| LL parsing is a top-down parsing method that processes input from left to right, aiming to construct a parse tree through leftmost derivations. It utilizes a predictive parsing table, often in LL(1) parsers, to make parsing decisions based on the leftmost non-terminal and a limited number of lookahead symbols.|
+|**LL Parsing Algorithm**| LL parsing is a top-down parsing method that processes input from left to right, aiming to construct a parse tree through leftmost derivations. It utilises a predictive parsing table, often in LL(1) parsers, to make parsing decisions based on the leftmost non-terminal and a limited number of lookahead symbols.|
 |**BNF**| A BNF specification is a set of derivation rules, written as:<br> ```<symbol> ::= __expression__``` <br>where: ```<symbol>``` is a nonterminal variable that is always enclosed between the pair <>.<br> ```::=``` means that the symbol on the left must be replaced with the expression on the right.<br> ```__expression__``` consists of one or more sequences of either terminal or nonterminal symbols where each sequence is separated by a vertical bar "|" indicating a choice, the whole being a possible substitution for the symbol on the left.|
-|**Standard Libraries**| Standard libraries refer to pre-compiled, reusable code modules that provide a set of commonly used functions and procedures. These libraries aim to facilitate software development by offering a consistent and standardized set of tools and utilities.|
+|**Standard Libraries**| Standard libraries refer to pre-compiled, reusable code modules that provide a set of commonly used functions and procedures. These libraries aim to facilitate software development by offering a consistent and standardised set of tools and utilities.|
 |**GCC (GNU Compiler Collection)**| GCC is a compiler system developed by the GNU Project. It includes compilers for various programming languages, such as C, C++, and Fortran. GCC is widely used in the open-source community and is a key tool for converting source code into executable programs.|
 |**Top-Down**| Top-down is an approach or methodology where a problem is broken down into smaller, more manageable sub-problems. The solution is then built by addressing these sub-problems from the highest level down to the most detailed level.|
 |**AST (Abstract Syntax Tree)**| An Abstract Syntax Tree is a hierarchical tree-like structure that represents the abstract syntactic structure of source code without the intricacies of specific syntax. ASTs are commonly used in compilers and interpreters to facilitate the analysis and transformation of code.|
@@ -315,7 +315,7 @@ eg.
    {Token("instruction", "ADD", 3, 1), Token("register", "R3", 3, 2), Token("register", "R1", 3, 3)}
 ```
 
-![diagram](/Documents/Appendices/tokenization.png)
+![diagram](/Documents/Appendices/tokenisation.png)
 
 **Note:**
 
@@ -439,9 +439,9 @@ processor and interpreter work seamlessly.
 
 The process of the parsing is the following:
 
-- Receive the tokenised assembly code obtained from the lexical analysis (tokenization) phase.
+- Receive the tokenised assembly code obtained from the lexical analysis (tokenisation) phase.
 
-- Initialize a parsing pointer to the beginning of the token array.
+- Initialise a parsing pointer to the beginning of the token array.
   Set up data structures to represent the abstract syntax tree (AST)
 
   ```mermaid
@@ -455,7 +455,7 @@ The process of the parsing is the following:
   }
 
   class ASTBuilder {
-    +initializeAST(): ASTNode
+    +initialiseAST(): ASTNode
     +createASTNode(type: TokenType, value: TokenValue): ASTNode
     +addChild(parent: ASTNode, child: ASTNode): void
     +cleanupAST(root: ASTNode): void
@@ -621,7 +621,7 @@ The process of the semantic analysis is the following:
 
 **Errors handling**
 
-Errors recognized by the semantic analyser are as follows:
+Errors recognised by the semantic analyser are as follows:
 
 **Float number**
 - **Error code:** 0xC3
@@ -803,8 +803,8 @@ The label .loop is going to be stored in the label table with the corresponding 
 
 ```mermaid
 flowchart TD
-    Start --> InitializeArray
-    InitializeArray --> TraverseAST
+    Start --> InitialiseArray
+    InitialiseArray --> TraverseAST
     TraverseAST --> |For each node in AST| DetermineType
     DetermineType --> |Instruction| GenerateCodeInstruction
     DetermineType --> |Immediate| GenerateCodeImmediate
@@ -1021,7 +1021,7 @@ sequenceDiagram
     participant User
     participant Program
     participant CleaningFunction
-    participant TokenizationFunction
+    participant TokenisationFunction
     participant ParsingFunction
     participant SemanticAnalysisFunction
     participant CodeGenerationFunction
@@ -1030,9 +1030,9 @@ sequenceDiagram
     User->>Program: Provides input assembly code
     Program->>CleaningFunction: Sends assembly code for cleaning
     CleaningFunction-->>Program: Returns cleaned assembly code
-    Program->>TokenizationFunction: Sends cleaned assembly code
-    TokenizationFunction-->>Program: Returns tokenized assembly code
-    Program->>ParsingFunction: Sends tokenized assembly code
+    Program->>TokenisationFunction: Sends cleaned assembly code
+    TokenisationFunction-->>Program: Returns tokenised assembly code
+    Program->>ParsingFunction: Sends tokenised assembly code
     ParsingFunction-->>Program: Returns abstract syntax tree (AST)
     Program->>SemanticAnalysisFunction: Sends AST
     SemanticAnalysisFunction-->>Program: Returns semantic analysis result
@@ -1170,11 +1170,11 @@ The following are the coding design principles:
 
 ## XIII. Development Process
 
-- Begin development with a minimal tokenization parser and a basic virtual processor
+- Begin development with a minimal tokenisation parser and a basic virtual processor
   
 - Limit the virtual processor to handle only 2 or 3 instructions initially
   
-- Focus on understanding key concepts like tokenization, parsing, and basic execution
+- Focus on understanding key concepts like tokenisation, parsing, and basic execution
   
 - Gradually expand the implementation to include more instructions as comprehension grows
   
