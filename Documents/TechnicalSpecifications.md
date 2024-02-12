@@ -476,6 +476,7 @@ The process of the parsing is the following:
 <XOR> ::= <register> "," <register> | <register> "," <immediate>
 <OR>  ::= <register> "," <register> | <register> "," <immediate>
 <CMP> ::= <register> "," <register> | <register> "," <immediate>
+<DISP> ::= <register> | <immediate>
 <NOT> ::= <register> 
 <GAD> ::= <register> 
 <JMP> ::= <label>
@@ -745,6 +746,8 @@ Here is the complete table of the instructions and the corresponding binary code
 |OR R1, 0X332| 0x75          |
 |NOT R1|       0x76          |
 |GAD R1|       0x77          |
+|DISP R1|      0x80          |
+|DISP 0x342|   0x81          |
 |-|       -                  |
 |**General Register**|       |
 |R1 |          0x01          |
