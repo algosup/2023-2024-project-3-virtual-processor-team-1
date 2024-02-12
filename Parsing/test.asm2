@@ -1,18 +1,19 @@
-.seumInternational
-    MOV R2, "No."
+.hello
+    MOV R2, "Hello, World!"
+    DISP R2
 RET
 
 .function
-    MOV R1, "Seum"
-    CALL .seumInternational
+    MOV R1, "Hello you"
+    CALL .hello
     DISP R1
 END
+
+CALL .function
 
 MOV R1, -5
 DISP R1     ; expected 5
 MOV R2, #7   ; Test comment
-
-CALL .function
 
 DISP R2     ; expected 7
 ADD R1, R2

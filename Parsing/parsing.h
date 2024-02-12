@@ -22,6 +22,7 @@ astNode_t *buildAST(token_t *tokens, int numTokens) {
     astNode_t *root = createNode((token_t){"ROOT", "ROOT", 0, 0});
     astNode_t *currentParent = root;
     astNode_t **parentStack = malloc(sizeof(astNode_t *) * numTokens);
+    astNode_t *labelParent = root;
     int stackTop = 0;
     parentStack[stackTop] = root;
 
@@ -40,8 +41,9 @@ astNode_t *buildAST(token_t *tokens, int numTokens) {
             addChild(currentParent, currentNode);
             parentStack[++stackTop] = currentNode;
             currentParent = currentNode;
+            labelParent = currentNode;
         } else if (strcmp(tokens[i].value, "RET") == 0 || strcmp(tokens[i].value, "END") == 0) {
-            addChild(currentParent, currentNode);
+            addChild(labelParent, currentNode);
             currentParent = parentStack[--stackTop];
         } else {
             if (tokens[i].column == 1 && tokens[i].row != lastInstructionRow) {
