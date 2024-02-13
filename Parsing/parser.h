@@ -119,12 +119,123 @@ void syntaxCheck(astNode_t* node, int depth) {
                     printf("Error line %d: First and second argument of MOV cannot be the same.\n", secondArg->token.row);
                 }
             }
-        } else if (strcmp(node->token.value, "CALL") == 0){
-            if (node->numChildren > 1){
-                printf("Error : CALL Instruction can only have 1 argument.\n");
+        } else if(strcmp(node->token.value, "ADD") == 0){
+            // Check for ADD instruction syntax
+            if (node->numChildren != 2) {
+                printf("Error: ADD instruction must have exactly 2 arguments.\n");
             } else {
+                // Check the first argument
+                astNode_t *firstArg = node->children[0];
+                if (strcmp(firstArg->token.type, "VOID") == 0) {
+                    printf("Error line %d: First argument of ADD cannot be VOID.\n", firstArg->token.row);
+                } else if (strcmp(firstArg->token.type, "IMMEDIATE") == 0) {
+                    printf("Error line %d: First argument of ADD cannot be an IMMEDIATE.\n", firstArg->token.row);
+                } else if (strcmp(firstArg->token.type, "REGISTER") != 0 &&
+                           strcmp(firstArg->token.type, "ADDRESS_REGISTER") != 0) {
+                    printf("Error line %d: First argument of ADD must be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
+                }
+                
+                // Check the second argument
+                astNode_t *secondArg = node->children[1];
+                if (strcmp(secondArg->token.type, "VOID") == 0) {
+                    printf("Error line %d: Second argument of ADD cannot be VOID.\n", secondArg->token.row);
+                }
+                else if (strcmp(firstArg->token.value,secondArg->token.value)==0 ) 
+                {
+                    printf("Error line %d: First and second argument of ADD cannot be the same.\n", secondArg->token.row);
+                }
             }
-        } else {
+        } else if(strcmp(node->token.value, "SUB") == 0){
+            // Check for SUB instruction syntax
+            if (node->numChildren != 2) {
+                printf("Error: SUB instruction must have exactly 2 arguments.\n");
+            } else {
+                // Check the first argument
+                astNode_t *firstArg = node->children[0];
+                if (strcmp(firstArg->token.type, "VOID") == 0) {
+                    printf("Error line %d: First argument of SUB cannot be VOID.\n", firstArg->token.row);
+                } else if (strcmp(firstArg->token.type, "IMMEDIATE") == 0) {
+                    printf("Error line %d: First argument of SUB cannot be an IMMEDIATE.\n", firstArg->token.row);
+                } else if (strcmp(firstArg->token.type, "REGISTER") != 0 &&
+                           strcmp(firstArg->token.type, "ADDRESS_REGISTER") != 0) {
+                    printf("Error line %d: First argument of SUB must be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
+                }
+                
+                // Check the second argument
+                astNode_t *secondArg = node->children[1];
+                if (strcmp(secondArg->token.type, "VOID") == 0) {
+                    printf("Error line %d: Second argument of SUB cannot be VOID.\n", secondArg->token.row);
+                }
+                else if (strcmp(firstArg->token.value,secondArg->token.value)==0 ) 
+                {
+                    printf("Error line %d: First and second argument of SUB cannot be the same.\n", secondArg->token.row);
+                }
+            }
+        } else if(strcmp(node->token.value, "MUL") == 0){
+            // Check for MUL instruction syntax
+            if (node->numChildren != 2) {
+                printf("Error: MUL instruction must have exactly 2 arguments.\n");
+            } else {
+                // Check the first argument
+                astNode_t *firstArg = node->children[0];
+                if (strcmp(firstArg->token.type, "VOID") == 0) {
+                    printf("Error line %d: First argument of MUL cannot be VOID.\n", firstArg->token.row);
+                } else if (strcmp(firstArg->token.type, "IMMEDIATE") == 0) {
+                    printf("Error line %d: First argument of MUL cannot be an IMMEDIATE.\n", firstArg->token.row);
+                } else if (strcmp(firstArg->token.type, "REGISTER") != 0 &&
+                           strcmp(firstArg->token.type, "ADDRESS_REGISTER") != 0) {
+                    printf("Error line %d: First argument of MUL must be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
+                }
+                
+                // Check the second argument
+                astNode_t *secondArg = node->children[1];
+                if (strcmp(secondArg->token.type, "VOID") == 0) {
+                    printf("Error line %d: Second argument of MUL cannot be VOID.\n", secondArg->token.row);
+                }
+                else if (strcmp(firstArg->token.value,secondArg->token.value)==0 ) 
+                {
+                    printf("Error line %d: First and second argument of MUL cannot be the same.\n", secondArg->token.row);
+                }
+            }
+        } else if(strcmp(node->token.value, "DIV") == 0){
+            // Check for DIV instruction syntax
+            if (node->numChildren != 2) {
+                printf("Error: DIV instruction must have exactly 2 arguments.\n");
+            } else {
+                // Check the first argument
+                astNode_t *firstArg = node->children[0];
+                if (strcmp(firstArg->token.type, "VOID") == 0) {
+                    printf("Error line %d: First argument of DIV cannot be VOID.\n", firstArg->token.row);
+                } else if (strcmp(firstArg->token.type, "IMMEDIATE") == 0) {
+                    printf("Error line %d: First argument of DIV cannot be an IMMEDIATE.\n", firstArg->token.row);
+                } else if (strcmp(firstArg->token.type, "REGISTER") != 0 &&
+                           strcmp(firstArg->token.type, "ADDRESS_REGISTER") != 0) {
+                    printf("Error line %d: First argument of DIV must be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
+                }
+                
+                // Check the second argument
+                astNode_t *secondArg = node->children[1];
+                if (strcmp(secondArg->token.type, "VOID") == 0) {
+                    printf("Error line %d: Second argument of DIV cannot be VOID.\n", secondArg->token.row);
+                }
+                else if (strcmp(firstArg->token.value,secondArg->token.value)==0 ) 
+                {
+                    printf("Error line %d: First and second argument of DIV cannot be the same.\n", secondArg->token.row);
+                }
+            }
+        } else if(strcmp(node->token.value, "CMP") == 0){
+            // Check for CMP instruction syntax
+            if (node->numChildren != 2) {
+                printf("Error: CMP instruction must have exactly 2 arguments.\n");
+            } else {
+                // Check the first argument
+                astNode_t *firstArg = node->children[0];
+                if (strcmp(firstArg->token.type, "VOID") == 0) {
+                    printf("Error line %d: First argument of CMP cannot be VOID.\n", firstArg->token.row);
+                } else if (strcmp(firstArg->token.type, "IMMEDIATE") == 0) {
+                    printf("Error line %d: First argument of CMP cannot be an IMMEDIATE.\n", firstArg->token.row);
+        } }}
+         else {
             printf("Error: Unsupported instruction: %s\n", node->token.value);
         }
     }
