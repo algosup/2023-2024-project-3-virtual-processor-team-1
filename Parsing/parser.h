@@ -31,7 +31,7 @@ astNode_t *buildAST(token_t *tokens, int numTokens) {
     int lastInstructionRow = -1;
 
     for (int i = 0; i < numTokens; i++) {
-        if (strcmp(tokens[i].type, "VOID") == 0) continue;
+        // if (strcmp(tokens[i].type, "VOID") == 0) continue;
         astNode_t *currentNode = createNode(tokens[i]);
 
         if (strcmp(tokens[i].type, "LABEL") == 0 && inCall) {
@@ -87,83 +87,89 @@ void freeAST(astNode_t *node) {
     free(node);
 }
 
-// Syntax analysis
-// instruction exclude call, ret, end
+void syntaxCheck(astNode_t* node, int depth) {
+    if (node == NULL) return;
+
+    // Perform syntax checks based on the type of node
+    if (strcmp(node->token.type, "INSTRUCTION") == 0) {
+        // Check instruction syntax
+        if (strcmp(node->token.value, "MOV") == 0) {
+            // Check for MOV instruction syntax
+            if (node->numChildren != 2) {
+                printf("Error: MOV instruction must have exactly 2 arguments.\n");
+            } else {
+                // Check the first argument
+                astNode_t *firstArg = node->children[0];
+                if (strcmp(firstArg->token.type, "VOID") == 0) {
+                    printf("Error: First argument of MOV cannot be VOID.\n");
+                } else if (strcmp(firstArg->token.type, "IMMEDIATE") == 0) {
+                    printf("Error: First argument of MOV cannot be an IMMEDIATE.\n");
+                } else if (strcmp(firstArg->token.type, "REGISTER") != 0 &&
+                           strcmp(firstArg->token.type, "ADDRESS_REGISTER") != 0) {
+                    printf("Error: First argument of MOV must be a REGISTER or ADDRESS_REGISTER.\n");
+                }
+                
+                // Check the second argument
+                astNode_t *secondArg = node->children[1];
+                if (strcmp(secondArg->token.type, "VOID") == 0) {
+                    printf("Error: Second argument of MOV cannot be VOID.\n");
+                }
+            }
+        } else if (strcmp(node->token.value, "CALL") == 0){
+            if (node->numChildren > 1){
+                printf("Error : CALL Instruction can only have 1 argument.\n");
+            } else {
+            }
+        } else {
+            printf("Error: Unsupported instruction: %s\n", node->token.value);
+        }
+    }
+
+    for (int i = 0; i < node->numChildren; i++) {
+        syntaxCheck(node->children[i], depth + 1);
+    }
+}
+
 void root()
 {
-    // root can have label, instruction, call as a children
-    // any number of children
-
 }
 
 void label()
 {
-    // label can have instruction, call, ret, end as a children
-    // end must be the last child of label if call is present
-    // ret must be the last child of label if call is not present
-    // any number of children
 }
 
 void instruction()
 {
-    // instruction can have registers as a 1st child, registers or any values as a 2nd child
-    // only 2 children
 }
 
 void registers()
-{
-    // registers has no children
+{  
 }
 
 void immediate()
 {
-    // immediate has no children
 }
 
 void negative()
 {
-    // negative has no children
 }
 
 void string()
 {
-    // string has no children
 }
 
 void call()
 {
-    // call  have label as a child
-    // only 1 child
 }
 
 void ret()
 {
-    // ret has no children
 }
 
 void end()
 {
-    // end has no children
 }
 
 void disp()
 {
-    // disp  have registers or any values as a child
-    // only 1 child
-}
-
-
-void syntaxCheck(astNode_t* node, int depth)
-{
-    if (node == NULL) return;
-
-    for(int i = 0; i < depth; i++)
-    {
-        
-    }
-
-    for(int i = 0; i < node->numChildren; i++)
-    {
-        syntaxCheck(node->children[i], depth + 1);
-    }
 }

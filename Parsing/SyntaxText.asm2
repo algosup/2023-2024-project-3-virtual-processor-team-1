@@ -1,0 +1,3 @@
+MOV 1, R1
+MOV #1, R2
+MOV A1, A2
