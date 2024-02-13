@@ -101,18 +101,22 @@ void syntaxCheck(astNode_t* node, int depth) {
                 // Check the first argument
                 astNode_t *firstArg = node->children[0];
                 if (strcmp(firstArg->token.type, "VOID") == 0) {
-                    printf("Error: First argument of MOV cannot be VOID.\n");
+                    printf("Error line %d: First argument of MOV cannot be VOID.\n", firstArg->token.row);
                 } else if (strcmp(firstArg->token.type, "IMMEDIATE") == 0) {
-                    printf("Error: First argument of MOV cannot be an IMMEDIATE.\n");
+                    printf("Error line %d: First argument of MOV cannot be an IMMEDIATE.\n", firstArg->token.row);
                 } else if (strcmp(firstArg->token.type, "REGISTER") != 0 &&
                            strcmp(firstArg->token.type, "ADDRESS_REGISTER") != 0) {
-                    printf("Error: First argument of MOV must be a REGISTER or ADDRESS_REGISTER.\n");
+                    printf("Error line %d: First argument of MOV must be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
                 }
                 
                 // Check the second argument
                 astNode_t *secondArg = node->children[1];
                 if (strcmp(secondArg->token.type, "VOID") == 0) {
-                    printf("Error: Second argument of MOV cannot be VOID.\n");
+                    printf("Error line %d: Second argument of MOV cannot be VOID.\n", secondArg->token.row);
+                }
+                else if (strcmp(firstArg->token.value,secondArg->token.value)==0 ) 
+                {
+                    printf("Error line %d: First and second argument of MOV cannot be the same.\n", secondArg->token.row);
                 }
             }
         } else if (strcmp(node->token.value, "CALL") == 0){
