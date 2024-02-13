@@ -87,94 +87,83 @@ void freeAST(astNode_t *node) {
     free(node);
 }
 
-void rootSyntax(astNode_t* root)
+// Syntax analysis
+// instruction exclude call, ret, end
+void root()
 {
-    for(int i = 0; 0 < root->numChildren; i++)
-    {
-        if(strcmp(root->children[i]->token.type,"LABEL") == 0)
-        {
+    // root can have label, instruction, call as a children
+    // any number of children
 
-        }
-        else if(strcmp(root->children[i]->token.type,"INSTRUCTION")==0)
-        {
-
-        }
-        else
-        {
-            printf("error line %d: %c is unvalide token on ROOT\n", root->children[i]->token.row, root->children[i]->token.value);
-        }
-    }
 }
 
-void labelSyntax(astNode_t* label)
+void label()
 {
-    for(int i = 0; i < label->numChildren; i++)
-    {
-        if(strcmp(label->children[i]->token.type,"LABEL")==0)
-        {
-
-        }
-        else if(strcmp(label->children[i]->token.type,"INSTRUCTION")==0)
-        {
-
-        }
-        else
-        {
-            printf("error line %d: %c is unvalide token on LABEL\n", label->children[i]->token.row, label->children[i]->token.value);
-        }
-
-        if(strcmp(label->children[label->numChildren-1]->token.value,"RET")==0)
-        {
-
-        }
-        else if(strcmp(label->children[label->numChildren-1]->token.value,"END")==0)
-        {
-
-        }
-        else
-        {
-            printf("error line %d:in %c LABEL, END or RET token at the end is expected \n", label->token.row, label->token.value);
-        }
-    
-    }
+    // label can have instruction, call, ret, end as a children
+    // end must be the last child of label if call is present
+    // ret must be the last child of label if call is not present
+    // any number of children
 }
 
-void syntaxCheck(astNode_t* node)
+void instruction()
 {
-    bool inROOT;
-    bool inLABEL;
-    bool inINSTRUCTION;
-    bool inCALL;
-    bool inDISP;
-    
-    for(int i = 0; 0 < node->numChildren; i++)
+    // instruction can have registers as a 1st child, registers or any values as a 2nd child
+    // only 2 children
+}
+
+void registers()
+{
+    // registers has no children
+}
+
+void immediate()
+{
+    // immediate has no children
+}
+
+void negative()
+{
+    // negative has no children
+}
+
+void string()
+{
+    // string has no children
+}
+
+void call()
+{
+    // call  have label as a child
+    // only 1 child
+}
+
+void ret()
+{
+    // ret has no children
+}
+
+void end()
+{
+    // end has no children
+}
+
+void disp()
+{
+    // disp  have registers or any values as a child
+    // only 1 child
+}
+
+
+void syntaxCheck(astNode_t* node, int depth)
+{
+    if (node == NULL) return;
+
+    for(int i = 0; i < depth; i++)
     {
-        if(strcmp(node->token.type,"ROOT")==0)
-        {
-            inROOT= true;
-            rootSyntax(node);
-        }
-        else if(strcmp(node->token.type,"LABEL")==0)
-        {
-            inLABEL= true;
-            labelSyntax(node);
-        }
-        else if(strcmp(node->token.type,"INSTRUCTION")==0)
-        {
-            inINSTRUCTION= true;
-        }
-        else if(strcmp(node->token.value,"CALL")==0)
-        {
-            inCALL= true;
-        }
-        else if(strcmp(node->token.value,"DISP")==0)
-        {
-            inDISP= true;
-        }
+        
     }
 
-    for(int i = 0; 0 < node->numChildren; i++)
+    for(int i = 0; i < node->numChildren; i++)
     {
-        syntaxCheck(node->children[i]);
+        syntaxCheck(node->children[i], depth + 1);
     }
 }
