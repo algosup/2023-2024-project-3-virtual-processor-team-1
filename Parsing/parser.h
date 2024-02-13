@@ -182,8 +182,8 @@ void syntaxCheck(astNode_t* node, int depth) {
                     printf("Error line %d: First argument of MUL cannot be VOID.\n", firstArg->token.row);
                 } else if (strcmp(firstArg->token.type, "IMMEDIATE") == 0) {
                     printf("Error line %d: First argument of MUL cannot be an IMMEDIATE.\n", firstArg->token.row);
-                } else if (strcmp(firstArg->token.type, "REGISTER") != 0 &&
-                           strcmp(firstArg->token.type, "ADDRESS_REGISTER") != 0) {
+                } else if (strcmp(firstArg->token.type, "REGISTER") != 0 && strcmp(firstArg->token.type, "ADDRESS_REGISTER") != 0) {
+                    
                     printf("Error line %d: First argument of MUL must be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
                 }
                 
@@ -235,8 +235,31 @@ void syntaxCheck(astNode_t* node, int depth) {
                 } else if (strcmp(firstArg->token.type, "IMMEDIATE") == 0) {
                     printf("Error line %d: First argument of CMP cannot be an IMMEDIATE.\n", firstArg->token.row);
         } }}
+        else if(strcmp(node->token.value,"JMP") == 0 )
+        {
+            if(node->numChildren != 2) 
+            {
+                if(node->children[1]->token.type != "VOID")
+                {
+                    printf("Error line %d: JMP instruction must have exactly 1 argument.\n", node->token.row);
+                    printf("Parent Token(\"%s\", \"%s\", %d, %d)\n", node->token.type, node->token.value, node->token.row, node->token.column);
+                    printf("child1 Token(\"%s\", \"%s\", %d, %d)\n", node->children[0]->token.type, node->children[0]->token.value, node->children[0]->token.row, node->children[0]->token.column);
+                    printf("child2 Token(\"%s\", \"%s\", %d, %d)\n", node->children[1]->token.type, node->children[1]->token.value, node->children[1]->token.row, node->children[1]->token.column);
+                }
+            }
+            else if(strcmp(node->children[0]->token.type, "LABEL") == 0 ||strcmp(node->children[0]->token.type, "ROOT") == 0)
+            {
+                printf("Error line %d: JMP instruction must have a LABEL as an argument.\n", node->token.row);
+            }
+            else if(node->children[0]->token.type == "VOID")
+            {
+                printf("Error line %d: JMP instruction must have a LABEL as an argument.\n", node->token.row);
+            }
+          
+            
+        }
          else {
-            printf("Error: Unsupported instruction: %s\n", node->token.value);
+            printf("Error line %d: Unsupported instruction: %s\n",node->token.row ,node->token.value);
         }
     }
 
