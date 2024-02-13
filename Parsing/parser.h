@@ -235,7 +235,7 @@ void syntaxCheck(astNode_t* node, int depth) {
                 } else if (strcmp(firstArg->token.type, "IMMEDIATE") == 0) {
                     printf("Error line %d: First argument of CMP cannot be an IMMEDIATE.\n", firstArg->token.row);
         } }}
-        else if(strcmp(node->token.value,"JMP") == 0 )
+        else if(strcmp(node->token.value,"JMP") == 0 ) // TODO Check all jump statements
         {
             if(node->numChildren != 2) 
             {
