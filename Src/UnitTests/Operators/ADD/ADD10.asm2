@@ -1,0 +1,8 @@
+DISP "Test 8: Add a string register to a register"
+
+MOV R1, #6
+MOV R2, "Hello"
+ADD R1, R2
+
+DISP R1
+DISP "Expected: Error"

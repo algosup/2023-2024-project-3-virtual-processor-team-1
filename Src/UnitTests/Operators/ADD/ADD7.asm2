@@ -1,5 +1,7 @@
-DISP "Test 6: Add nothing: Not valid"
+DISP "Test 7: Add an negative value to a register"
 
-ADD
+MOV R1, #6
+ADD R1, -5
 
-; Expected: Error message
+DISP R1
+DISP "Expected: 1"

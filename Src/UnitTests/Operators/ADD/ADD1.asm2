@@ -1,7 +1,7 @@
 DISP "Test 1: Add an immediate value to a register"
 
-MOV R1, 6
-ADD R1, 5
+MOV R1, #6
+ADD R1, #5
 
 DISP R1
 DISP "Expected: 11"

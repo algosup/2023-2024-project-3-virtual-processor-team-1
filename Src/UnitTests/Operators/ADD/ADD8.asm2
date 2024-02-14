@@ -1,0 +1,8 @@
+DISP "Test 9: Add a negative register to a register"
+
+MOV R1, #6
+MOV R2, -5
+ADD R1, R2
+
+DISP R1
+DISP "Expected: 1"
