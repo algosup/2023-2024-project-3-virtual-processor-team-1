@@ -93,9 +93,9 @@ For our strategy we decided to work on iterative testing, which consists of test
 
 Mainly, we need to test the documents and our program.
 
-As far as our program is concerned, we need to test that there are no significants bugs, and that all the features presented in the functional specification operate as intended. Also as we work on different platforms (Windows and macOS) we have to check if all the features work correctly.
+As far as our program is concerned, we need to test that there are no significant bugs, and that all the features presented in the functional specification operate as intended. Also as we work on different platforms (Windows and macOS) we have to check if all the features work correctly.
 
-For our document it is important to ensure their quality of its content, provide a clear communication with our client, make sure all of them could understand all the documentation. We will also check grammatical and typography errors.
+For our document it is important to ensure their quality of its content, provide a clear communication with our client, make sure all of them could understand all the documentation. We will also check grammatical and typographical errors.
 
 ## 3. Testing type
 ### 3.1 Unit test
@@ -133,19 +133,19 @@ Perform the basic assembly instructions *(like MOV, CMP, and basic memory operat
 
 ## 6. Test cases
 
-A test case is a defined format for software testing, required to check if any particular feature of our program if working or not. A test case consist of a set of instructions that need to be check to test our program.
+A test case is a defined format for software testing, required to check if any particular feature of our program is working or not. A test case consist of a set of instructions that need to be check to test our program.
 
 For each test cases we use this pattern:
 
 - **Date**: Date of the test case
-- **Title**: Title the function or the feature of the test case tested
+- **Title**: Title of the function or the feature of the test case tested
 - **Test case description**: Add a clear and concise description of the test case
-- **Step of test**: Mentione all the steps in detail and write in order in wich it requires to be executed
+- **Step of test**: Mentions all the steps in detail and write in order in wich it requires to be executed
 - **Expected result**: Explain what kind of result did you expect
 - **Priority**: Test case priority (None, Low, Medium, High)
 - **Status**: Test case status (Passed, Failed, In progress or Not implement)
 
-To make QA's job easier, and to monitor the progress of our test cases, we use a [Test Case file](/Documents/TestCases.md). That facilate the job of the Quality Assurance and enable us to be aware of features that not working or have not been implement.
+To make QA's job easier, and to monitor the progress of our test cases, we use a [Test Case file](/Documents/TestCases.md). TThen facilates the job of the Quality Assurance and enable us to be aware of features that not working or have not been implement.
 
 ## 7. Monitoring and tools
 ### 7.1 GitHub
@@ -155,7 +155,7 @@ GitHub is a cloud-based collaborative development platform that allows users to 
 
 We will also be using GitHub Issues to report bugs and errors to be fixed.
 
-#### 7.1.2 GitHub issues
+#### 7.1.2 GitHub Issues
 
 GitHub Issues is a sort of bug tracker in every repository.
 
@@ -188,7 +188,7 @@ We have decided to work in collaboration with the other project teams, which mea
 
 # III. Test criteria
 
-Establishing test criteria is crucial to guaranteed the quality of our program before it is released. This represents some standards to which our programme must conform before being sent to customers.
+Establishing test criteria is crucial to guaranteed the quality of our program before it is released. This represents some standards to which our program must conform before being sent to customers.
 
 ## 1. Suspension criteria
 
@@ -260,10 +260,10 @@ For this project we have only one quality assurance on this team but we also wor
 
 # VI. Conclusion and acknowledgements
 
-Delivering software that does not work or is buggy can damage our professional image and spoil the user experience. That is why the testing phase is so important. We have a duty to deliver a programme that meets as many different requirements as possible. The testing phase will guarantee the quality of our programme and ensure that it works as it should.
+Delivering software that does not work or is buggy can damage our professional image and spoil the user experience. That is why the testing phase is so important. We have a duty to deliver a program that meets as many different requirements as possible. The testing phase will guarantee the quality of our program and ensure that it works as it should.
 
 Within our team we would like to thank the software engineering team for their work.
-We would also like to thank our Programme Manager and Technical Lead for all the information they shared with us on which the test plan is based.
+We would also like to thank our Program Manager and Technical Lead for all the information they shared with us on which the test plan is based.
 Finally, we'd like to thank our project manager for leading the team towards our common goal.
 And of course we would like to thank the QAs from the other teams we worked with. 
 

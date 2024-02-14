@@ -1,8 +1,8 @@
-# Tests Cases
+# Test Cases
 
 ## Overview
 
-A test case is a defined format for software testing, required to check if any particular feature of our program if working or not. It consists of a set of instructions that need to be check to test our program.
+A test case is a defined format for software testing, required to check if any particular feature of our program is working or not. It consists of a set of instructions that need to be check to test our program.
 
 ## Test Case template 
 
@@ -37,6 +37,372 @@ A test case is a defined format for software testing, required to check if any p
 |Test Case Description|The assembly program should correctly perform arithmetic operations (Addition (`ADD`), Substration (`SUB`), Multiplication (`MUL`), Division (`DIV`)).|
 |Step of the Test Case|1. Store immediate values in registers `R1` and `R2`. <br>2. Perform `Arithmetic operands` `R1`, `R2` (like `ADD` `R1`, `R2`).|
 |Expected Result|`R1` should contents the result of the operation between `R1` and `R2`.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+## 2. Test Case: Arithmetic operation
+### 2.1 Addition: `ADD`
+#### 2.1.1 Add a immediate value
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should correctly perform arithmetic operations addition (`ADD`) between two immediate values.|
+|Step of the Test Case|1. Store immediate values in registers `R1`: <br> `MOV` `R1`, `#2`<br>2. Perform `ADD` `R1`, `#3` .|
+|Expected Result|`R1` should contents the result of the addition between `R1` and `#3`. It should be 5.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.2 Ajouter valeurs de deux registers
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should correctly perform arithmetic operations addition (`ADD`) between two immediate values.|
+|Step of the Test Case|1. Store immediate values in registers `R1` and `R2`: <br> `MOV` `R1`, `#2` <br> `MOV` `R2`, `#3` <br>2. Perform `ADD` `R1`, `R2` .|
+|Expected Result|`R1` should contents the result of the addition between `R1` and `R2`. It should be 5.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.3 Add a negative number
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should correctly perform arithmetic addition (`ADD`) with negative values.|
+|Step of the Test Case|1. Store immediate values in registers `R1`: <br> `MOV` `R1`, `#10`<br>2. Perform `ADD` `R1`, `-5` .|
+|Expected Result|`R1` should contents the result of the addition between `R1` and `-5`. It should be 5.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.4 Add a negative number stored into a register
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should correctly perform arithmetic addition (`ADD`) between two registers that contains negatives values.|
+|Step of the Test Case|1. Store immediate values in registers `R1` and `R2`: <br> `MOV` `R1`, `-2` <br> `MOV` `R2`, `-3` <br>2. Perform `ADD` `R1`, `R2` .|
+|Expected Result|`R1` should contents the result of the operation between `R1` and `R2`. It should be -5.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.5 Add an overflow
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should not perform arithmetic addition (`ADD`) when we have a overflow.|
+|Step of the Test Case|1. Store immediate values in registers `R1` and `R2`: <br> `MOV` `R1`, `#2` <br> 2. Perform `ADD` `R1`, `#65535` .|
+|Expected Result|`R1` should show an errors due to an overflow.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.6 Add a string
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should not perform arithmetic addition (`ADD`) with a string.|
+|Step of the Test Case|1. Store values in registers `R1` and `R2`: <br> `MOV` `R1`, `#2` <br> `MOV` `R2`, `Hello` <br>2. Perform `ADD` `R1`, `R2` .|
+|Expected Result|`R1` should show an error due of a instruction errors.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.6 Add a string
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should not perform arithmetic addition (`ADD`) with a string.|
+|Step of the Test Case|1. Store values in registers `R1`: <br> `MOV` `R1`, `#2` <br>2. Perform `ADD` `R1`, `Hello` .|
+|Expected Result|`R1` should show an error due of a instruction errors.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.7 Add an address
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should not perform arithmetic addition (`ADD`) with an address.|
+|Step of the Test Case|1. Store immediate values in registers `R1`: <br> `MOV` `R1`, `#2` <br> 2. Perform `ADD` `R1`, `A1` .|
+|Expected Result|`R1` should show an error.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.8 Add R1
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should not perform arithmetic addition (`ADD`) between when we put only one register and nothing after.|
+|Step of the Test Case|1. Perform `ADD` `R1`|
+|Expected Result| The program should show an error due to a missing instruction.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.9 Add R1 R2 R3
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should not perform arithmetic operations addition (`ADD`) between 3 values.|
+|Step of the Test Case|1. Store immediate values in registers `R1`, `R2` and `R3`: <br> `MOV` `R1`, `#2` <br> `MOV` `R2`, `#3` <br> `MOV` `R3`, `#2`<br>2. Perform `ADD` `R1`, `R2`,`R3`.|
+|Expected Result|The program should show an error.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+### 2.1 Multiplication: `MUL`
+#### 2.1.1 Multiplicate a immediate value
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should correctly perform arithmetic multiplication (`MUL`) between two immediate values.|
+|Step of the Test Case|1. Store immediate values in registers `R1`: <br> `MOV` `R1`, `#2`<br>2. Perform `MUL` `R1`, `#3` .|
+|Expected Result|`R1` should contents the result of the multiplication between `R1` and `#3`. It should be 6.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.2 Ajouter valeurs de deux registers
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should correctly perform arithmetic operations multiplication (`MUL`) between two immediate values.|
+|Step of the Test Case|1. Store immediate values in registers `R1` and `R2`: <br> `MOV` `R1`, `#2` <br> `MOV` `R2`, `#3` <br>2. Perform `MUL` `R1`, `R2` .|
+|Expected Result|`R1` should contents the result of the multiplication between `R1` and `R2`. It should be 6.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.3 Multiplicate a negative number
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should correctly perform arithmetic multiplication (`MUL`) with negative values.|
+|Step of the Test Case|1. Store immediate values in registers `R1`: <br> `MOV` `R1`, `#10`<br>2. Perform `MUL` `R1`, `-5` .|
+|Expected Result|`R1` should contents the result of the addition between `R1` and `-5`. It should be -50.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.4 Multiplicate a negative number stored into a register
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should correctly perform arithmetic addition (`ADD`) between two registers that contains negatives values.|
+|Step of the Test Case|1. Store immediate values in registers `R1` and `R2`: <br> `MOV` `R1`, `-2` <br> `MOV` `R2`, `-3` <br>2. Perform `MUL` `R1`, `R2` .|
+|Expected Result|`R1` should contents the result of the operation between `R1` and `R2`. It should be -6.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.5 Multiplicate an overflow
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should not perform arithmetic multiplication (`MUL`) when we have a overflow.|
+|Step of the Test Case|1. Store immediate values in registers `R1` and `R2`: <br> `MOV` `R1`, `#2` <br> 2. Perform `MUL` `R1`, `#65535` .|
+|Expected Result|`R1` should show an errors due to an overflow.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.6 Multiplicate a string
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should not perform arithmetic multiplication (`MUL`) with a string.|
+|Step of the Test Case|1. Store values in registers `R1` and `R2`: <br> `MOV` `R1`, `#2` <br> `MOV` `R2`, `Hello` <br>2. Perform `MUL` `R1`, `R2` .|
+|Expected Result|`R1` should show an error due of a instruction errors.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.6 Multiplicate a string stored in a register
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should not perform arithmetic multiplication (`MUL`) with a string.|
+|Step of the Test Case|1. Store values in registers `R1`: <br> `MOV` `R1`, `#2` <br>2. Perform `MUL` `R1`, `Hello` .|
+|Expected Result|`R1` should show an error due of a instruction errors.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.7 Multiplicate an address
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should not perform arithmetic multiplication (`MUL`) with an address.|
+|Step of the Test Case|1. Store immediate values in registers `R1`: <br> `MOV` `R1`, `#2` <br> 2. Perform `MUL` `R1`, `A1` .|
+|Expected Result|`R1` should show an error.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.8 Multiplicate R1
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should not perform arithmetic multiplication (`MUL`) between when we put only one register and nothing after.|
+|Step of the Test Case|1. Perform `MUL` `R1`|
+|Expected Result| The program should show an error due to a missing instruction.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.9 Multiplicate R1 R2 R3
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should not perform arithmetic operations multiplication (`MUL`) between 3 values.|
+|Step of the Test Case|1. Store immediate values in registers `R1`, `R2` and `R3`: <br> `MOV` `R1`, `#2` <br> `MOV` `R2`, `#3` <br> `MOV` `R3`, `#2`<br>2. Perform `MUL` `R1`, `R2`,`R3`.|
+|Expected Result|The program should show an error.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+### 2.1 Division: `DIV`
+#### 2.1.1 Divise a immediate value
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should correctly perform arithmetic division (`DIV`) between two immediate values.|
+|Step of the Test Case|1. Store immediate values in registers `R1`: <br> `MOV` `R1`, `#6`<br>2. Perform `DIV` `R1`, `#2` .|
+|Expected Result|`R1` should contents the result of the division between `R1` and `#2`. It should be 3.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.2 DIV valeurs de deux registers
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should correctly perform arithmetic division (`MUL`) between two immediate values.|
+|Step of the Test Case|1. Store immediate values in registers `R1` and `R2`: <br> `MOV` `R1`, `#6` <br> `MOV` `R2`, `#3` <br>2. Perform `MUL` `R1`, `R2` .|
+|Expected Result|`R1` should contents the result of the division between `R1` and `R2`. It should be 2.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.3 Divise a negative number
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should correctly perform arithmetic division (`DIV`) with negative values.|
+|Step of the Test Case|1. Store immediate values in registers `R1`: <br> `MOV` `R1`, `#10`<br>2. Perform `DIV` `R1`, `-5` .|
+|Expected Result|`R1` should contents the result of the division between `R1` and `-5`. It should be -2.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.4 DIV a negative number stored into a register
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should correctly perform arithmetic division (`DIV`) between two registers that contains negatives values.|
+|Step of the Test Case|1. Store immediate values in registers `R1` and `R2`: <br> `MOV` `R1`, `-6` <br> `MOV` `R2`, `-3` <br>2. Perform `DIV` `R1`, `R2` .|
+|Expected Result|`R1` should contents the result of the operation between `R1` and `R2`. It should be 2.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+////
+
+#### 2.1.5 Add an overflow
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should not perform arithmetic addition (`ADD`) when we have a overflow.|
+|Step of the Test Case|1. Store immediate values in registers `R1` and `R2`: <br> `MOV` `R1`, `#2` <br> 2. Perform `ADD` `R1`, `#65535` .|
+|Expected Result|`R1` should show an errors due to an overflow.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.6 Add a string
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should not perform arithmetic addition (`ADD`) with a string.|
+|Step of the Test Case|1. Store values in registers `R1` and `R2`: <br> `MOV` `R1`, `#2` <br> `MOV` `R2`, `Hello` <br>2. Perform `ADD` `R1`, `R2` .|
+|Expected Result|`R1` should show an error due of a instruction errors.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.6 Add a string
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should not perform arithmetic addition (`ADD`) with a string.|
+|Step of the Test Case|1. Store values in registers `R1`: <br> `MOV` `R1`, `#2` <br>2. Perform `ADD` `R1`, `Hello` .|
+|Expected Result|`R1` should show an error due of a instruction errors.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.7 Add an address
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should not perform arithmetic addition (`ADD`) with an address.|
+|Step of the Test Case|1. Store immediate values in registers `R1`: <br> `MOV` `R1`, `#2` <br> 2. Perform `ADD` `R1`, `A1` .|
+|Expected Result|`R1` should show an error.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.8 Add R1
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should not perform arithmetic addition (`ADD`) between when we put only one register and nothing after.|
+|Step of the Test Case|1. Perform `ADD` `R1`|
+|Expected Result| The program should show an error due to a missing instruction.|
+|Priority|High|
+|Test Case Status|Not implement|
+
+#### 2.1.9 Add R1 R2 R3
+
+|ID|T2|
+|--|--|
+|Test Case Name|Arithmetic operation|
+|Test Case Pre-condition|The program should run.|
+|Test Case Description|The assembly program should not perform arithmetic operations addition (`ADD`) between 3 values.|
+|Step of the Test Case|1. Store immediate values in registers `R1`, `R2` and `R3`: <br> `MOV` `R1`, `#2` <br> `MOV` `R2`, `#3` <br> `MOV` `R3`, `#2`<br>2. Perform `ADD` `R1`, `R2`,`R3`.|
+|Expected Result|The program should show an error.|
 |Priority|High|
 |Test Case Status|Not implement|
 
