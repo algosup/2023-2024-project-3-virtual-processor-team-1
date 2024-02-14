@@ -33,17 +33,20 @@ astNode_t *buildAST(token_t *tokens, int numTokens) {
     for (int i = 0; i < numTokens; i++) {
         astNode_t *currentNode = createNode(tokens[i]);
 
-        if (strcmp(tokens[i].type, "LABEL") == 0 && inCall) {
-            addChild(lastCallNode, currentNode);
-            addChild(lastCallNode, createNode((token_t){"REGISTER", "VOID", 0, 0})); // Add a VOID register
-            inCall = false;
-            currentParent = parentStack[--stackTop]; // Close the children
-        } else if (strcmp(tokens[i].type, "LABEL") == 0) {
-            addChild(currentParent, currentNode);
-            addChild(currentParent, createNode((token_t){"REGISTER", "VOID", 0, 0})); // Add a VOID register
-            parentStack[++stackTop] = currentNode;
-            currentParent = currentNode;
-            labelParent = currentNode;
+        if (strcmp(tokens[i].type, "LABEL") == 0) {
+            if (strcmp(tokens[i-1].value, "CALL") == 0 || strcmp(tokens[i-1].value, "JMP") == 0) {
+                if (!inCall) {
+                    addChild(currentParent, currentNode);
+                    labelParent = currentNode; 
+                } else {
+                    addChild(lastCallNode, currentNode);
+                }
+            } else {
+                addChild(currentParent, currentNode);
+                parentStack[++stackTop] = currentNode;
+                currentParent = currentNode;
+                labelParent = currentNode;
+            }
         } else if (strcmp(tokens[i].value, "RET") == 0 || strcmp(tokens[i].value, "END") == 0) {
             addChild(labelParent, currentNode);
             currentParent = parentStack[--stackTop]; // Close the children
@@ -51,14 +54,18 @@ astNode_t *buildAST(token_t *tokens, int numTokens) {
             if (tokens[i].column == 1 && tokens[i].row != lastInstructionRow) {
                 currentParent = parentStack[stackTop];
             }
-            addChild(currentParent, currentNode);
-            if (strcmp(tokens[i].type, "INSTRUCTION") == 0) {
-                lastInstructionRow = tokens[i].row;
-                if (strcmp(tokens[i].value, "CALL") == 0) {
+            if (strcmp(tokens[i].type, "INSTRUCTION") == 0 && strcmp(tokens[i].value, "CALL") == 0) {
+                if (!inCall) {
                     inCall = true;
                     lastCallNode = currentNode;
-                } else {
-                    currentParent = currentNode;
+                    addChild(currentParent, lastCallNode);
+                }
+            } else {
+                addChild(currentParent, currentNode);
+                if (strcmp(tokens[i].type, "INSTRUCTION") == 0) {
+                    lastInstructionRow = tokens[i].row;
+                    inCall = false; // Reset the inCall flag when encountering a non-CALL instruction
+                    currentParent = currentNode; // Correctly move to the next node
                 }
             }
         }
@@ -141,10 +148,6 @@ void syntaxCheck(astNode_t* node, int depth) {
                 if (strcmp(secondArg->token.type, "VOID") == 0) {
                     printf("Error line %d: Second argument of ADD cannot be VOID.\n", secondArg->token.row);
                 }
-                else if (strcmp(firstArg->token.value,secondArg->token.value)==0 ) 
-                {
-                    printf("Error line %d: First and second argument of ADD cannot be the same.\n", secondArg->token.row);
-                }
             }
         } else if(strcmp(node->token.value, "SUB") == 0){
             // Check for SUB instruction syntax
@@ -165,10 +168,6 @@ void syntaxCheck(astNode_t* node, int depth) {
                 astNode_t *secondArg = node->children[1];
                 if (strcmp(secondArg->token.type, "VOID") == 0) {
                     printf("Error line %d: Second argument of SUB cannot be VOID.\n", secondArg->token.row);
-                }
-                else if (strcmp(firstArg->token.value,secondArg->token.value)==0 ) 
-                {
-                    printf("Error line %d: First and second argument of SUB cannot be the same.\n", secondArg->token.row);
                 }
             }
         } else if(strcmp(node->token.value, "MUL") == 0){
@@ -192,10 +191,6 @@ void syntaxCheck(astNode_t* node, int depth) {
                 if (strcmp(secondArg->token.type, "VOID") == 0) {
                     printf("Error line %d: Second argument of MUL cannot be VOID.\n", secondArg->token.row);
                 }
-                else if (strcmp(firstArg->token.value,secondArg->token.value)==0 ) 
-                {
-                    printf("Error line %d: First and second argument of MUL cannot be the same.\n", secondArg->token.row);
-                }
             }
         } else if(strcmp(node->token.value, "DIV") == 0){
             // Check for DIV instruction syntax
@@ -217,10 +212,6 @@ void syntaxCheck(astNode_t* node, int depth) {
                 if (strcmp(secondArg->token.type, "VOID") == 0) {
                     printf("Error line %d: Second argument of DIV cannot be VOID.\n", secondArg->token.row);
                 }
-                else if (strcmp(firstArg->token.value,secondArg->token.value)==0 ) 
-                {
-                    printf("Error line %d: First and second argument of DIV cannot be the same.\n", secondArg->token.row);
-                }
             }
         } else if(strcmp(node->token.value, "CMP") == 0){
             // Check for CMP instruction syntax
@@ -233,6 +224,7 @@ void syntaxCheck(astNode_t* node, int depth) {
                     printf("Error line %d: First argument of CMP cannot be VOID.\n", firstArg->token.row);
                 } else if (strcmp(firstArg->token.type, "IMMEDIATE") == 0) {
                     printf("Error line %d: First argument of CMP cannot be an IMMEDIATE.\n", firstArg->token.row);
+<<<<<<< Updated upstream
         } }
         } else if(strcmp(node->token.value,"JMP") == 0 ) // TODO Check all jump statements
         {
@@ -309,6 +301,49 @@ void syntaxCheck(astNode_t* node, int depth) {
             }
         } else {
             printf("Error line %d: Unsupported instruction: %s\n",node->token.row ,node->token.value);
+=======
+        } }}
+        else if(strcmp(node->token.value, "JMP") == 0){
+            if(node->numChildren >= 3 || node->numChildren == 0){
+                printf("Error: JMP instruction must have 1 argument.\n");
+            } else {
+                astNode_t* firstArg = node->children[0];
+                if(strcmp(firstArg->token.type, "VOID") == 0){
+                    printf("Error line %d: First argument of JMP cannot be VOID.\n", firstArg->token.row);
+                } else if(strcmp(firstArg->token.type, "IMMEDIATE") == 0){
+                    printf("Error line %d: First argument of JMP cannot be an IMMEDIATE.\n", firstArg->token.row);
+                } else if(strcmp(firstArg->token.type, "REGISTER") == 0 && strcmp(firstArg->token.type, "ADDRESS_REGISTER") == 0){
+                    printf("Error line %d: First argument of JMP cannot be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
+                }
+                if(strcmp(firstArg->token.value, "CALL") == 0){
+                    printf("Error line %d: First argument of JMP cannot be CALL.\n", firstArg->token.row);
+                }
+
+                astNode_t* secondArg = node->children[1];
+                if(strcmp(secondArg->token.type, "VOID") != 0){
+                    printf("Error line %d: There is only one argument in a JMP.\n", secondArg->token.row);
+                }
+            }
+        }
+        else if(strcmp(node->token.value, "CALL") == 0){
+            if(node->numChildren >= 3 || node->numChildren == 0){
+                printf("Error: CALL instruction must have 1 argument.\n");
+            } else {
+                astNode_t* firstArg = node->children[0];
+                if(strcmp(firstArg->token.type, "VOID") == 0){
+                    printf("Error line %d: First argument of CALL cannot be VOID.\n", firstArg->token.row);
+                } else if(strcmp(firstArg->token.type, "IMMEDIATE") == 0){
+                    printf("Error line %d: First argument of CALL cannot be an IMMEDIATE.\n", firstArg->token.row);
+                } else if(strcmp(firstArg->token.type, "REGISTER") == 0 && strcmp(firstArg->token.type, "ADDRESS_REGISTER") == 0){
+                    printf("Error line %d: First argument of CALL cannot be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
+                }
+
+                astNode_t* secondArg = node->children[1];
+                if(strcmp(secondArg->token.type, "VOID") != 0){
+                    printf("Error line %d: There is only one argument in a CALL.\n", secondArg->token.row);
+                }
+            }
+>>>>>>> Stashed changes
         }
     }
 
