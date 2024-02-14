@@ -4,3 +4,4 @@ MOV A1, A2
 ADD #2, R1
 ADD R1, #1
 SUB R1, R1
+JMP .ramdotcom

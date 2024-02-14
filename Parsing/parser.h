@@ -31,20 +31,22 @@ astNode_t *buildAST(token_t *tokens, int numTokens) {
     int lastInstructionRow = -1;
 
     for (int i = 0; i < numTokens; i++) {
-        // if (strcmp(tokens[i].type, "VOID") == 0) continue;
         astNode_t *currentNode = createNode(tokens[i]);
 
         if (strcmp(tokens[i].type, "LABEL") == 0 && inCall) {
             addChild(lastCallNode, currentNode);
+            addChild(lastCallNode, createNode((token_t){"REGISTER", "VOID", 0, 0})); // Add a VOID register
             inCall = false;
+            currentParent = parentStack[--stackTop]; // Close the children
         } else if (strcmp(tokens[i].type, "LABEL") == 0) {
             addChild(currentParent, currentNode);
+            addChild(currentParent, createNode((token_t){"REGISTER", "VOID", 0, 0})); // Add a VOID register
             parentStack[++stackTop] = currentNode;
             currentParent = currentNode;
             labelParent = currentNode;
         } else if (strcmp(tokens[i].value, "RET") == 0 || strcmp(tokens[i].value, "END") == 0) {
             addChild(labelParent, currentNode);
-            currentParent = parentStack[--stackTop];
+            currentParent = parentStack[--stackTop]; // Close the children
         } else {
             if (tokens[i].column == 1 && tokens[i].row != lastInstructionRow) {
                 currentParent = parentStack[stackTop];
@@ -64,6 +66,7 @@ astNode_t *buildAST(token_t *tokens, int numTokens) {
     free(parentStack);
     return root;
 }
+
 
 void printAST(astNode_t *node, int depth) {
     if (node == NULL) return;
