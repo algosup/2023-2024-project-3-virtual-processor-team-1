@@ -1,0 +1,11 @@
+DISP "This is a string and it will be followed by two numbers:"
+
+DISP -1
+DISP 8
+
+MOV R1, #2
+DISP "A number in a register:"
+DISP R1
+
+MOV R2, "A string in a register"
+DISP R2

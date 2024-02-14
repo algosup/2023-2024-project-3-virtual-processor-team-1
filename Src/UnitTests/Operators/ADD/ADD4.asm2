@@ -1,0 +1,5 @@
+DISP "Test 4: Add instruction: Not valid"
+
+ADD MOV
+
+; Expected: Error message

@@ -1,0 +1,7 @@
+DISP "Test 3: Add a instruction: Not valid"
+
+MOV R1, 6
+ADD R1, MOV
+
+DISP R1
+; Expected: Error message

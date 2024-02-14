@@ -1,0 +1,6 @@
+DISP "Test 5: Add nothing to a register: Not valid"
+
+MOV R1, 6
+ADD R1
+
+; Expected: Error message

@@ -1,0 +1,17 @@
+DISP "Test of the MOV instruction"
+
+MOV R1, #3
+DISP "R1 contains"
+DISP R1
+
+MOV R2, R1
+DISP "R2 contains"
+DISP R2
+
+MOV R3, "A string"
+DISP "R3 contains"
+DISP R3
+
+MOV R4, -2
+DISP "R4 contains"
+DISP R4

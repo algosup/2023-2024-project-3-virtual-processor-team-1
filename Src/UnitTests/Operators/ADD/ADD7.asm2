@@ -1,0 +1,5 @@
+DISP "Test 6: Add nothing: Not valid"
+
+ADD
+
+; Expected: Error message
