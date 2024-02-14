@@ -22,7 +22,6 @@ astNode_t *buildAST(token_t *tokens, int numTokens) {
     astNode_t *root = createNode((token_t){"ROOT", "ROOT", 0, 0});
     astNode_t *currentParent = root;
     astNode_t **parentStack = malloc(sizeof(astNode_t *) * numTokens);
-    astNode_t *labelParent = root;
     int stackTop = 0;
     parentStack[stackTop] = root;
 
@@ -32,44 +31,36 @@ astNode_t *buildAST(token_t *tokens, int numTokens) {
 
     for (int i = 0; i < numTokens; i++) {
         astNode_t *currentNode = createNode(tokens[i]);
+        token_t token = tokens[i];
 
-        if (strcmp(tokens[i].type, "LABEL") == 0) {
-            if (strcmp(tokens[i-1].value, "CALL") == 0 || strcmp(tokens[i-1].value, "JMP") == 0) {
-                if (!inCall) {
-                    addChild(currentParent, currentNode);
-                    labelParent = currentNode; 
-                } else {
-                    addChild(lastCallNode, currentNode);
-                }
+        if (token.column == 1 && token.row != lastInstructionRow) {
+            inCall = false; 
+            currentParent = root; 
+        }
+
+        if (strcmp(token.type, "INSTRUCTION") == 0) {
+            if (strcmp(token.value, "CALL") == 0 || strcmp(token.value, "JMP") == 0) {
+                inCall = true; 
+                lastCallNode = currentNode;
+                addChild(currentParent, lastCallNode);
+                currentParent = lastCallNode;
             } else {
                 addChild(currentParent, currentNode);
+                currentParent = currentNode; 
+            }
+            lastInstructionRow = token.row;
+        } else if (strcmp(token.type, "LABEL") == 0) {
+            if (!inCall) {
+                addChild(root, currentNode);
                 parentStack[++stackTop] = currentNode;
-                currentParent = currentNode;
-                labelParent = currentNode;
-            }
-        } else if (strcmp(tokens[i].value, "RET") == 0 || strcmp(tokens[i].value, "END") == 0) {
-            addChild(labelParent, currentNode);
-            currentParent = parentStack[--stackTop]; // Close the children
-        } else {
-            if (tokens[i].column == 1 && tokens[i].row != lastInstructionRow) {
-                currentParent = parentStack[stackTop];
-            }
-            if (strcmp(tokens[i].type, "INSTRUCTION") == 0 && strcmp(tokens[i].value, "CALL") == 0) {
-                if (!inCall) {
-                    inCall = true;
-                    lastCallNode = currentNode;
-                    addChild(currentParent, lastCallNode);
-                }
             } else {
                 addChild(currentParent, currentNode);
-                if (strcmp(tokens[i].type, "INSTRUCTION") == 0) {
-                    lastInstructionRow = tokens[i].row;
-                    inCall = false; // Reset the inCall flag when encountering a non-CALL instruction
-                    currentParent = currentNode; // Correctly move to the next node
-                }
             }
+        } else {
+            addChild(currentParent, currentNode);
         }
     }
+
     free(parentStack);
     return root;
 }
@@ -224,86 +215,8 @@ void syntaxCheck(astNode_t* node, int depth) {
                     printf("Error line %d: First argument of CMP cannot be VOID.\n", firstArg->token.row);
                 } else if (strcmp(firstArg->token.type, "IMMEDIATE") == 0) {
                     printf("Error line %d: First argument of CMP cannot be an IMMEDIATE.\n", firstArg->token.row);
-<<<<<<< Updated upstream
         } }
-        } else if(strcmp(node->token.value,"JMP") == 0 ) // TODO Check all jump statements
-        {
-            if(node->numChildren != 2) 
-            {
-                if(node->children[1]->token.type != "VOID")
-                {
-                    printf("Error line %d: JMP instruction must have exactly 1 argument.\n", node->token.row);
-                    printf("Parent Token(\"%s\", \"%s\", %d, %d)\n", node->token.type, node->token.value, node->token.row, node->token.column);
-                    printf("child1 Token(\"%s\", \"%s\", %d, %d)\n", node->children[0]->token.type, node->children[0]->token.value, node->children[0]->token.row, node->children[0]->token.column);
-                    printf("child2 Token(\"%s\", \"%s\", %d, %d)\n", node->children[1]->token.type, node->children[1]->token.value, node->children[1]->token.row, node->children[1]->token.column);
-                }
-            }
-            else if(strcmp(node->children[0]->token.type, "LABEL") == 0 ||strcmp(node->children[0]->token.type, "ROOT") == 0)
-            {
-                printf("Error line %d: JMP instruction must have a LABEL as an argument.\n", node->token.row);
-            }
-            else if(node->children[0]->token.type == "VOID")
-            {
-                printf("Error line %d: JMP instruction must have a LABEL as an argument.\n", node->token.row);
-            }
-        }
-           // ********LOGICAL OPERATOR
-        else if (strcmp(node->token.value,"AND")== 0||strcmp(node->token.value,"OR")== 0||strcmp(node->token.value,"XOR")== 0 || strcmp(node->token.value,"NOT")== 0) {
-            astNode_t *firstArg = node->children[0];
-            astNode_t *secondArg = node->children[1];
-            if(node->numChildren !=2)
-            {
-                printf("Error line %d: Logical operator must have exactly 2 arguments.\n"
-                , node->token.row);
-            }
-            else if (strcmp(firstArg->token.type,"VOID")==0)
-            {
-                    printf("Error line %d: First argument of logical operator cannot be VOID.\n"
-                    , node->children[0]->token.row);
-            }
-            else if(strcmp(secondArg->token.type,"VOID")==0)
-            {
-                printf("Error line %d: Second argument of logical operator cannot be VOID.\n"
-                , node->children[1]->token.row);
-            }
-            else if(strcmp(firstArg->token.type,"REGISTER")!=0)
-            {
-                printf("Error line %d: First argument of logical operator must be a REGISTER.\n"
-                , node->children[0]->token.row);
-            }
-            else if (strcmp(secondArg->token.type,"REGISTER")!=0
-            && strcmp(secondArg->token.type,"IMMEDIATE")!=0)
-            {
-                printf("Error line %d: Second argument of logical operator must be a REGISTER or IMMEDIATE.\n"
-                , node->children[1]->token.row);
-            }
-            // *********
-        } else if (strcmp(node->token.value, "DISP"))
-        {
-            if(node->numChildren != 1) 
-            {
-                printf("Error line %d: DISP instruction must have exactly 1 argument1.\n", node->token.row);
-            }
-        } else if (strcmp(node->token.value, "GAD"))
-        {
-            if (node->numChildren != 2) 
-            {
-                printf("Error line %d: GAD instruction must have exactly 2 arguments.\n", node->token.row);
-            } else {
-                astNode_t *firstArg = node->children[0];
-                if (strcmp(firstArg->token.type, "ADDRESS_REGISTER") != 0) {
-                    printf("Error line %d: First argument of GAD must be a ADDRESS_REGISTER.\n", firstArg->token.row);
-                }
-                astNode_t *secondArg = node->children[1];
-                if (strcmp(secondArg->token.type, "REGISTER") != 0) {
-                    printf("Error line %d: Second argument of GAD must be a REGISTER.\n", secondArg->token.row);
-                }
-            }
-        } else {
-            printf("Error line %d: Unsupported instruction: %s\n",node->token.row ,node->token.value);
-=======
-        } }}
-        else if(strcmp(node->token.value, "JMP") == 0){
+        } else if(strcmp(node->token.value, "JMP") == 0){
             if(node->numChildren >= 3 || node->numChildren == 0){
                 printf("Error: JMP instruction must have 1 argument.\n");
             } else {
@@ -343,7 +256,6 @@ void syntaxCheck(astNode_t* node, int depth) {
                     printf("Error line %d: There is only one argument in a CALL.\n", secondArg->token.row);
                 }
             }
->>>>>>> Stashed changes
         }
     }
 
