@@ -107,8 +107,7 @@ void syntaxCheck(astNode_t* node, int depth) {
                     printf("Error line %d: First argument of MOV cannot be VOID.\n", firstArg->token.row);
                 } else if (strcmp(firstArg->token.type, "IMMEDIATE") == 0) {
                     printf("Error line %d: First argument of MOV cannot be an IMMEDIATE.\n", firstArg->token.row);
-                } else if (strcmp(firstArg->token.type, "REGISTER") != 0 &&
-                           strcmp(firstArg->token.type, "ADDRESS_REGISTER") != 0) {
+                } else if (strcmp(firstArg->token.type, "REGISTER") != 0 && strcmp(firstArg->token.type, "ADDRESS_REGISTER") != 0) {
                     printf("Error line %d: First argument of MOV must be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
                 }
                 
@@ -133,8 +132,7 @@ void syntaxCheck(astNode_t* node, int depth) {
                     printf("Error line %d: First argument of ADD cannot be VOID.\n", firstArg->token.row);
                 } else if (strcmp(firstArg->token.type, "IMMEDIATE") == 0) {
                     printf("Error line %d: First argument of ADD cannot be an IMMEDIATE.\n", firstArg->token.row);
-                } else if (strcmp(firstArg->token.type, "REGISTER") != 0 &&
-                           strcmp(firstArg->token.type, "ADDRESS_REGISTER") != 0) {
+                } else if (strcmp(firstArg->token.type, "REGISTER") != 0 && strcmp(firstArg->token.type, "ADDRESS_REGISTER") != 0) {
                     printf("Error line %d: First argument of ADD must be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
                 }
                 
@@ -159,8 +157,7 @@ void syntaxCheck(astNode_t* node, int depth) {
                     printf("Error line %d: First argument of SUB cannot be VOID.\n", firstArg->token.row);
                 } else if (strcmp(firstArg->token.type, "IMMEDIATE") == 0) {
                     printf("Error line %d: First argument of SUB cannot be an IMMEDIATE.\n", firstArg->token.row);
-                } else if (strcmp(firstArg->token.type, "REGISTER") != 0 &&
-                           strcmp(firstArg->token.type, "ADDRESS_REGISTER") != 0) {
+                } else if (strcmp(firstArg->token.type, "REGISTER") != 0 && strcmp(firstArg->token.type, "ADDRESS_REGISTER") != 0) {
                     printf("Error line %d: First argument of SUB must be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
                 }
                 
@@ -211,8 +208,7 @@ void syntaxCheck(astNode_t* node, int depth) {
                     printf("Error line %d: First argument of DIV cannot be VOID.\n", firstArg->token.row);
                 } else if (strcmp(firstArg->token.type, "IMMEDIATE") == 0) {
                     printf("Error line %d: First argument of DIV cannot be an IMMEDIATE.\n", firstArg->token.row);
-                } else if (strcmp(firstArg->token.type, "REGISTER") != 0 &&
-                           strcmp(firstArg->token.type, "ADDRESS_REGISTER") != 0) {
+                } else if (strcmp(firstArg->token.type, "REGISTER") != 0 && strcmp(firstArg->token.type, "ADDRESS_REGISTER") != 0) {
                     printf("Error line %d: First argument of DIV must be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
                 }
                 
@@ -237,8 +233,8 @@ void syntaxCheck(astNode_t* node, int depth) {
                     printf("Error line %d: First argument of CMP cannot be VOID.\n", firstArg->token.row);
                 } else if (strcmp(firstArg->token.type, "IMMEDIATE") == 0) {
                     printf("Error line %d: First argument of CMP cannot be an IMMEDIATE.\n", firstArg->token.row);
-        } }}
-        else if(strcmp(node->token.value,"JMP") == 0 ) // TODO Check all jump statements
+        } }
+        } else if(strcmp(node->token.value,"JMP") == 0 ) // TODO Check all jump statements
         {
             if(node->numChildren != 2) 
             {
@@ -258,45 +254,60 @@ void syntaxCheck(astNode_t* node, int depth) {
             {
                 printf("Error line %d: JMP instruction must have a LABEL as an argument.\n", node->token.row);
             }
-          
-            
         }
            // ********LOGICAL OPERATOR
-    else if (strcmp(node->token.value,"AND")== 0||strcmp(node->token.value,"OR")== 0||
-    strcmp(node->token.value,"XOR")== 0 || strcmp(node->token.value,"NOT")== 0)
-    {
-        astNode_t *firstArg = node->children[0];
-        astNode_t *secondArg = node->children[1];
-        if(node->numChildren !=2)
-        {
-            printf("Error line %d: Logical operator must have exactly 2 arguments.\n"
-            , node->token.row);
-        }
-        else if (strcmp(firstArg->token.type,"VOID")==0)
-        {
-                printf("Error line %d: First argument of logical operator cannot be VOID.\n"
+        else if (strcmp(node->token.value,"AND")== 0||strcmp(node->token.value,"OR")== 0||strcmp(node->token.value,"XOR")== 0 || strcmp(node->token.value,"NOT")== 0) {
+            astNode_t *firstArg = node->children[0];
+            astNode_t *secondArg = node->children[1];
+            if(node->numChildren !=2)
+            {
+                printf("Error line %d: Logical operator must have exactly 2 arguments.\n"
+                , node->token.row);
+            }
+            else if (strcmp(firstArg->token.type,"VOID")==0)
+            {
+                    printf("Error line %d: First argument of logical operator cannot be VOID.\n"
+                    , node->children[0]->token.row);
+            }
+            else if(strcmp(secondArg->token.type,"VOID")==0)
+            {
+                printf("Error line %d: Second argument of logical operator cannot be VOID.\n"
+                , node->children[1]->token.row);
+            }
+            else if(strcmp(firstArg->token.type,"REGISTER")!=0)
+            {
+                printf("Error line %d: First argument of logical operator must be a REGISTER.\n"
                 , node->children[0]->token.row);
-        }
-        else if(strcmp(secondArg->token.type,"VOID")==0)
+            }
+            else if (strcmp(secondArg->token.type,"REGISTER")!=0
+            && strcmp(secondArg->token.type,"IMMEDIATE")!=0)
+            {
+                printf("Error line %d: Second argument of logical operator must be a REGISTER or IMMEDIATE.\n"
+                , node->children[1]->token.row);
+            }
+            // *********
+        } else if (strcmp(node->token.value, "DISP"))
         {
-            printf("Error line %d: Second argument of logical operator cannot be VOID.\n"
-            , node->children[1]->token.row);
-        }
-        else if(strcmp(firstArg->token.type,"REGISTER")!=0)
+            if(node->numChildren != 1) 
+            {
+                printf("Error line %d: DISP instruction must have exactly 1 argument1.\n", node->token.row);
+            }
+        } else if (strcmp(node->token.value, "GAD"))
         {
-            printf("Error line %d: First argument of logical operator must be a REGISTER.\n"
-            , node->children[0]->token.row);
-        }
-        else if (strcmp(secondArg->token.type,"REGISTER")!=0
-        && strcmp(secondArg->token.type,"IMMEDIATE")!=0)
-        {
-            printf("Error line %d: Second argument of logical operator must be a REGISTER or IMMEDIATE.\n"
-            , node->children[1]->token.row);
-        }
-        
-    }
-    //**********
-         else {
+            if (node->numChildren != 2) 
+            {
+                printf("Error line %d: GAD instruction must have exactly 2 arguments.\n", node->token.row);
+            } else {
+                astNode_t *firstArg = node->children[0];
+                if (strcmp(firstArg->token.type, "ADDRESS_REGISTER") != 0) {
+                    printf("Error line %d: First argument of GAD must be a ADDRESS_REGISTER.\n", firstArg->token.row);
+                }
+                astNode_t *secondArg = node->children[1];
+                if (strcmp(secondArg->token.type, "REGISTER") != 0) {
+                    printf("Error line %d: Second argument of GAD must be a REGISTER.\n", secondArg->token.row);
+                }
+            }
+        } else {
             printf("Error line %d: Unsupported instruction: %s\n",node->token.row ,node->token.value);
         }
     }
