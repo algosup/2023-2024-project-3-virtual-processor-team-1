@@ -32,7 +32,7 @@ int main(void)
     if (lastSlash != NULL) 
     {  // put here the name of the file you want to open 
        // in the same folder as the executable
-    strcpy(lastSlash + 1, "assemblyCode.asm2");
+    strcpy(lastSlash + 1, "SyntaxText.asm2");
     } 
     else 
     {
@@ -91,8 +91,8 @@ int main(void)
     int numTokens = numLines * MAX_TOKENS;
     int numNode = numTokens;
     astNode_t *root = buildAST(tokens, numLines * MAX_TOKENS);
-    //printAST(root, 0);
-    syntaxCheck(root);
+    printAST(root, 0);
+    syntaxCheck(root,0);
     freeAST(root);
     return 0;
 }

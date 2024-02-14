@@ -261,10 +261,46 @@ void syntaxCheck(astNode_t* node, int depth) {
           
             
         }
+           // ********LOGICAL OPERATOR
+    else if (strcmp(node->token.value,"AND")== 0||strcmp(node->token.value,"OR")== 0||
+    strcmp(node->token.value,"XOR")== 0 || strcmp(node->token.value,"NOT")== 0)
+    {
+        astNode_t *firstArg = node->children[0];
+        astNode_t *secondArg = node->children[1];
+        if(node->numChildren !=2)
+        {
+            printf("Error line %d: Logical operator must have exactly 2 arguments.\n"
+            , node->token.row);
+        }
+        else if (strcmp(firstArg->token.type,"VOID")==0)
+        {
+                printf("Error line %d: First argument of logical operator cannot be VOID.\n"
+                , node->children[0]->token.row);
+        }
+        else if(strcmp(secondArg->token.type,"VOID")==0)
+        {
+            printf("Error line %d: Second argument of logical operator cannot be VOID.\n"
+            , node->children[1]->token.row);
+        }
+        else if(strcmp(firstArg->token.type,"REGISTER")!=0)
+        {
+            printf("Error line %d: First argument of logical operator must be a REGISTER.\n"
+            , node->children[0]->token.row);
+        }
+        else if (strcmp(secondArg->token.type,"REGISTER")!=0
+        && strcmp(secondArg->token.type,"IMMEDIATE")!=0)
+        {
+            printf("Error line %d: Second argument of logical operator must be a REGISTER or IMMEDIATE.\n"
+            , node->children[1]->token.row);
+        }
+        
+    }
+    //**********
          else {
             printf("Error line %d: Unsupported instruction: %s\n",node->token.row ,node->token.value);
         }
     }
+
 
     for (int i = 0; i < node->numChildren; i++) {
         syntaxCheck(node->children[i], depth + 1);
