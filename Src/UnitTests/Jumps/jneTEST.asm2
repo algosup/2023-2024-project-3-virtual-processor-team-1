@@ -1,0 +1,14 @@
+DISP "JNE TEST"
+DISP "MESSAGE EXPECTED: R1 and R2 IS NOT EQUAL!"
+
+.label
+DISP "IS NOT EQUAL!"
+RET
+
+.main
+MOV R1, #5
+MOV R2, #1
+DISP "R1 and R2"
+CMP R1, R2
+JNE .label
+END

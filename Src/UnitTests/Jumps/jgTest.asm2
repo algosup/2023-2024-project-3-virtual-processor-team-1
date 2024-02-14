@@ -1,0 +1,14 @@
+DISP "JG TEST"
+DISP "MESSAGE EXPECTED: R1 > R2 "
+
+.label
+DISP " > R2"
+RET
+
+.main
+MOV R1, #5
+MOV R2, #1
+DISP "R1"
+CMP R1, R2
+JG .label
+END

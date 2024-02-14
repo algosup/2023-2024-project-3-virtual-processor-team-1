@@ -1,0 +1,14 @@
+DISP "JMP TEST"
+DISP "MESSAGE EXPECTED: HELLO, IT IS WORKING!" 
+
+.label
+DISP " IT IS WORKING!"
+RET
+
+.main
+DISP "HELLO,"
+JMP .label
+END
+
+
+

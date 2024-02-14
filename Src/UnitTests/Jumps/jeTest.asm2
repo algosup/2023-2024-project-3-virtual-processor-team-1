@@ -1,0 +1,17 @@
+DISP "JE TEST"
+DISP "MESSAGE EXPECTED: R1 and R2 IS EQUAL!"
+
+.label
+DISP "IS EQUAL!"
+RET
+
+.main
+MOV R1, #5
+MOV R2, #5
+DISP "R1 and R2"
+CMP R1, R2
+JE .label
+END
+
+
+
