@@ -34,6 +34,7 @@
       - [7.7.1. vCPU structure](#771-vcpu-structure)
       - [7.7.2. Running the vCPU](#772-running-the-vcpu)
       - [7.7.3 Class diagram](#773-class-diagram)
+    - [7.8. Sequence diagram](#78-sequence-diagram)
 - [IX. Syntax and Structure](#ix-syntax-and-structure)
   - [1. Folder structure](#1-folder-structure)
   - [2. Program file structure](#2-program-file-structure)
@@ -72,9 +73,9 @@ Secondary audiences
 |**virtual processor**| A virtual processor is a software-based emulation of a physical processor. It is used to execute instructions and perform operations on data.|
 |**opcode**| Short for "operation code," it is a code that represents a specific machine language instruction.|
 |**little-endian**| A format for storing binary data in which the least significant byte comes first.|
-|**LL Parsing Algorithm**| LL parsing is a top-down parsing method that processes input from left to right, aiming to construct a parse tree through leftmost derivations. It utilizes a predictive parsing table, often in LL(1) parsers, to make parsing decisions based on the leftmost non-terminal and a limited number of lookahead symbols.|
+|**LL Parsing Algorithm**| LL parsing is a top-down parsing method that processes input from left to right, aiming to construct a parse tree through leftmost derivations. It utilises a predictive parsing table, often in LL(1) parsers, to make parsing decisions based on the leftmost non-terminal and a limited number of lookahead symbols.|
 |**BNF**| A BNF specification is a set of derivation rules, written as:<br> ```<symbol> ::= __expression__``` <br>where: ```<symbol>``` is a nonterminal variable that is always enclosed between the pair <>.<br> ```::=``` means that the symbol on the left must be replaced with the expression on the right.<br> ```__expression__``` consists of one or more sequences of either terminal or nonterminal symbols where each sequence is separated by a vertical bar "|" indicating a choice, the whole being a possible substitution for the symbol on the left.|
-|**Standard Libraries**| Standard libraries refer to pre-compiled, reusable code modules that provide a set of commonly used functions and procedures. These libraries aim to facilitate software development by offering a consistent and standardized set of tools and utilities.|
+|**Standard Libraries**| Standard libraries refer to pre-compiled, reusable code modules that provide a set of commonly used functions and procedures. These libraries aim to facilitate software development by offering a consistent and standardised set of tools and utilities.|
 |**GCC (GNU Compiler Collection)**| GCC is a compiler system developed by the GNU Project. It includes compilers for various programming languages, such as C, C++, and Fortran. GCC is widely used in the open-source community and is a key tool for converting source code into executable programs.|
 |**Top-Down**| Top-down is an approach or methodology where a problem is broken down into smaller, more manageable sub-problems. The solution is then built by addressing these sub-problems from the highest level down to the most detailed level.|
 |**AST (Abstract Syntax Tree)**| An Abstract Syntax Tree is a hierarchical tree-like structure that represents the abstract syntactic structure of source code without the intricacies of specific syntax. ASTs are commonly used in compilers and interpreters to facilitate the analysis and transformation of code.|
@@ -314,7 +315,7 @@ eg.
    {Token("instruction", "ADD", 3, 1), Token("register", "R3", 3, 2), Token("register", "R1", 3, 3)}
 ```
 
-![diagram](/Documents/Appendices/tokenization.png)
+![diagram](/Documents/Appendices/tokenisation.png)
 
 **Note:**
 
@@ -438,9 +439,9 @@ processor and interpreter work seamlessly.
 
 The process of the parsing is the following:
 
-- Receive the tokenised assembly code obtained from the lexical analysis (tokenization) phase.
+- Receive the tokenised assembly code obtained from the lexical analysis (tokenisation) phase.
 
-- Initialize a parsing pointer to the beginning of the token array.
+- Initialise a parsing pointer to the beginning of the token array.
   Set up data structures to represent the abstract syntax tree (AST)
 
   ```mermaid
@@ -454,7 +455,7 @@ The process of the parsing is the following:
   }
 
   class ASTBuilder {
-    +initializeAST(): ASTNode
+    +initialiseAST(): ASTNode
     +createASTNode(type: TokenType, value: TokenValue): ASTNode
     +addChild(parent: ASTNode, child: ASTNode): void
     +cleanupAST(root: ASTNode): void
@@ -475,6 +476,7 @@ The process of the parsing is the following:
 <XOR> ::= <register> "," <register> | <register> "," <immediate>
 <OR>  ::= <register> "," <register> | <register> "," <immediate>
 <CMP> ::= <register> "," <register> | <register> "," <immediate>
+<DISP> ::= <register> | <immediate>
 <NOT> ::= <register> 
 <GAD> ::= <register> 
 <JMP> ::= <label>
@@ -619,7 +621,7 @@ The process of the semantic analysis is the following:
 
 **Errors handling**
 
-Errors recognized by the semantic analyser are as follows:
+Errors recognised by the semantic analyser are as follows:
 
 **Float number**
 - **Error code:** 0xC3
@@ -744,6 +746,8 @@ Here is the complete table of the instructions and the corresponding binary code
 |OR R1, 0X332| 0x75          |
 |NOT R1|       0x76          |
 |GAD R1|       0x77          |
+|DISP R1|      0x80          |
+|DISP 0x342|   0x81          |
 |-|       -                  |
 |**General Register**|       |
 |R1 |          0x01          |
@@ -799,8 +803,8 @@ The label .loop is going to be stored in the label table with the corresponding 
 
 ```mermaid
 flowchart TD
-    Start --> InitializeArray
-    InitializeArray --> TraverseAST
+    Start --> InitialiseArray
+    InitialiseArray --> TraverseAST
     TraverseAST --> |For each node in AST| DetermineType
     DetermineType --> |Instruction| GenerateCodeInstruction
     DetermineType --> |Immediate| GenerateCodeImmediate
@@ -821,15 +825,15 @@ flowchart TD
 
 The process of the code generation is the following:
 
-- The program will receive the AST obtained from the semantic analysis phase.
-- The program will traverse the AST and for each node, it will determine the type of the node. 
-  - If the node is an instruction, the program will generate the corresponding binary code. 
-  - If the node is an immediate, the program will generate the corresponding binary code. 
-  - If the node is a label, the program will transform the name of the label into ASCII code then it will sum all the ASCII code from letters and generate the binary code of this number.
-  - If the node is a register, the program will generate the corresponding binary code.
-- The program will append the binary code to an array.
-- The program will continue to traverse the AST until the end of the AST.
-- The program will return the array of the binary code.
+- The program will receive the AST obtained from the semantic analysis phase
+- The program will traverse the AST and for each node, it will determine the type of the node
+  - If the node is an instruction, the program will generate the corresponding binary code
+  - If the node is an immediate, the program will generate the corresponding binary code.
+  - If the node is a label, the program will transform the name of the label into ASCII code then it will sum all the ASCII code from letters and generate the binary code of this number
+  - If the node is a register, the program will generate the corresponding binary code
+- The program will append the binary code to an array
+- The program will continue to traverse the AST until the end of the AST
+- The program will return the array of the binary code
 
 **Input data**
 
@@ -896,14 +900,14 @@ This phase involves the implementation of the virtual processor, which is going 
 
 This structure represents the state of the CPU and contains various fields:
 
-- mem: A pointer to the array containing the binary code representing the memory of the CPU.
-- max_mem: The maximum size of the memory.
-- pc: Program counter, holds the memory address of the current instruction being executed.
-- sp: Stack pointer, holds the memory address of the top of the stack.
-- r: An array representing the general-purpose registers.
-- ar: An array representing the floating-point registers.
-- inst, dest, and src: Variables to hold parts of the current instruction being executed.
-- zero, ltz, and gtz: Flags to indicate whether the result of the previous operation was zero, negative, or positive, respectively.
+- mem: A pointer to the array containing the binary code representing the memory of the CPU
+- max_mem: The maximum size of the memory
+- pc: Program counter, holds the memory address of the current instruction being executed
+- sp: Stack pointer, holds the memory address of the top of the stack
+- r: An array representing the general-purpose registers
+- ar: An array representing the floating-point registers
+- inst, dest, and src: Variables to hold parts of the current instruction being executed
+- zero, ltz, and gtz: Flags to indicate whether the result of the previous operation was zero, negative, or positive, respectively
 
 ##### 7.7.2. Running the vCPU
 
@@ -986,10 +990,10 @@ classDiagram
         - Continue until PC points to end of memory
     }
 
-    Initialisation --> vCPU : <<create>>
-    FetchInstruction --> vCPU : <<use>>
-    ExecuteOperation --> vCPU : <<use>>
-    RunCPU --> vCPU : <<use>>
+    Initialisation --> vCPU 
+    FetchInstruction --> vCPU 
+    ExecuteOperation --> vCPU 
+    RunCPU --> vCPU 
 ```
 
 **Error handling**
@@ -1010,7 +1014,34 @@ classDiagram
 - **Message:** Line number of the error + Code on the line + The language does not take floats into account.
 
 
+#### 7.8. Sequence diagram
 
+```mermaid
+sequenceDiagram
+    participant User
+    participant Program
+    participant CleaningFunction
+    participant TokenisationFunction
+    participant ParsingFunction
+    participant SemanticAnalysisFunction
+    participant CodeGenerationFunction
+    participant VirtualProcessor
+
+    User->>Program: Provides input assembly code
+    Program->>CleaningFunction: Sends assembly code for cleaning
+    CleaningFunction-->>Program: Returns cleaned assembly code
+    Program->>TokenisationFunction: Sends cleaned assembly code
+    TokenisationFunction-->>Program: Returns tokenised assembly code
+    Program->>ParsingFunction: Sends tokenised assembly code
+    ParsingFunction-->>Program: Returns abstract syntax tree (AST)
+    Program->>SemanticAnalysisFunction: Sends AST
+    SemanticAnalysisFunction-->>Program: Returns semantic analysis result
+    Program->>CodeGenerationFunction: Sends semantic analysis result
+    CodeGenerationFunction-->>Program: Returns binary machine code
+    Program->>VirtualProcessor: Sends binary machine code
+    VirtualProcessor-->>Program: Executes binary machine code
+    Program-->>User: Provides output or error messages
+```
 
 ## IX. Syntax and Structure
 
@@ -1139,11 +1170,11 @@ The following are the coding design principles:
 
 ## XIII. Development Process
 
-- Begin development with a minimal tokenization parser and a basic virtual processor
+- Begin development with a minimal tokenisation parser and a basic virtual processor
   
 - Limit the virtual processor to handle only 2 or 3 instructions initially
   
-- Focus on understanding key concepts like tokenization, parsing, and basic execution
+- Focus on understanding key concepts like tokenisation, parsing, and basic execution
   
 - Gradually expand the implementation to include more instructions as comprehension grows
   

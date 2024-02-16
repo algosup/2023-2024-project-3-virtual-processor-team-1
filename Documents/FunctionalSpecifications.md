@@ -23,9 +23,9 @@
             - [4.1 Resources/Financial plan](#41-resourcesfinancial-plan)
             - [4.2 Assumptions/Constraints](#42-assumptionsconstraints)
     - [II. Explanation of How a CPU Works](#ii-explanation-of-how-a-cpu-works)
-        - [1. The CPU's inner workings](#1-the-cpus-inner-workings)
-        - [2. The role of assembly language](#2-the-role-of-assembly-language)
-        - [3. The indispensable role of registers](#3-the-indispensable-role-of-registers)
+      - [1. The CPU's inner workings](#1-the-cpus-inner-workings)
+      - [2. The role of assembly language](#2-the-role-of-assembly-language)
+      - [3. The indispensable role of registers](#3-the-indispensable-role-of-registers)
     - [III. Functional Requirements](#iii-functional-requirements)
         - [1. Registers](#1-registers)
             - [1.1 General registers](#11-general-registers)
@@ -327,8 +327,8 @@ Functions have a naming convention. Each function must :
 - not be just a number
 - not contain any special characters
 - not start or end with `_`
-  <br><br>
-  Here's a general structure for defining functions in our own assembly:
+<br><br>
+Here's a general structure for defining functions in our own assembly:
 
 ```assembly
 .function
@@ -555,7 +555,7 @@ In assembly language, printing values to the output or display is a common task.
    MOV A1, R1     ; Load the memory address of R1, in A1
    DISP A1        ; Display the memory address on R1 in A1
    ```
-
+       
 If the value in register R2 is 100, this code will display the number 100 to the output.
 
 ### 7. Instructions

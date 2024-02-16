@@ -13,8 +13,8 @@
 
 ## Description
 
-The goal of the project is to create a virtual processor and an interpreter for running assembly code on
-that processor.
+The goal of the project is to create a virtual processor and an interpreter for running assembly code on 
+that processor. 
 The project will be developed in plain, portable, C language without the use of any external library besides
 C standard libraries.
 
@@ -28,9 +28,11 @@ C standard libraries.
 
 [Test plan](https://github.com/algosup/2023-2024-project-3-virtual-processor-team-1/blob/main/Documents/TestPlan.md) - In progress
 
+Our code documentation is available directly from the language's GitBook. You can find it by [clicking here](https://algosup-t1.gitbook.io/asm2/).
+
 ## Management
-The management artifacts of this project are available on our [Jira project](https://virtual-processor.atlassian.net/jira/core/projects/VPT1/summary).
-Here is a [Tutorial](/Documents/ManagementArtefacts/JiraTutorial.md) to help you to find specific documents.
+The management artifacts of this project are available on our [Jira project](https://virtual-processor.atlassian.net/jira/core/projects/VPT1/summary). 
+Here is a [Tutorial](/Documents/JiraTutorial.md) to help you to find specific documents.
 
 ## Installation
 
@@ -39,10 +41,6 @@ git clone <https://github.com/algosup/2023-2024-project-3-virtual-processor-team
 cd <2023-2024-project-3-virtual-processor-team-1>
 ./vCPU
 ```
-
-## Documentation
-
-Our code documentation is available directly from the language's GitBook. You can find it by [clicking here](https://algosup-t1.gitbook.io/asm2/).
 
 
 
