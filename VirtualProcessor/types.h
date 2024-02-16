@@ -1,5 +1,5 @@
 #define NUM_REGS 4
-#define byte signed int 
+#define byte unsigned char 
 #define i32 int
 #define i64 unsigned long long
 int regs [NUM_REGS] ;
@@ -18,7 +18,7 @@ typedef struct {
 	// instruction parts
 	byte inst;
 	byte dest;
-	i32 src;
+	byte src;
 
 	// flags
 	i32 zero;

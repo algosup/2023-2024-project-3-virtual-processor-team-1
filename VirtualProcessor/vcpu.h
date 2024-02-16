@@ -30,15 +30,15 @@ void run_vcpu(vcpu *c) {
 
 void fetch(vcpu *c) {
 	c->pc++;
-    int temp = c->mem[c->pc];
+    i64 temp = c->mem[c->pc];
 	// print the binary version of the instruction
 	printf("inst: %llu\n", c->mem[c->pc]);
 	// extract the instruction parts
-	c->inst = (temp >> 24) & 0xFF; 
+	c->inst = (temp >> 40) & 0xFF; 
     printf("inst: %d\n", c->inst);
-	c->dest = (temp >> 12) & 0x0FFF;
+	c->dest = (temp >> 32) & 0xFF;
     printf("dest: %d\n", c->dest);
-	c->src = temp & 0x0FFF;
+	c->src = temp & 0xFFFFFFFF;
     printf("src: %d\n", c->src);
 
 }
