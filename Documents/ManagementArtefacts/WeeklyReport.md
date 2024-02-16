@@ -1,6 +1,6 @@
 # Weekly Report
 
-In this document, you will find multiple link to a Jira project, which we use for the management and the organisation of the project. To access these documents, you will need an [Atlassian](https://www.atlassian.com/) account. We can also find this [weekly report](https://virtual-processor.atlassian.net/l/cp/CFX0M2mJ) with a better formatting. 
+In this document, you will find multiple links to a Jira project, which we use for the management and the organisation of the project. To access these documents, you will need an [Atlassian](https://www.atlassian.com/) account. We can also find this [weekly report](https://virtual-processor.atlassian.net/l/cp/CFX0M2mJ) with better formatting. 
 
 <br>
 
@@ -59,7 +59,7 @@ The meeting report will serve as proof that people had attended the meeting and 
 
 The project charter consists of putting the major information of the project in one document.
 
-This will allow us to check if the team have the same understanding of the project.
+This will allow us to check if the team has the same understanding of the project.
 
 <sub>The document is written however, it’s on stand-by till the approbation of the client.</sub>
 
@@ -75,7 +75,7 @@ This will allow us to check if the team have the same understanding of the proje
 
 This task includes the publication of the repository as well as its initialisation.
 
-The initialisation of the repository takes into account the creation of the branches, the writing of the README file and the creation of the licence.
+The initialisation of the repository takes into account the creation of the branches, the writing of the README file and the creation of the license.
 
 <sub>Thomas PLANCHARD &amp; Elone DELILLE</sub>
 
