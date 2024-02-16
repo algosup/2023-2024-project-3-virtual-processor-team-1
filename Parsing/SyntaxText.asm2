@@ -10,5 +10,5 @@ ADD R1, #1
 SUB R1, R1
 JMP .ramdotcom
 ADD R1, R2
-CALL .hello
+CALL R1
 MOV R1, R2

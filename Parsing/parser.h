@@ -26,7 +26,9 @@ astNode_t *buildAST(token_t *tokens, int numTokens) {
     parentStack[stackTop] = root;
 
     bool inCall = false;
-    astNode_t *lastCallNode = NULL;
+    bool inLabel = false;
+    astNode_t *labelNode = NULL;
+    int numArgs = 0;
     int lastInstructionRow = -1;
 
     for (int i = 0; i < numTokens; i++) {
@@ -34,37 +36,61 @@ astNode_t *buildAST(token_t *tokens, int numTokens) {
         token_t token = tokens[i];
 
         if (token.column == 1 && token.row != lastInstructionRow) {
-            inCall = false; 
-            currentParent = root; 
+            inCall = false;
+            numArgs = 0; 
+                if (!inLabel) {
+                currentParent = root;
+            }
         }
 
         if (strcmp(token.type, "INSTRUCTION") == 0) {
             if (strcmp(token.value, "CALL") == 0 || strcmp(token.value, "JMP") == 0) {
-                inCall = true; 
-                lastCallNode = currentNode;
-                addChild(currentParent, lastCallNode);
-                currentParent = lastCallNode;
+                inCall = true;
+                addChild(currentParent, currentNode);
+                parentStack[++stackTop] = currentParent;
+                currentParent = currentNode;
+            } else if (strcmp(token.value, "END") == 0) {
+                addChild(currentParent, currentNode);
+                if (inLabel) {
+                    inLabel = false;
+                    currentParent = parentStack[stackTop--];
+                    labelNode = NULL;
+                }
             } else {
                 addChild(currentParent, currentNode);
-                currentParent = currentNode; 
+                if (inLabel) {
+                    parentStack[++stackTop] = currentParent;
+                    currentParent = currentNode;
+                } else {
+                    parentStack[++stackTop] = currentParent;
+                    currentParent = currentNode;
+                }
+                numArgs = 0;
             }
-            lastInstructionRow = token.row;
         } else if (strcmp(token.type, "LABEL") == 0) {
             if (!inCall) {
+                inLabel = true;
+                labelNode = currentNode;
                 addChild(root, currentNode);
-                parentStack[++stackTop] = currentNode;
+                parentStack[++stackTop] = currentParent;
+                currentParent = currentNode;
             } else {
                 addChild(currentParent, currentNode);
             }
         } else {
             addChild(currentParent, currentNode);
+            numArgs++;
+            if (numArgs == 2 && inLabel) {
+                currentParent = labelNode;
+            }
         }
+
+        lastInstructionRow = token.row;
     }
 
     free(parentStack);
     return root;
 }
-
 
 void printAST(astNode_t *node, int depth) {
     if (node == NULL) return;
@@ -247,7 +273,7 @@ void syntaxCheck(astNode_t* node, int depth) {
                     printf("Error line %d: First argument of CALL cannot be VOID.\n", firstArg->token.row);
                 } else if(strcmp(firstArg->token.type, "IMMEDIATE") == 0){
                     printf("Error line %d: First argument of CALL cannot be an IMMEDIATE.\n", firstArg->token.row);
-                } else if(strcmp(firstArg->token.type, "REGISTER") == 0 && strcmp(firstArg->token.type, "ADDRESS_REGISTER") == 0){
+                } else if(strcmp(firstArg->token.type, "REGISTER") == 0 || strcmp(firstArg->token.type, "ADDRESS_REGISTER") == 0){
                     printf("Error line %d: First argument of CALL cannot be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
                 }
 
@@ -255,6 +281,11 @@ void syntaxCheck(astNode_t* node, int depth) {
                 if(strcmp(secondArg->token.type, "VOID") != 0){
                     printf("Error line %d: There is only one argument in a CALL.\n", secondArg->token.row);
                 }
+            }
+        }
+        else if(strcmp(node->token.value, "END") == 0){
+            if(node->numChildren != 0){
+                printf("Error: END instruction must have 0 argument.\n");
             }
         }
     }
