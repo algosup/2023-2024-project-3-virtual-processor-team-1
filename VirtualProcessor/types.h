@@ -2,9 +2,7 @@
 #define byte unsigned char 
 #define i32 int
 #define i64 unsigned long long
-int regs [NUM_REGS] ;
-int aregs [NUM_REGS];
-
+#define DEFAULT 255
 typedef struct {
 	i64 *mem;
 	i64 max_mem;
@@ -18,7 +16,7 @@ typedef struct {
 	// instruction parts
 	byte inst;
 	byte dest;
-	byte src;
+	i32 src;
 
 	// flags
 	i32 zero;

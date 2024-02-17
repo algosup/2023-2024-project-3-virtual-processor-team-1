@@ -14,7 +14,7 @@ typedef enum {
     INSTRUCTION_MUL1 = 0x30, // Mul register, register
     INSTRUCTION_MUL2 = 0x31, // Mul register , immediate 
     INSTRUCTION_DIV1 = 0x40, // Div register, register 
-    INSTRUCTION_DIV = 0x41, // Div register , immediate 
+    INSTRUCTION_DIV2 = 0x41, // Div register , immediate 
 
     INSTRUCTION_LABEL = 0X99,
     INSTRUCTION_END = 0x98,
