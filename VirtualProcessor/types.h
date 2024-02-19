@@ -7,6 +7,8 @@ typedef struct {
 	i64 *mem;
 	i64 max_mem;
 
+	i32 stack[100];
+
 	// registers
 	i32 pc;
 	i32 sp;
@@ -23,3 +25,15 @@ typedef struct {
 	i32 ltz;
 	i32 gtz;
 } vcpu;
+
+
+
+    i64 labelTable[]= {
+        0B00000000000000001101100000000110, // .label1 
+    };
+
+    i64 addressTable[]={
+            1,
+    };
+
+i64 arrayTableLenght = sizeof(labelTable) / sizeof(labelTable[0]); 

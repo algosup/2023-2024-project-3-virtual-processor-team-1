@@ -6,7 +6,7 @@
 
 void execute(vcpu *c);
 void fetch(vcpu *c);
-
+void executeFunction(vcpu *c);
 
 
 vcpu *new_vcpu(i64 *memory, i64 mem_size) {
@@ -40,6 +40,7 @@ void fetch(vcpu *c) {
 	c->dest = (temp >> 32) & 0xFF;
     //printf("dest: %d\n", c->dest);
 	c->src = littleEndianToRealValue(temp & 0xFFFFFFFF);
+	//printf("src: %d\n", c->src);
 }
 
 void execute(vcpu *c) {
@@ -78,13 +79,30 @@ void execute(vcpu *c) {
 			c->r[c->dest] /= c->src;
 			break;
 		case INSTRUCTION_LABEL:
+			if (c->inst == INSTRUCTION_RET || c->inst == INSTRUCTION_END) {
+				break;
+			}
+			else {
+				c->pc++;
+				i64 temp = c->mem[c->pc];
+				c->inst = (temp >> 40) & 0xFF;
+			}
 			break;
 		case INSTRUCTION_END:
 			break;
 		case INSTRUCTION_RET:
 			break;
 		case INSTRUCTION_CALL:
-			break;
+    		for (int i = 0; i < arrayTableLenght; i++) {
+        		if (littleEndianToRealValue(labelTable[i]) == c->src) {
+            		int returnAddress = c->pc; // Save the return address
+            		c->pc = addressTable[i]; // Jump to the function
+            		executeFunction(c); // Execute the function
+            		c->pc = returnAddress; // Return to the line after the call
+            		break;
+        		}
+    	}
+   		 break;
 		case INSTRUCTION_CMP1:
 			if (c->r[c->dest] == c->r[c->src]) {
 				c->zero = 1;
@@ -187,5 +205,15 @@ void execute(vcpu *c) {
 		 
  	}
  }
+
+void executeFunction(vcpu *c) {
+	if (c->inst == INSTRUCTION_RET || c->inst == INSTRUCTION_END) {
+		return;
+	}
+	else {
+		fetch(c);
+		execute(c);
+	}
+}
 
 
