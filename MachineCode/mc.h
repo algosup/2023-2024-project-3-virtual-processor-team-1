@@ -45,7 +45,7 @@ int* generateMachineCode(token_t *assemblyCode, int numTokens)
             }
             // match the immediate
             char* removeHash = remove_char(assemblyCode[i+2].value,'#');
-            machineCode[smc+2] = (int)removeHash;
+            machineCode[smc+2] = atoi(removeHash);
         }
         
         // go to the next token line
