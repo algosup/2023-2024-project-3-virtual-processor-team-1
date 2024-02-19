@@ -47,13 +47,17 @@ int* generateMachineCode(token_t *assemblyCode, int numTokens)
             char* removeHash = remove_char(assemblyCode[i+2].value,'#');
             machineCode[smc+2] = atoi(removeHash);
         }
+        else if(strcmp(assemblyCode[i].type,"VOID")==0
+            && strcmp(assemblyCode[i+2].type,"VOID")==0)
+        {
+            machineCode[smc] = 0x00; // INSTRUCTION_NOP
+            machineCode[smc+1] = 0x00; // VOID
+            machineCode[smc+2] = 0x00; // VOID
+        }
         
         // go to the next token line
         smc=+3;
     }
-
-    // generate the machine code
-
     // return the machine code
     return machineCode;
 }
