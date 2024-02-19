@@ -22,7 +22,7 @@ int* generateMachineCode(token_t *assemblyCode, int numTokens)
     {
         // token is MOV REGISTER, IMMEDIATE
         if (strcmp(assemblyCode[i].value,"MOV")==0
-            && strcmp(assemblyCode[i+2].type,"IM")==0) 
+            && strcmp(assemblyCode[i+2].type,"IMMEDIATE")==0) 
         {
             // match the instruction
             machineCode[smc] = 0x10; // INSTRUCTION_MOV1
