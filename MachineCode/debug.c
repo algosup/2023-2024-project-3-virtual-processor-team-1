@@ -96,5 +96,7 @@ int main(void)
     //freeAST(root);
     int* machineCode = generateMachineCode(tokens, numTokens);
     printMachineCode(machineCode, numTokens);
+    printBinary(machineCode, numTokens);
+    free(machineCode);
     return 0;
 }
