@@ -10,4 +10,8 @@
 #include "lexical.h"
 #include "parser.h"
 #include "vm.h"
+#include "mc.h"
+#include "instruction.h"
+#include "register.h"
+#include "address.h"
 #endif
