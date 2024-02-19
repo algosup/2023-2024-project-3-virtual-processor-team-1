@@ -1,5 +1,9 @@
 # Weekly Report
 
+This document is no longer updated, the updated version is findable on our [Jira project](https://virtual-processor.atlassian.net/l/cp/CFX0M2mJ).
+
+<br>
+
 In this document, you will find multiple links to a Jira project, which we use for the management and the organisation of the project. To access these documents, you will need an [Atlassian](https://www.atlassian.com/) account. We can also find this [weekly report](https://virtual-processor.atlassian.net/l/cp/CFX0M2mJ) with better formatting. 
 
 <br>
