@@ -1,28 +1,25 @@
-.hello
-    MOV R2, "Hello, World!"
-    DISP R2
-RET
+; This programme allows you to set a small timer, and once the timer has finished, the programme displays an end message.
 
-.function
-    MOV R1, "Hello you"
-    CALL .hello
-    DISP R1
-END
+.endOfTheProgram:
+    DISP "Congratulations ! The timer is now finished."
+    RET
 
-CALL .function
+.loopDec:
+    SUB R4, #1
+    JMP .loopTimer
 
-MOV R1, -5
-DISP R1     ; expected 5
-MOV R2, #7   ; Test comment
+.loopTimer:
+    DISP R4
+    CMP R4, #0
+    JNE .loopDec
+    END
 
-DISP R2     ; expected 7
-ADD R1, R2
-DISP R1     ; expected 12
-SUB R2, #3
-DISP R2     ; 4
+.setTimerValue:
+    MOV R4, R1
+    CALL .loopTimer
+    RET
 
-DISP "Hello World" ; expected Hello World
-
-; expected --> R1 = 5, R2 = 7, R1 = 12, R2 = 4
-
-DISP "End of program"
+DISP "The clock is ticking!"        ; Display text
+MOV R1, #40                         ; Insert your value here
+CALL .setTimerValue                 ; Set the value for the timer, and start the loop
+CALL .endOfTheProgram               ; End the program.
