@@ -52,6 +52,7 @@ int main() {
     vcpu *c4 = new_vcpu(simpleDiv, 4);
     vcpu *c5 = new_vcpu(simpleFunction, 8);
 
+    clearScreen();
 
 	run_vcpu(c);
     free_vcpu(c);
@@ -64,5 +65,7 @@ int main() {
     run_vcpu(c5);
     free_vcpu(c5);
 
-	return 0;
+    printf("Press any key to continue...");
+    getchar();
+    return 0;
 }
