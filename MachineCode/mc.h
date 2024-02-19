@@ -65,21 +65,25 @@ void printMachineCode(int *machineCode, int numTokens)
         printf("%d\n", machineCode[i]);
     }
 }
-// convert int to binary --> 32 bits 
-// 1 -> 0B00000000000000000000000000000001
+// convert int to binary 
+// 1 -> 0B000000000000001
 int binary(int n)
 {
     if (n == 0) return 0;
     if (n == 1) return 1;
     return (n % 2) + 10 * binary(n / 2);
 }
-
+// print the machine code in binary
 void printBinary(int *machineCode, int numTokens)
 {
-    for(int i = 0; i < numTokens; i++)
+    for(int i = 0; i < numTokens; i+=3)
     {
+        
         printf("0B");
-        printf("%032d\n", binary(machineCode[i]));
+        printf("%016d", binary(machineCode[i]));
+        printf("%016d", binary(machineCode[i+1]));
+        printf("%016d\n", binary(machineCode[i+2]));
+        
     }
 }
 
