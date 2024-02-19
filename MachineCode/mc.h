@@ -18,7 +18,7 @@ int* generateMachineCode(token_t *assemblyCode, int numTokens)
     int smc = 0; // set machine code --> {INSTRUCTION_MOV1, REGISTER_1, IMMEDIATE}
                  //       smc=                0 ,                1 ,          2
     // for each line
-    for(int i = 0; i < numTokens/3; i++)
+    for(int i = 0; i < numTokens; i++)
     {
         // token is MOV REGISTER, IMMEDIATE
         if (strcmp(assemblyCode[i].value,"MOV")==0
@@ -65,26 +65,31 @@ void printMachineCode(int *machineCode, int numTokens)
         printf("%d\n", machineCode[i]);
     }
 }
+
 // convert int to binary 
-// 1 -> 0B000000000000001
 int binary(int n)
 {
     if (n == 0) return 0;
     if (n == 1) return 1;
     return (n % 2) + 10 * binary(n / 2);
 }
-// print the machine code in binary
-void printBinary(int *machineCode, int numTokens)
+
+// convert the machine code to binary
+char** generateBinary(int *machineCode, int numTokens)
 {
+    // Allocate memory for the array of strings
+    char **binaryStrings = malloc(numTokens * sizeof(char*));
+
     for(int i = 0; i < numTokens; i+=3)
     {
-        
-        printf("0B");
-        printf("%016d", binary(machineCode[i]));
-        printf("%016d", binary(machineCode[i+1]));
-        printf("%016d\n", binary(machineCode[i+2]));
-        
+        // Allocate memory for each string
+        binaryStrings[i] = malloc(49 * sizeof(char));  // 16 digits * 3 + 2 for "0B" + 1 for '\0'
+
+        // Generate the binary string
+        sprintf(binaryStrings[i], "0B%016d%016d%016d", binary(machineCode[i]), binary(machineCode[i+1]), binary(machineCode[i+2]));
     }
+
+    return binaryStrings;
 }
 
 

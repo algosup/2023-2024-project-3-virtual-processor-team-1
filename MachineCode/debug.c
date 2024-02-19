@@ -96,7 +96,13 @@ int main(void)
     //freeAST(root);
     int* machineCode = generateMachineCode(tokens, numTokens);
     printMachineCode(machineCode, numTokens);
-    printBinary(machineCode, numTokens);
+    //printBinary(machineCode, numTokens);
+    char **binaryStrings = generateBinary(machineCode, numTokens);
+    for(int i = 0; i < numTokens; i+=3)
+    {
+        printf("%s\n", binaryStrings[i]);
+    }
+    free(binaryStrings);
     free(machineCode);
     return 0;
 }
