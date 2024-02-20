@@ -1,5 +1,6 @@
 #include "global.h"
 
+
 int main(int argc, char *argv[]) {
 
     // Check if a file name was passed as an argument to the program
@@ -41,6 +42,7 @@ int main(int argc, char *argv[]) {
     astNode_t *root = buildAST(tokens, numLines * MAX_TOKENS);
     printAST(root, 0);
     syntaxCheck(root, 0);
-    freeAST(root);
+    generateMachineCode(root);
+    freeAST(root);  
     return 0;
 }

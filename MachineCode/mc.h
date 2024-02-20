@@ -1,104 +1,52 @@
-char* remove_char(char* str, char to_remove) {
-    char* src;
-    char* dst;
-    for (src = dst = str; *src != '\0'; src++) {
-        *dst = *src;
-        if (*dst != to_remove) dst++;
-    }
-    *dst = '\0';
-    return str;
-}
 
-int* generateMachineCode(token_t *assemblyCode, int numTokens)
-{
-    // allocate memory for the machine code
-    int *machineCode = (int *)malloc(sizeof(int) * (numTokens));
-    // match token with the instruction set
-    // token{type, value, line, column}
-    int smc = 0; // set machine code --> {INSTRUCTION_MOV1, REGISTER_1, IMMEDIATE}
-                 //       smc=                0 ,                1 ,          2
-    // for each line
-    for(int i = 0; i < numTokens; i++)
-    {
-        // token is MOV REGISTER, IMMEDIATE
-        if (strcmp(assemblyCode[i].value,"MOV")==0
-            && strcmp(assemblyCode[i+2].type,"IMMEDIATE")==0) 
-        {
-            // match the instruction
-            machineCode[smc] = 0x10; // INSTRUCTION_MOV1
-            // match the register
-            if(strcmp(assemblyCode[i+1].value,"R1")==0)
-            {
-                machineCode[smc+1] = 0x01; // REGISTER_1
+void generateMachineCode(astNode_t *node);
+
+void generateMachineCode(astNode_t *node) {
+    if (node == NULL) return;
+
+    if (strcmp(node->token.type, "INSTRUCTION") == 0 && strcmp(node->token.value, "MOV") == 0) {
+        char *opcode = NULL; // Will be set according to MOV type
+        char regCode[9], targetCode[33]; // For register and immediate/address value in binary
+        memset(regCode, 0, sizeof(regCode));
+        memset(targetCode, 0, sizeof(targetCode));
+
+        // Determine the type of MOV instruction
+        if (node->numChildren == 2) {
+            if (strcmp(node->children[0]->token.type, "REGISTER") == 0) {
+                if (strcmp(node->children[1]->token.type, "IMMEDIATE") == 0) {
+                    opcode = "00010000"; // MOV REGISTER, IMMEDIATE
+                    int regNum = atoi(&node->children[0]->token.value[1]); // Convert "Rn" to integer
+                    // Convert register number to binary
+                    for (int i = 7; i >= 0; --i) {
+                        regCode[i] = (regNum & 1) + '0';
+                        regNum >>= 1;
+                    }
+                    int immValue = atoi(&node->children[1]->token.value[1]); // Convert "#value" to integer
+                    // Convert to binary string and little endianness
+                    char tempCode[33];
+                    for (int i = 31; i >= 0; --i) {
+                        tempCode[31-i] = (immValue & 1) + '0';
+                        immValue >>= 1;
+                    }
+                    // Swap bytes for endianness
+                    for (int i = 0; i < 32; i += 8) {
+                        for (int j = 0; j < 8; ++j) {
+                            targetCode[i + j] = tempCode[i + (7 - j)];
+                        }
+                    }
+                } else if (strcmp(node->children[1]->token.type, "REGISTER") == 0) {
+                    opcode = "00010010"; // MOV REGISTER, REGISTER
+                }
+            } else if (strcmp(node->children[0]->token.type, "ADDRESS_REGISTER") == 0) {
+                opcode = "00010001"; // MOV ADDRESS_REGISTER, ADDRESS
             }
-            else if(strcmp(assemblyCode[i+1].value,"R2")==0)
-            {
-                machineCode[smc+1] = 0x02; // REGISTER_2
-            }
-            else if(strcmp(assemblyCode[i+1].value,"R3")==0)
-            {
-                machineCode[smc+1] = 0x03; // REGISTER_3
-            }
-            else if(strcmp(assemblyCode[i+1].value,"R4")==0)
-            {
-                machineCode[smc+1] = 0x04; // REGISTER_4
-            }
-            // match the immediate
-            char* removeHash = remove_char(assemblyCode[i+2].value,'#');
-            machineCode[smc+2] = atoi(removeHash);
         }
-        else if(strcmp(assemblyCode[i].type,"VOID")==0
-            && strcmp(assemblyCode[i+2].type,"VOID")==0)
-        {
-            machineCode[smc] = 0x00; // INSTRUCTION_NOP
-            machineCode[smc+1] = 0x00; // VOID
-            machineCode[smc+2] = 0x00; // VOID
-        }
-        
-        // go to the next token line
-        smc=+3;
-    }
-    // return the machine code
-    return machineCode;
-}
-
-void printMachineCode(int *machineCode, int numTokens)
-{
-    for(int i = 0; i < numTokens; i++)
-    {
-        printf("%d\n", machineCode[i]);
-    }
-}
-
-// convert int to binary 
-int binary(int n)
-{
-    if (n == 0) return 0;
-    if (n == 1) return 1;
-    return (n % 2) + 10 * binary(n / 2);
-}
-
-// convert the machine code to binary
-char** generateBinary(int *machineCode, int numTokens)
-{
-    // Allocate memory for the array of strings
-    char **binaryStrings = malloc(numTokens * sizeof(char*));
-
-    for(int i = 0; i < numTokens; i+=3)
-    {
-        // Allocate memory for each string
-        binaryStrings[i] = malloc(49 * sizeof(char));  // 16 digits * 3 + 2 for "0B" + 1 for '\0'
-
-        // Generate the binary string
-        sprintf(binaryStrings[i], "0B%016d%016d%016d", binary(machineCode[i]), binary(machineCode[i+1]), binary(machineCode[i+2]));
+        regCode[8] = '\0'; // Ensure null termination
+        targetCode[32] = '\0'; // Ensure null termination
+        printf("0b%s\n%s\n%s\n", opcode, regCode, targetCode);
     }
 
-    return binaryStrings;
+    for (int i = 0; i < node->numChildren; i++) {
+        generateMachineCode(node->children[i]);
+    }
 }
-
-
-
-
-
-
-
