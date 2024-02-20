@@ -128,8 +128,26 @@ void freeAST(astNode_t *node) {
     free(node);
 }
 
+bool containsComma(const char *str) {
+    // Iterate through each character in the string
+    for (int i = 0; str[i] != '\0'; i++) {
+        // If a comma is found, return true
+        if (str[i] == ',') {
+            return true;
+        }
+    }
+    return false; // Return false if no comma is found
+}
+
 void syntaxCheck(astNode_t* node, int depth) {
     if (node == NULL) return;
+
+    // Don't accept the float as a value and if a "," is detected, print an error
+    if (strcmp(node->token.type, "IMMEDIATE") == 0) {
+        if (containsComma(node->token.value)) {
+            printf("Error line %d: Float values are not accepted.\n", node->token.row);
+        }
+    }
 
     // Perform syntax checks based on the type of node
     if (strcmp(node->token.type, "INSTRUCTION") == 0) {

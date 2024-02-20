@@ -5,7 +5,7 @@
     RET
 
 .loopDec:
-    SUB R4, #1
+    ADD R1, #3, #4
     JMP .loopTimer
 
 .loopTimer:
