@@ -40,6 +40,7 @@ int main(int argc, char *argv[]) {
     // Build the AST
     astNode_t *root = buildAST(tokens, numLines * MAX_TOKENS);
     printAST(root, 0);
+    syntaxCheck(root, 0);
     freeAST(root);
     return 0;
 }
