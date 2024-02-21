@@ -34,7 +34,7 @@ typedef struct {
     };
 
     i64 addressTable[]={
-			7
+			9
     };
 
 i64 arrayTableLenght = sizeof(labelTable) / sizeof(labelTable[0]); 

@@ -127,44 +127,44 @@ void execute(vcpu *c) {
 			break;
 		case INSTRUCTION_JE:
 		printf("JE\n");
-			if (c->zero == 1) {
+			if (c->zero == 0) {
 				c->pc = c->src;
 				clear_flags(c);
 			}
 			break;
 		case INSTRUCTION_JNE:
 		printf("JNE\n");
-		printf("c->src: %d\n", littleEndianToRealValue(c->src));
-		printf("flag: %d\n", c->zero);
 			if (c->zero == 0) {
-				clear_flags(c);
 				c->pc = searchLabel(c->src);
+				clear_flags(c);
 			}
 			break;
 		case INSTRUCTION_JG:
 		printf("JG\n");
-			if (c->gtz == 1) {
+			if (c->gtz == 0) {
 				c->pc = c->src;
 				clear_flags(c);
 			}
 			break;
 		case INSTRUCTION_JGE:
 		printf("JGE\n");
-			if (c->gtz == 1 || c->zero == 1) {
+			if (c->gtz == 0 || c->zero == 0) {
 				c->pc = c->src;
 				clear_flags(c);
 			}
 			break;
 		case INSTRUCTION_JL:
 		printf("JL\n");
-			if (c->ltz == 1) {
-				clear_flags(c);
+		printf("c->ltz: %d\n", c->ltz);
+			if (c->ltz == 0) {
+				printf("c->src: %d\n", c->src);
 				c->pc = searchLabel(c->src);
+				clear_flags(c);
 			}
 			break;
 		case INSTRUCTION_JLE:
 		printf("JLE\n");
-			if (c->ltz == 1 || c->zero == 1) {
+			if (c->ltz == 0 || c->zero == 0) {
 				c->pc = c->src;
 				clear_flags(c);
 			}
