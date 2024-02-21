@@ -1,4 +1,4 @@
-// Include the different instructions and registers in the different enums
+
 typedef enum instruction
 {
     ADD, 
@@ -43,7 +43,6 @@ typedef enum address_registers
 
 } address_registers_t;
 
-// There is 3 types of values: Immediate, Negative and String
 typedef enum values
 {
     IM,
@@ -69,7 +68,6 @@ typedef enum typeofdata
 
 } typeofdata_t;
 
-// Define a token by the different elements it contains
 typedef struct token {
     char type[20];    // String representation of the type
     char value[100];   // String representation of the value
@@ -82,11 +80,11 @@ token_t tokens[MAX_LINES][MAX_TOKENS];
 int column = 0;
 int row = 0;
 
+void removeCommentsAndEmptyLines(char *str) {
 
     /* 
     Removes comments and empty lines from a line.
     */
-void removeCommentsAndEmptyLines(char *str) {
 
     int inCommentLine = 0;
 
@@ -110,6 +108,8 @@ void removeCommentsAndEmptyLines(char *str) {
     }
 }
 
+void removeTrailingComma(char *token) {
+
     /*
     Removes trailing commas from tokens. This is necessary because the
     tokenizer will treat "hello," and "hello" as two different tokens.
@@ -117,13 +117,15 @@ void removeCommentsAndEmptyLines(char *str) {
     This function is called after the tokenizer has finished tokenizing
     a line.
     */
-void removeTrailingComma(char *token) {
+
     int length = strlen(token);
     while (length > 0 && token[length - 1] == ',') {
         token[length - 1] = '\0';
         length--;
     }
 }
+
+void splitLine(char *lengthLine, char cleanedLines[][3][1000], int *numLines) {
 
     /*
     Tokenizes a line. This function is called after the line has been
@@ -132,7 +134,7 @@ void removeTrailingComma(char *token) {
     Each line is tokenized into three tokens. If there are less than
     three tokens, the remaining tokens are set to empty strings.
     */
-void splitLine(char *lengthLine, char cleanedLines[][3][1000], int *numLines) {
+
     int inQuotedString = 0;
     int numTokens = 0;
     char token[1000] = "";
@@ -171,9 +173,8 @@ void splitLine(char *lengthLine, char cleanedLines[][3][1000], int *numLines) {
 
     if (inQuotedString) {
         // Reset tokens if the line ends with an open quote
-        strcpy(cleanedLines[*numLines][0], "");
-        strcpy(cleanedLines[*numLines][1], "");
-        strcpy(cleanedLines[*numLines][2], "");
+        printf("Error: Unterminated quoted string\n");
+        strcpy(cleanedLines[*numLines][2], "ERROR");
     }
     if (numTokens == 0) { // Aucun token n'a été trouvé pour cette ligne
         strcpy(cleanedLines[*numLines][0], "LINE_EMPTY");
@@ -182,7 +183,6 @@ void splitLine(char *lengthLine, char cleanedLines[][3][1000], int *numLines) {
     (*numLines)++;
 }
 
-// Handle the differents specials characters in the line
 void handleString(char *source, char *destination){
     int length = strlen(source);
     if (length > 98){
@@ -216,7 +216,7 @@ void handleString(char *source, char *destination){
                 break;
             default:
                 printf("Error: Invalid escape sequence\n");
-                strcpy(destination, "ERROR");
+                strcpy(destination, "ERREUR");
                 return;
             }
         } else {
@@ -227,7 +227,7 @@ void handleString(char *source, char *destination){
     destination[j] = '\0';
 }
 
-// Check all the enums to check what is the element tokenised
+
 void getEnum(char cleanedLines[1000], token_t *token) {
     // Instructions
     if (strcmp(cleanedLines, "MOV") == 0) {
@@ -296,8 +296,7 @@ void getEnum(char cleanedLines[1000], token_t *token) {
     } else if(strcmp(cleanedLines, "END") == 0){
         strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "END");
-    }
-    else if (strcmp(cleanedLines, "R1") == 0) {
+    } else if (strcmp(cleanedLines, "R1") == 0) {
         strcpy(token->type, "REGISTER");
         strcpy(token->value, "R1");
     } else if (strcmp(cleanedLines, "R2") == 0) {
@@ -327,28 +326,28 @@ void getEnum(char cleanedLines[1000], token_t *token) {
     } else if (cleanedLines[0] == '"') {
         strcpy(token->type, "STR");
         handleString(cleanedLines, token->value);
-    }
-    else if (cleanedLines[0] == '#') {
+    } else if (cleanedLines[0] == '#') {
         strcpy(token->type, "IMMEDIATE");
         strcpy(token->value, cleanedLines);
-    }
-    //Add the label
+    } //Add the label
     else if (cleanedLines[0] == '.') {
         strcpy(token->type, "LABEL");
         strcpy(token->value, cleanedLines);
-    }
-    // Default case if none matched
+    } // Default case if none matched
     else {
         strcpy(token->type, "VOID");
         strcpy(token->value, "VOID");
     }
 }
 
-// Take a cleaned line and split it in 3 tokens
+
+
+// Output:
+// {Token("instruction", "MOV", 1, 1), Token("register", "R1", 1, 2), Token("immediate", "#5", 1, 3)}
 void tokenizationFunction(char cleanedLines[][3][1000], int numLines, token_t *tokens) {
     int tokenIndex = 0;
     for(int i = 0; i < numLines; i++){
-        // Vérifier si le premier token de la ligne est "VOID"
+        // Check if the line is empty
         if (strcmp(cleanedLines[i][0], "VOID") == 0) {
             continue;
         }
@@ -361,7 +360,6 @@ void tokenizationFunction(char cleanedLines[][3][1000], int numLines, token_t *t
     }
 }
 
-// Display the tokenisation
 void printTokenization(token_t *tokens, int numTokens) {
     for (int i = 0; i < numTokens; i += MAX_TOKENS) {
         bool allVoid = true;
