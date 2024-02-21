@@ -104,38 +104,10 @@ void execute(vcpu *c) {
     	}
    		 break;
 		case INSTRUCTION_CMP1:
-			if (c->r[c->dest] == c->r[c->src]) {
-				c->zero = 1;
-			} else {
-				c->zero = 0;
-			}
-			if (c->r[c->dest] < c->r[c->src]) {
-				c->ltz = 1;
-			} else {
-				c->ltz = 0;
-			}
-			if (c->r[c->dest] > c->r[c->src]) {
-				c->gtz = 1;
-			} else {
-				c->gtz = 0;
-			}
+			set_flags(c, c->r[c->dest], c->r[c->src]);
 			break;
 		case INSTRUCTION_CMP2:
-			if (c->r[c->dest] == c->src) {
-				c->zero = 1;
-			} else {
-				c->zero = 0;
-			}
-			if (c->r[c->dest] < c->src) {
-				c->ltz = 1;
-			} else {
-				c->ltz = 0;
-			}
-			if (c->r[c->dest] > c->src) {
-				c->gtz = 1;
-			} else {
-				c->gtz = 0;
-			}
+			set_flags(c, c->r[c->dest], c->src);
 			break;
 		case INSTRUCTION_JMP:
 			c->pc = c->src;
@@ -143,31 +115,37 @@ void execute(vcpu *c) {
 		case INSTRUCTION_JE:
 			if (c->zero == 1) {
 				c->pc = c->src;
+				clear_flags(c);
 			}
 			break;
 		case INSTRUCTION_JNE:
 			if (c->zero == 0) {
 				c->pc = c->src;
+				clear_flags(c);
 			}
 			break;
 		case INSTRUCTION_JG:
 			if (c->gtz == 1) {
 				c->pc = c->src;
+				clear_flags(c);
 			}
 			break;
 		case INSTRUCTION_JGE:
 			if (c->gtz == 1 || c->zero == 1) {
 				c->pc = c->src;
+				clear_flags(c);
 			}
 			break;
 		case INSTRUCTION_JL:
 			if (c->ltz == 1) {
 				c->pc = c->src;
+				clear_flags(c);
 			}
 			break;
 		case INSTRUCTION_JLE:
 			if (c->ltz == 1 || c->zero == 1) {
 				c->pc = c->src;
+				clear_flags(c);
 			}
 			break;
 		case INSTRUCTION_AND1:
@@ -214,12 +192,4 @@ void executeFunction(vcpu *c) {
 		fetch(c);
 		execute(c);
 	}
-}
-
-void clearScreen() {
-	#ifdef _WIN32
-    system("cls");
-	#else
-		system("clear");
-	#endif
 }

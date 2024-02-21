@@ -4,13 +4,14 @@
 #include "types.h"
 
 i32 littleEndianToRealValue(i32 value){
-    i32 result = 0; 
-    while(value != 0){
-        result = (result << 8) | (value & 0xFF);
-        value = value >> 8;
-    }
+    i32 result = 0;
+    result |= (value & 0x000000FF) << 24;
+    result |= (value & 0x0000FF00) << 8;
+    result |= (value & 0x00FF0000) >> 8;
+    result |= (value & 0xFF000000) >> 24;
     return result;
 }
+
 
 
 

@@ -29,11 +29,14 @@ typedef struct {
 
 
     i64 labelTable[]= {
-        0B00000000000000001101100000000110, // .label1 
+        0B01011010000100000000000000000000, // .main
+		0B10101011000100000000000000000000 // .loop
     };
 
     i64 addressTable[]={
             1,
+			9
     };
 
 i64 arrayTableLenght = sizeof(labelTable) / sizeof(labelTable[0]); 
+
