@@ -173,9 +173,8 @@ void splitLine(char *lengthLine, char cleanedLines[][3][1000], int *numLines) {
 
     if (inQuotedString) {
         // Reset tokens if the line ends with an open quote
-        strcpy(cleanedLines[*numLines][0], "");
-        strcpy(cleanedLines[*numLines][1], "");
-        strcpy(cleanedLines[*numLines][2], "");
+        printf("Error: Unterminated quoted string\n");
+        strcpy(cleanedLines[*numLines][2], "ERROR");
     }
     if (numTokens == 0) { // Aucun token n'a été trouvé pour cette ligne
         strcpy(cleanedLines[*numLines][0], "LINE_EMPTY");
@@ -297,8 +296,7 @@ void getEnum(char cleanedLines[1000], token_t *token) {
     } else if(strcmp(cleanedLines, "END") == 0){
         strcpy(token->type, "INSTRUCTION");
         strcpy(token->value, "END");
-    }
-    else if (strcmp(cleanedLines, "R1") == 0) {
+    } else if (strcmp(cleanedLines, "R1") == 0) {
         strcpy(token->type, "REGISTER");
         strcpy(token->value, "R1");
     } else if (strcmp(cleanedLines, "R2") == 0) {
@@ -328,17 +326,14 @@ void getEnum(char cleanedLines[1000], token_t *token) {
     } else if (cleanedLines[0] == '"') {
         strcpy(token->type, "STR");
         handleString(cleanedLines, token->value);
-    }
-    else if (cleanedLines[0] == '#') {
+    } else if (cleanedLines[0] == '#') {
         strcpy(token->type, "IMMEDIATE");
         strcpy(token->value, cleanedLines);
-    }
-    //Add the label
+    } //Add the label
     else if (cleanedLines[0] == '.') {
         strcpy(token->type, "LABEL");
         strcpy(token->value, cleanedLines);
-    }
-    // Default case if none matched
+    } // Default case if none matched
     else {
         strcpy(token->type, "VOID");
         strcpy(token->value, "VOID");
@@ -352,7 +347,7 @@ void getEnum(char cleanedLines[1000], token_t *token) {
 void tokenizationFunction(char cleanedLines[][3][1000], int numLines, token_t *tokens) {
     int tokenIndex = 0;
     for(int i = 0; i < numLines; i++){
-        // Vérifier si le premier token de la ligne est "VOID"
+        // Check if the line is empty
         if (strcmp(cleanedLines[i][0], "VOID") == 0) {
             continue;
         }

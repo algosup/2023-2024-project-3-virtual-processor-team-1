@@ -128,8 +128,26 @@ void freeAST(astNode_t *node) {
     free(node);
 }
 
+bool containsComma(const char *str) {
+    // Iterate through each character in the string
+    for (int i = 0; str[i] != '\0'; i++) {
+        // If a comma is found, return true
+        if (str[i] == ',') {
+            return true;
+        }
+    }
+    return false; // Return false if no comma is found
+}
+
 void syntaxCheck(astNode_t* node, int depth) {
     if (node == NULL) return;
+
+    // Don't accept the float as a value and if a "," is detected, print an error
+    if (strcmp(node->token.type, "IMMEDIATE") == 0) {
+        if (containsComma(node->token.value)) {
+            printf("Error line %d: Float values are not accepted.\n", node->token.row);
+        }
+    }
 
     // Perform syntax checks based on the type of node
     if (strcmp(node->token.type, "INSTRUCTION") == 0) {
@@ -251,27 +269,22 @@ void syntaxCheck(astNode_t* node, int depth) {
             } else {
                 // Check the first argument
                 astNode_t *firstArg = node->children[0];
-                if (strcmp(firstArg->token.type, "VOID") == 0) {
-                    printf("Error line %d: First argument of CMP cannot be VOID.\n", firstArg->token.row);
-                } else if (strcmp(firstArg->token.type, "IMMEDIATE") == 0) {
-                    printf("Error line %d: First argument of CMP cannot be an IMMEDIATE.\n", firstArg->token.row);
-        } }
+                astNode_t *secondArg = node->children[1];
+                if (strcmp(firstArg->token.type, "REGISTER") == 1) {
+                    printf("Error line %d: First argument of CMP must be a REGISTER.\n", firstArg->token.row);
+                }
+                if (strcmp(secondArg->token.type, "REGISTER") == 1 && strcmp(secondArg->token.type, "IMMEDIATE") == 1) {
+                    printf("Error line %d: Second argument of CMP must be a REGISTER or IMMEDIATE.\n", secondArg->token.row);
+                }
+        } 
         } else if(strcmp(node->token.value, "JMP") == 0){
             if(node->numChildren >= 3 || node->numChildren == 0){
                 printf("Error: JMP instruction must have 1 argument.\n");
             } else {
                 astNode_t* firstArg = node->children[0];
-                if(strcmp(firstArg->token.type, "VOID") == 0){
-                    printf("Error line %d: First argument of JMP cannot be VOID.\n", firstArg->token.row);
-                } else if(strcmp(firstArg->token.type, "IMMEDIATE") == 0){
-                    printf("Error line %d: First argument of JMP cannot be an IMMEDIATE.\n", firstArg->token.row);
-                } else if(strcmp(firstArg->token.type, "REGISTER") == 0 && strcmp(firstArg->token.type, "ADDRESS_REGISTER") == 0){
-                    printf("Error line %d: First argument of JMP cannot be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
+                if (strcmp(firstArg->token.type, "LABEL") != 0) {
+                    printf("Error line %d: First argument of JMP must be a LABEL.\n", firstArg->token.row);
                 }
-                if(strcmp(firstArg->token.value, "CALL") == 0){
-                    printf("Error line %d: First argument of JMP cannot be CALL.\n", firstArg->token.row);
-                }
-
                 astNode_t* secondArg = node->children[1];
                 if(strcmp(secondArg->token.type, "VOID") != 0){
                     printf("Error line %d: There is only one argument in a JMP.\n", secondArg->token.row);
@@ -280,12 +293,8 @@ void syntaxCheck(astNode_t* node, int depth) {
         }
         else if(strcmp(node->token.value, "CALL") == 0){
                 astNode_t* firstArg = node->children[0];
-                if(strcmp(firstArg->token.type, "VOID") == 0){
-                    printf("Error line %d: First argument of CALL cannot be VOID.\n", firstArg->token.row);
-                } else if(strcmp(firstArg->token.type, "IMMEDIATE") == 0){
-                    printf("Error line %d: First argument of CALL cannot be an IMMEDIATE.\n", firstArg->token.row);
-                } else if(strcmp(firstArg->token.type, "REGISTER") == 0 || strcmp(firstArg->token.type, "ADDRESS_REGISTER") == 0){
-                    printf("Error line %d: First argument of CALL cannot be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
+                if (strcmp(firstArg->token.type, "LABEL") != 0) {
+                    printf("Error line %d: First argument of CALL must be a LABEL.\n", firstArg->token.row);
                 }
 
                 astNode_t* secondArg = node->children[1];
@@ -328,12 +337,8 @@ void syntaxCheck(astNode_t* node, int depth) {
                 printf("Error: JE instruction must have 1 argument.\n");
             } else {
                 astNode_t* firstArg = node->children[0];
-                if(strcmp(firstArg->token.type, "VOID") == 0){
-                    printf("Error line %d: First argument of JNE cannot be VOID.\n", firstArg->token.row);
-                } else if(strcmp(firstArg->token.type, "IMMEDIATE") == 0){
-                    printf("Error line %d: First argument of JE cannot be an IMMEDIATE.\n", firstArg->token.row);
-                } else if(strcmp(firstArg->token.type, "REGISTER") == 0 || strcmp(firstArg->token.type, "ADDRESS_REGISTER") == 0){
-                    printf("Error line %d: First argument of JE cannot be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
+                if (strcmp(firstArg->token.type, "LABEL") != 0) {
+                    printf("Error line %d: First argument of JE must be a LABEL.\n", firstArg->token.row);
                 }
 
                 astNode_t* secondArg = node->children[1];
@@ -347,12 +352,8 @@ void syntaxCheck(astNode_t* node, int depth) {
                 printf("Error: JNE instruction must have 1 argument.\n");
             } else {
                 astNode_t* firstArg = node->children[0];
-                if(strcmp(firstArg->token.type, "VOID") == 0){
-                    printf("Error line %d: First argument of JN cannot be VOID.\n", firstArg->token.row);
-                } else if(strcmp(firstArg->token.type, "IMMEDIATE") == 0){
-                    printf("Error line %d: First argument of JNE cannot be an IMMEDIATE.\n", firstArg->token.row);
-                } else if(strcmp(firstArg->token.type, "REGISTER") == 0 || strcmp(firstArg->token.type, "ADDRESS_REGISTER") == 0){
-                    printf("Error line %d: First argument of JNE cannot be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
+                if (strcmp(firstArg->token.type, "LABEL") != 0) {
+                    printf("Error line %d: First argument of JNE must be a LABEL.\n", firstArg->token.row);
                 }
 
                 astNode_t* secondArg = node->children[1];
@@ -366,12 +367,8 @@ void syntaxCheck(astNode_t* node, int depth) {
                 printf("Error: JG instruction must have 1 argument.\n");
             } else {
                 astNode_t* firstArg = node->children[0];
-                if(strcmp(firstArg->token.type, "VOID") == 0){
-                    printf("Error line %d: First argument of JG cannot be VOID.\n", firstArg->token.row);
-                } else if(strcmp(firstArg->token.type, "IMMEDIATE") == 0){
-                    printf("Error line %d: First argument of JG cannot be an IMMEDIATE.\n", firstArg->token.row);
-                } else if(strcmp(firstArg->token.type, "REGISTER") == 0 || strcmp(firstArg->token.type, "ADDRESS_REGISTER") == 0){
-                    printf("Error line %d: First argument of JG cannot be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
+                if (strcmp(firstArg->token.type, "LABEL") != 0) {
+                    printf("Error line %d: First argument of JG must be a LABEL.\n", firstArg->token.row);
                 }
 
                 astNode_t* secondArg = node->children[1];
@@ -385,12 +382,8 @@ void syntaxCheck(astNode_t* node, int depth) {
                 printf("Error: JGE instruction must have 1 argument.\n");
             } else {
                 astNode_t* firstArg = node->children[0];
-                if(strcmp(firstArg->token.type, "VOID") == 0){
-                    printf("Error line %d: First argument of JGE cannot be VOID.\n", firstArg->token.row);
-                } else if(strcmp(firstArg->token.type, "IMMEDIATE") == 0){
-                    printf("Error line %d: First argument of JGE cannot be an IMMEDIATE.\n", firstArg->token.row);
-                } else if(strcmp(firstArg->token.type, "REGISTER") == 0 || strcmp(firstArg->token.type, "ADDRESS_REGISTER") == 0){
-                    printf("Error line %d: First argument of JGE cannot be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
+                if (strcmp(firstArg->token.type, "LABEL") != 0) {
+                    printf("Error line %d: First argument of JGE must be a LABEL.\n", firstArg->token.row);
                 }
 
                 astNode_t* secondArg = node->children[1];
@@ -404,12 +397,8 @@ void syntaxCheck(astNode_t* node, int depth) {
                 printf("Error: JL instruction must have 1 argument.\n");
             } else {
                 astNode_t* firstArg = node->children[0];
-                if(strcmp(firstArg->token.type, "VOID") == 0){
-                    printf("Error line %d: First argument of JL cannot be VOID.\n", firstArg->token.row);
-                } else if(strcmp(firstArg->token.type, "IMMEDIATE") == 0){
-                    printf("Error line %d: First argument of JL cannot be an IMMEDIATE.\n", firstArg->token.row);
-                } else if(strcmp(firstArg->token.type, "REGISTER") == 0 || strcmp(firstArg->token.type, "ADDRESS_REGISTER") == 0){
-                    printf("Error line %d: First argument of JL cannot be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
+                if (strcmp(firstArg->token.type, "LABEL") != 0) {
+                    printf("Error line %d: First argument of JL must be a LABEL.\n", firstArg->token.row);
                 }
 
                 astNode_t* secondArg = node->children[1];
@@ -423,12 +412,8 @@ void syntaxCheck(astNode_t* node, int depth) {
                 printf("Error: JLE instruction must have 1 argument.\n");
             } else {
                 astNode_t* firstArg = node->children[0];
-                if(strcmp(firstArg->token.type, "VOID") == 0){
-                    printf("Error line %d: First argument of JLE cannot be VOID.\n", firstArg->token.row);
-                } else if(strcmp(firstArg->token.type, "IMMEDIATE") == 0){
-                    printf("Error line %d: First argument of JLE cannot be an IMMEDIATE.\n", firstArg->token.row);
-                } else if(strcmp(firstArg->token.type, "REGISTER") == 0 || strcmp(firstArg->token.type, "ADDRESS_REGISTER") == 0){
-                    printf("Error line %d: First argument of JLE cannot be a REGISTER or ADDRESS_REGISTER.\n", firstArg->token.row);
+                if (strcmp(firstArg->token.type, "LABEL") != 0) {
+                    printf("Error line %d: First argument of JLE must be a LABEL.\n", firstArg->token.row);
                 }
 
                 astNode_t* secondArg = node->children[1];
