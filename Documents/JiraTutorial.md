@@ -115,6 +115,18 @@ In this tab, you can see the tasks by weeks, months or quarters.
 
 This tab gathers every management document made during the project.
 
-![Confluence](./Appendices/pages.png)
+![Pages](./Appendices/pages.png)
 
 When you have an arrow present in front of a document, it means that there are linked documents. By clicking on the title, you can open the document. You also have the possibility to leave comments at a specific line.
+
+If you want more options for the document, you can open it in Confluence by clicking on the "Open in Confluence" button.
+
+![To Confluence](./Appendices/confluence.png)
+
+To access the versioning of the document, you can click on the "..." button (1), and access all the versions in "Page history" (2).
+
+![Button](./Appendices/button.png)
+
+The control versioning of Jira shows you all the updates of the documents, and also provides you a way to compare different versions.
+
+![History](./Appendices/history.png)
