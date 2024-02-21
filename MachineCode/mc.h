@@ -71,6 +71,12 @@ char* determineOpcode(astNode_t *node) {
         } else if (strcmp(node->children[1]->token.type, "IMMEDIATE") == 0) {
             return "01010001"; // CMP REGISTER, IMMEDIATE
         }
+    } // END opcode
+    else if (strcmp(node->token.value, "END") == 0) {
+        return "1001100000000000"; // END
+    } // RET opcode
+    else if (strcmp(node->token.value, "RET") == 0) {
+        return "1001011100000000"; // RET
     }
     return NULL; // In case of an unrecognized instruction or operand type
 }
