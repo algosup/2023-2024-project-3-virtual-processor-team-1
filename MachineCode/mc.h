@@ -43,7 +43,13 @@ char* determineOpcode(astNode_t *node) {
         } else if (strcmp(node->children[1]->token.type, "IMMEDIATE") == 0) {
             return "01000001"; // DIV REGISTER, IMMEDIATE
         }
-    }
+    } else if(strcmp(node->token.value, "AND") == 0) {
+        if (strcmp(node->children[1]->token.type, "REGISTER") == 0) {
+            return "01110000"; // AND REGISTER, REGISTER
+        } else if (strcmp(node->children[1]->token.type, "IMMEDIATE") == 0) {
+            return "01110001"; // AND REGISTER, IMMEDIATE
+        }
+    } 
     return NULL; // In case of an unrecognized instruction or operand type
 }
 
