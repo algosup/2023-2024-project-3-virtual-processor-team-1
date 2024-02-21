@@ -3,6 +3,8 @@ Documents/.DS_Store
 .vscode/
 .DS_Store
 .idea/
+.vscode/
+
 # Prerequisites
 *.d
 
@@ -55,3 +57,5 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+testClean.asm2
+src/fileCleaner
