@@ -1,5 +1,6 @@
 # Ds store files
 Documents/.DS_Store
+.vscode/
 .DS_Store
 .idea/
 # Prerequisites
