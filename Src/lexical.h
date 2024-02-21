@@ -187,7 +187,7 @@ void handleString(char *source, char *destination){
     int length = strlen(source);
     if (length > 98){
         printf("Error: String too long\n");
-        strcpy(destination, "ERROR");
+        strcpy(destination, "ERREUR");
         return;
     }
     int j = 0;
