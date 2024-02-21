@@ -269,11 +269,14 @@ void syntaxCheck(astNode_t* node, int depth) {
             } else {
                 // Check the first argument
                 astNode_t *firstArg = node->children[0];
-                if (strcmp(firstArg->token.type, "VOID") == 0) {
-                    printf("Error line %d: First argument of CMP cannot be VOID.\n", firstArg->token.row);
-                } else if (strcmp(firstArg->token.type, "IMMEDIATE") == 0) {
-                    printf("Error line %d: First argument of CMP cannot be an IMMEDIATE.\n", firstArg->token.row);
-        } }
+                astNode_t *secondArg = node->children[1];
+                if (strcmp(firstArg->token.type, "REGISTER") == 1) {
+                    printf("Error line %d: First argument of CMP must be a REGISTER.\n", firstArg->token.row);
+                }
+                if (strcmp(secondArg->token.type, "REGISTER") == 1 && strcmp(secondArg->token.type, "IMMEDIATE") == 1) {
+                    printf("Error line %d: Second argument of CMP must be a REGISTER or IMMEDIATE.\n", secondArg->token.row);
+                }
+        } 
         } else if(strcmp(node->token.value, "JMP") == 0){
             if(node->numChildren >= 3 || node->numChildren == 0){
                 printf("Error: JMP instruction must have 1 argument.\n");
