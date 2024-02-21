@@ -61,6 +61,10 @@ char* determineOpcode(astNode_t *node) {
         } else if (strcmp(node->children[1]->token.type, "IMMEDIATE") == 0) {
             return "01110011"; // XOR REGISTER, IMMEDIATE
         }
+    } else if (strcmp(node->token.value, "DISP") == 0) {
+        if (strcmp(node->children[0]->token.type, "REGISTER") == 0) {
+            return "10000000"; // DISP REGISTER
+        }
     }
     return NULL; // In case of an unrecognized instruction or operand type
 }
@@ -89,23 +93,32 @@ void generateMachineCode(astNode_t *node) {
         memset(targetCode, '0', sizeof(targetCode) - 1); // Initialize with '0's for 32 bits, leaving last byte for null terminator
         targetCode[32] = '\0'; // Ensure null termination
 
-        // Convert first argument (register) to binary if present
-        if (node->numChildren > 0 && strcmp(node->children[0]->token.type, "REGISTER") == 0) {
-            int regNum = atoi(&node->children[0]->token.value[1]); // Convert "Rn" to integer
-            for (int i = 7; i >= 0; --i) {
-                regCode[i] = (regNum & 1) + '0';
-                regNum >>= 1;
-            }
-            regCode[8] = '\0'; // Ensure null termination
-        }
-
         // Determine the type of instruction and its arguments
         opcode = determineOpcode(node);
         int lastValue = determineLastValue(node);
 
-        intToLittleEndianBinary(lastValue, targetCode); // Convert last token to little endian format
+        if (strcmp(node->token.value, "DISP") == 0 && strcmp(node->children[0]->token.type, "IMMEDIATE") == 0) {
+            // For DISP IMMEDIATE, convert the immediate value to little endian binary directly
+            intToLittleEndianBinary(lastValue, targetCode);
+            printf("0b%s%s\n", opcode, targetCode); // Print opcode and targetCode for DISP IMMEDIATE
+        } else {
+            // For other instructions or DISP REGISTER, process normally
+            if (node->numChildren > 0 && strcmp(node->children[0]->token.type, "REGISTER") == 0) {
+                int regNum = atoi(&node->children[0]->token.value[1]); // Convert "Rn" to integer
+                for (int i = 7; i >= 0; --i) {
+                    regCode[i] = (regNum & 1) + '0';
+                    regNum >>= 1;
+                }
+                regCode[8] = '\0'; // Ensure null termination
+            }
 
-        printf("0b%s%s%s\n", opcode, regCode, targetCode);
+            if (!(strcmp(node->token.value, "DISP") == 0 && strcmp(node->children[0]->token.type, "REGISTER") == 0)) {
+                // Only convert the last value for non-DISP REGISTER instructions
+                intToLittleEndianBinary(lastValue, targetCode); // Convert last token to little endian format
+            }
+            
+            printf("0b%s%s%s\n", opcode, regCode, targetCode); // Print for instructions other than DISP IMMEDIATE
+        }
     }
 
     // Recursively process children nodes

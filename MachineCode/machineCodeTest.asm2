@@ -1,5 +1,3 @@
-MOV R1, #2
-MOV R2, #3
-XOR R1, R2
-MOV R1, #2
-XOR R1, #3
+MOV R1, #10
+SUB R1, #5
+DISP R1
