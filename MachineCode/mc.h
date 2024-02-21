@@ -31,6 +31,12 @@ char* determineOpcode(astNode_t *node) {
         } else if (strcmp(node->children[1]->token.type, "IMMEDIATE") == 0) {
             return "00100011"; // SUB REGISTER, IMMEDIATE
         }
+    } else if (strcmp(node->token.value, "MUL") == 0) {
+        if(strcmp(node->children[1]->token.type, "REGISTER") == 0) {
+            return "00110000"; // MUL REGISTER, REGISTER
+        } else if (strcmp(node->children[1]->token.type, "IMMEDIATE") == 0) {
+            return "00110001"; // MUL REGISTER, IMMEDIATE
+        }
     }
     return NULL; // In case of an unrecognized instruction or operand type
 }
