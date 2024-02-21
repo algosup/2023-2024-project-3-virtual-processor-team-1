@@ -10,4 +10,5 @@
 #include "lexical.h"
 #include "parser.h"
 #include "vm.h"
+#include "mc.h"
 #endif

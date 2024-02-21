@@ -1,5 +1,0 @@
-MOV R1, #10
-SUB R1, #5
-CMP R1, R2
-CMP R1, #4
-DISP R1
