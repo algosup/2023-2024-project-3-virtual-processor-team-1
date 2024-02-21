@@ -58,7 +58,7 @@ This step should take you less than 2 minutes to do.
 
 # 2 - Get the access
 
-Once your account is created, as the project manager of team 1, I will need the previously used email address to give the viewer access to the account linked.
+Once your account is created, as the project manager of team 1, I will need the previously used email address to give the viewer access to the account linked. You can email me the email address at: clementine.curel@algosup.com, or by slack.
 
 After, you should receive an email that informs you of the end of the process.
 
