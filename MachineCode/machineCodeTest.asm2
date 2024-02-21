@@ -1,3 +1,2 @@
 MOV R1, #2
-MOV R2, #3
-AND R1, R2
+OR R1, #3
