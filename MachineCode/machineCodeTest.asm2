@@ -1,5 +1,5 @@
-
-
+SUB R4, #102
+SUB R3, R1
 MOV R1, #601
 MOV R3, R2
 ADD R1, R2
