@@ -347,7 +347,7 @@ void getEnum(char cleanedLines[1000], token_t *token) {
 void tokenizationFunction(char cleanedLines[][3][1000], int numLines, token_t *tokens) {
     int tokenIndex = 0;
     for(int i = 0; i < numLines; i++){
-        // Vérifier si le premier token de la ligne est "VOID"
+        // Check if the line is empty
         if (strcmp(cleanedLines[i][0], "VOID") == 0) {
             continue;
         }
