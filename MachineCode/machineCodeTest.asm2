@@ -1,4 +1,5 @@
 
 
-MOV R4, #2535
-MOV R3, #5
+MOV R1, #601
+MOV R3, R2
+ADD R1, R2
