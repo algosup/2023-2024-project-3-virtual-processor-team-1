@@ -20,6 +20,7 @@ typedef struct {
 	byte dest;
 	i32 src;
 
+
 	// flags
 	i32 zero;
 	i32 ltz;
@@ -28,14 +29,12 @@ typedef struct {
 
 
 
-    i64 labelTable[]= {
-        0B01011010000100000000000000000000, // .main
+    i32 labelTable[]= {
 		0B10101011000100000000000000000000 // .loop
     };
 
     i64 addressTable[]={
-            1,
-			9
+			7
     };
 
 i64 arrayTableLenght = sizeof(labelTable) / sizeof(labelTable[0]); 

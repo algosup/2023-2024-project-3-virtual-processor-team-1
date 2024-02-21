@@ -38,11 +38,13 @@ typedef enum {
     INSTRUCTION_XOR2 = 0x73, // XOR register , immediate 
     INSTRUCTION_OR1 = 0x74, // OR register , register 
     INSTRUCTION_OR2 = 0x75, // OR register , immediate 
-    INSTRUCTION_NOT = 0x76, 
-    INSTRUCTION_GAD = 0x77,
     INSTRUCTION_DISP1 = 0x80, // DISP register
     INSTRUCTION_DISP2 = 0x81 // DISP immediate
 
 } Instruction;
 
 #endif // INSTRUCTIONS_H
+
+
+
+

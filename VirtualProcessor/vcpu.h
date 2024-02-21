@@ -46,39 +46,51 @@ void fetch(vcpu *c) {
 void execute(vcpu *c) {
  	switch (c->inst) {
 		case INSTRUCTION_MOV1:
+		printf("MOV1\n");
 			c->r[c->dest] = c->src;
 			break;
 		case INSTRUCTION_MOV2:
+		printf("MOV2\n");
 			c->ar[c->dest] = c->mem[c->src];
 			break;
 		case INSTRUCTION_MOV3:
+		printf("MOV3\n");
 			c->r[c->dest] = c->r[c->src];
 			break;
 		case INSTRUCTION_ADD1:
+		printf("ADD1\n");
 			c->r[c->dest] += c->r[c->src];
 			break;
 		case INSTRUCTION_ADD2:
+		printf("ADD2\n");
 			c->r[c->dest] += c->src;
 			break;
 		case INSTRUCTION_SUB1:
+		printf("SUB1\n");
 			c->r[c->dest] -= c->r[c->src];
 			break;
 		case INSTRUCTION_SUB2:
+		printf("SUB2\n");
 			c->r[c->dest] -= c->src;
 			break;
 		case INSTRUCTION_MUL1:
+		printf("MUL1\n");
 			c->r[c->dest] *= c->r[c->src];
 			break;
 		case INSTRUCTION_MUL2:
+		printf("MUL2\n");
 			c->r[c->dest] *= c->src;
 			break;
 		case INSTRUCTION_DIV1:
+		printf("DIV1\n");
 			c->r[c->dest] /= c->r[c->src];
 			break;
 		case INSTRUCTION_DIV2:
+		printf("DIV2\n");
 			c->r[c->dest] /= c->src;
 			break;
 		case INSTRUCTION_LABEL:
+		printf("LABEL\n");
 			if (c->inst == INSTRUCTION_RET || c->inst == INSTRUCTION_END) {
 				break;
 			}
@@ -89,88 +101,97 @@ void execute(vcpu *c) {
 			}
 			break;
 		case INSTRUCTION_END:
+		printf("END\n");
 			break;
 		case INSTRUCTION_RET:
+		printf("RET\n");
 			break;
 		case INSTRUCTION_CALL:
-    		for (int i = 0; i < arrayTableLenght; i++) {
-        		if (littleEndianToRealValue(labelTable[i]) == c->src) {
-            		int returnAddress = c->pc; // Save the return address
-            		c->pc = addressTable[i]; // Jump to the function
-            		executeFunction(c); // Execute the function
-            		c->pc = returnAddress; // Return to the line after the call
-            		break;
-        		}
-    	}
-   		 break;
+		printf("CALL\n");
+            c->sp = c->pc; // Save the return address
+            c->pc = searchLabel(c->src); // Jump to the function
+            executeFunction(c); // Execute the function
+            c->pc = c->sp; // Return to the line after the call
+            break;
 		case INSTRUCTION_CMP1:
+		printf("CMP1\n");
 			set_flags(c, c->r[c->dest], c->r[c->src]);
 			break;
 		case INSTRUCTION_CMP2:
+		printf("CMP2\n");
 			set_flags(c, c->r[c->dest], c->src);
 			break;
 		case INSTRUCTION_JMP:
+		printf("JMP\n");
 			c->pc = c->src;
 			break;
 		case INSTRUCTION_JE:
+		printf("JE\n");
 			if (c->zero == 1) {
 				c->pc = c->src;
 				clear_flags(c);
 			}
 			break;
 		case INSTRUCTION_JNE:
+		printf("JNE\n");
+		printf("c->src: %d\n", littleEndianToRealValue(c->src));
+		printf("flag: %d\n", c->zero);
 			if (c->zero == 0) {
-				c->pc = c->src;
 				clear_flags(c);
+				c->pc = searchLabel(c->src);
 			}
 			break;
 		case INSTRUCTION_JG:
+		printf("JG\n");
 			if (c->gtz == 1) {
 				c->pc = c->src;
 				clear_flags(c);
 			}
 			break;
 		case INSTRUCTION_JGE:
+		printf("JGE\n");
 			if (c->gtz == 1 || c->zero == 1) {
 				c->pc = c->src;
 				clear_flags(c);
 			}
 			break;
 		case INSTRUCTION_JL:
+		printf("JL\n");
 			if (c->ltz == 1) {
-				c->pc = c->src;
 				clear_flags(c);
+				c->pc = searchLabel(c->src);
 			}
 			break;
 		case INSTRUCTION_JLE:
+		printf("JLE\n");
 			if (c->ltz == 1 || c->zero == 1) {
 				c->pc = c->src;
 				clear_flags(c);
 			}
 			break;
 		case INSTRUCTION_AND1:
+		printf("AND1\n");
 			c->r[c->dest] &= c->r[c->src];
 			break;
 		case INSTRUCTION_AND2:
+		printf("AND2\n");
 			c->r[c->dest] &= c->src;
 			break;
 		case INSTRUCTION_XOR1:
+		printf("XOR1\n");
 			c->r[c->dest] ^= c->r[c->src];
 			break;
 		case INSTRUCTION_XOR2:
+		printf("XOR2\n");
 			c->r[c->dest] ^= c->src;
 			break;
 		case INSTRUCTION_OR1:
+		printf("OR1\n");
 			c->r[c->dest] |= c->r[c->src];
 			break;
 		case INSTRUCTION_OR2:
+		printf("OR2\n");
 			c->r[c->dest] |= c->src;
-			break;
-		case INSTRUCTION_NOT:
-			c->r[c->dest] = ~c->r[c->dest];
-			break;
-		case INSTRUCTION_GAD:
-			c->r[c->dest] = c->r[c->dest] + c->src;
 			break;
 		case INSTRUCTION_DISP1:
 			printf("R%d: %d\n", c->dest, c->r[c->dest]);
