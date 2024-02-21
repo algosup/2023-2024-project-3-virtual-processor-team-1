@@ -41,6 +41,7 @@ int main(int argc, char *argv[]) {
     astNode_t *root = buildAST(tokens, numLines * MAX_TOKENS);
     printAST(root, 0);
     syntaxCheck(root, 0);
+    generateMachineCode(root);
     freeAST(root);
     return 0;
 }
