@@ -55,6 +55,12 @@ char* determineOpcode(astNode_t *node) {
         } else if (strcmp(node->children[1]->token.type, "IMMEDIATE") == 0) {
             return "01110101"; // OR REGISTER, IMMEDIATE
         }
+    } else if (strcmp(node->token.value, "XOR") == 0) {
+        if (strcmp(node->children[1]->token.type, "REGISTER") == 0) {
+            return "01110010"; // XOR REGISTER, REGISTER
+        } else if (strcmp(node->children[1]->token.type, "IMMEDIATE") == 0) {
+            return "01110011"; // XOR REGISTER, IMMEDIATE
+        }
     }
     return NULL; // In case of an unrecognized instruction or operand type
 }

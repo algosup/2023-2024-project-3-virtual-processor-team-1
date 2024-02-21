@@ -1,2 +1,5 @@
 MOV R1, #2
-OR R1, #3
+MOV R2, #3
+XOR R1, R2
+MOV R1, #2
+XOR R1, #3
