@@ -11,4 +11,5 @@
 #include "parser.h"
 #include "vm.h"
 #include "mc.h"
+#include "vm.h"
 #endif
