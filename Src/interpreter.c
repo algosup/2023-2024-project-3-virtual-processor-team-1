@@ -36,14 +36,14 @@ int main(int argc, char *argv[]) {
 
     token_t tokens[MAX_LINES * MAX_TOKENS];
     tokenizationFunction(cleanedLines, numLines, tokens);
-    // printTokenization(tokens, numLines * MAX_TOKENS);
+    printTokenization(tokens, numLines * MAX_TOKENS);
 
     // printf("\n");
     // Build the AST
     astNode_t *root = buildAST(tokens, numLines * MAX_TOKENS);
-    printAST(root, 0);
+    // printAST(root, 0);
     syntaxCheck(root, 0);
-    generateMachineCode(root);
+    // generateMachineCode(root);
     freeAST(root);
     return 0;
 }
