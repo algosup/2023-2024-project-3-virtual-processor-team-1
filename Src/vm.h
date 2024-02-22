@@ -86,6 +86,7 @@ i32 littleEndianToRealValue(i32 value);
 i64 searchLabel(i32 label);
 void clear_flags(vcpu *c);
 void set_flags(vcpu *c, i32 a, i32 b);
+int searchingForTheFirstJumpCallofAFunction(vcpu *c, i32 label);
 
 
 vcpu *new_vcpu(i64 *memory, i64 mem_size) {
@@ -109,6 +110,7 @@ void run_vcpu(vcpu *c) {
 		execute(c);
 	}
 }
+
 
 void fetch(vcpu *c) {
 	c->pc++;
@@ -202,13 +204,16 @@ void execute(vcpu *c) {
 			break;
 		case INSTRUCTION_JMP:
 		printf("JMP\n");
-			c->pc = c->src;
+			c->pc = searchLabel(c->src);
 			break;
 		case INSTRUCTION_JE:
 		printf("JE\n");
 			if (c->zero == 0) {
 				c->pc = c->src;
 				clear_flags(c);
+			}
+			else {
+				c->pc = searchingForTheFirstJumpCallofAFunction(c, c->src);
 			}
 			break;
 		case INSTRUCTION_JNE:
@@ -217,12 +222,18 @@ void execute(vcpu *c) {
 				c->pc = searchLabel(c->src);
 				clear_flags(c);
 			}
+			else {
+				c->pc = searchingForTheFirstJumpCallofAFunction(c, c->src);
+			}
 			break;
 		case INSTRUCTION_JG:
 		printf("JG\n");
 			if (c->gtz == 0) {
 				c->pc = c->src;
 				clear_flags(c);
+			}
+			else {
+				c->pc = searchingForTheFirstJumpCallofAFunction(c, c->src);
 			}
 			break;
 		case INSTRUCTION_JGE:
@@ -231,14 +242,18 @@ void execute(vcpu *c) {
 				c->pc = c->src;
 				clear_flags(c);
 			}
+			else {
+				c->pc = searchingForTheFirstJumpCallofAFunction(c, c->src);
+			}
 			break;
 		case INSTRUCTION_JL:
 		printf("JL\n");
-		printf("c->ltz: %d\n", c->ltz);
 			if (c->ltz == 0) {
-				printf("c->src: %d\n", c->src);
 				c->pc = searchLabel(c->src);
 				clear_flags(c);
+			}
+			else {
+				c->pc = searchingForTheFirstJumpCallofAFunction(c, c->src);
 			}
 			break;
 		case INSTRUCTION_JLE:
@@ -246,6 +261,9 @@ void execute(vcpu *c) {
 			if (c->ltz == 0 || c->zero == 0) {
 				c->pc = c->src;
 				clear_flags(c);
+			}
+			else {
+				c->pc = searchingForTheFirstJumpCallofAFunction(c, c->src);
 			}
 			break;
 		case INSTRUCTION_AND1:
@@ -302,6 +320,7 @@ i32 littleEndianToRealValue(i32 value){
     result |= (value & 0xFF000000) >> 24;
     return result;
 }
+
 i64 searchLabel(i32 label){
 	for(i64 i = 0; i < arrayTableLenght; i++){
 		i64 temp = littleEndianToRealValue(labelTable[i]);
@@ -321,6 +340,39 @@ void clear_flags(vcpu *c) {
 void set_flags(vcpu *c, i32 a, i32 b) {
 	i32 res = a - b;
 	c->zero = (res == 0);
-	c->ltz = (res < 0);
-	c->gtz = (res > 0);
+	c->ltz = (res <= 0);
+	c->gtz = (res >= 0);
+}
+
+
+int searchingForTheFirstJumpCallofAFunction(vcpu *c, i32 label) {
+	c -> pc = 0;
+	while (c->pc < c->max_mem) {
+		fetch(c);
+		if (c->inst == INSTRUCTION_JMP && c->src == label) {
+			return c->pc;
+		}
+		else if (c->inst == INSTRUCTION_JE && c->src == label) {
+			return c->pc;
+		}
+		else if (c->inst == INSTRUCTION_JG && c->src == label) {
+			return c->pc;
+		}
+		else if (c->inst == INSTRUCTION_JGE && c->src == label) {
+			return c->pc;
+		}
+		else if (c->inst == INSTRUCTION_JL && c->src == label) {
+			return c->pc;
+		}
+		else if (c->inst == INSTRUCTION_JLE && c->src == label) {
+			return c->pc;
+		}
+		else if (c->inst == INSTRUCTION_JNE && c->src == label) {
+			return c->pc;
+		}
+		else if (c->inst == INSTRUCTION_CALL && c->src == label) {
+			return c->pc;
+		}
+	}
+	return -1;
 }
