@@ -176,7 +176,7 @@ void splitLine(char *lengthLine, char cleanedLines[][3][1000], int *numLines) {
         printf("Error: Unterminated quoted string\n");
         strcpy(cleanedLines[*numLines][2], "ERROR");
     }
-    if (numTokens == 0) { // Aucun token n'a été trouvé pour cette ligne
+    if (numTokens == 0) { // No tokens on the line
         strcpy(cleanedLines[*numLines][0], "LINE_EMPTY");
     }
     // Increment numLines even if there's only one token
