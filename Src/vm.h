@@ -74,18 +74,10 @@ typedef struct {
 } vcpu;
 
 
-i32 labelTable[]= {
-		0B10101011000100000000000000000000 // .loop
-    };
-
-i64 addressTable[]={
-			9
-    };
-
+i32 labelTable[100];
+i32 addressTable[100];
+i64 program[1000];
 i64 arrayTableLenght = sizeof(labelTable) / sizeof(labelTable[0]); 
-
-
-
 
 void execute(vcpu *c);
 void fetch(vcpu *c);
