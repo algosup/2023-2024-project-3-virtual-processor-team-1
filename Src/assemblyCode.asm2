@@ -1,22 +1,7 @@
 .main
-MOV R1, #5
-MOV R2, #5
-CMP R1, -2
-CMP -2, #2
-CMP "str", #2
-CMP R1, "str"
-CMP "str", "str"
+MOV R1, R2
 END
 
-.jump
-JMP A1
-JMP R1
-JMP "str"
-JE "str"
-JNE "str"
-JL "str"
-JLE "str"
-JE "str"
-JGE "str"
-JMP #1
-END
+JMP .main
+JE .main
+JNE .main
