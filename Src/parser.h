@@ -33,6 +33,7 @@ astNode_t *buildAST(token_t *tokens, int numTokens) {
     int numArgs = 0;
     int lastInstructionRow = -1;
     int endArgsCount = 0;
+    bool labelInCall = false; // Flag to check if a label is inside a CALL instruction
 
     for (int i = 0; i < numTokens; i++) {
         astNode_t *currentNode = createNode(tokens[i]);
@@ -77,6 +78,7 @@ astNode_t *buildAST(token_t *tokens, int numTokens) {
                 currentParent = currentNode;
             } else {
                 addChild(currentParent, currentNode);
+                labelInCall = true;
             }
         } else {
             addChild(currentParent, currentNode);
@@ -95,6 +97,11 @@ astNode_t *buildAST(token_t *tokens, int numTokens) {
                         inLabel = false; // Reset label state as we've completed the label section
                     }
                 }
+            }
+            // If the current token is the second argument of a CALL instruction, then revert to the parent of the CALL node
+            if (labelInCall) {
+                currentParent = parentStack[stackTop--];
+                labelInCall = false;
             }
         }
 
