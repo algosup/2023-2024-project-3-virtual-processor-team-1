@@ -14,6 +14,13 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    // Check if the file is in the correct format (ends with .asm2)
+    char *fileExtension = strrchr(argv[1], '.');
+    if (fileExtension == NULL || strcmp(fileExtension, ".asm2") != 0) {
+        printf("Error: File must have a .asm2 extension\n");
+        return 1;
+    }
+
     char lenghtLine[1000];
     char cleanedLines[100][3][1000];
     int numLines = 0;
