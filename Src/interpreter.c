@@ -18,6 +18,8 @@ int main(int argc, char *argv[]) {
     char cleanedLines[100][3][1000];
     int numLines = 0;
 
+    
+
     // Read the file line by line, clean each line, and tokenize each line
     int i = 0;
     while (fgets(lenghtLine, sizeof(lenghtLine), file)) {
