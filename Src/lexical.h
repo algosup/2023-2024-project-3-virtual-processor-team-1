@@ -1,4 +1,3 @@
-
 typedef enum instruction
 {
     ADD, 
@@ -126,15 +125,6 @@ void removeTrailingComma(char *token) {
 }
 
 void splitLine(char *lengthLine, char cleanedLines[][3][1000], int *numLines) {
-
-    /*
-    Tokenizes a line. This function is called after the line has been
-    cleaned of comments and empty lines.
-
-    Each line is tokenized into three tokens. If there are less than
-    three tokens, the remaining tokens are set to empty strings.
-    */
-
     int inQuotedString = 0;
     int numTokens = 0;
     char token[1000] = "";
@@ -163,6 +153,11 @@ void splitLine(char *lengthLine, char cleanedLines[][3][1000], int *numLines) {
             strcpy(cleanedLines[*numLines][numTokens], token);
             memset(token, 0, sizeof(token));
             numTokens++;
+            // Reset numTokens if it exceeds 3
+            if (numTokens >= 4) {
+                printf("Error: Too many tokens in line %d\n", *numLines + 1);
+                return;
+            }
         } else {
             strncat(token, &lengthLine[i], 1);
         }
@@ -173,7 +168,7 @@ void splitLine(char *lengthLine, char cleanedLines[][3][1000], int *numLines) {
 
     if (inQuotedString) {
         // Reset tokens if the line ends with an open quote
-        printf("Error: Unterminated quoted string\n");
+        printf("Error: Unterminated quoted string in line %d\n", *numLines + 1);
         strcpy(cleanedLines[*numLines][2], "ERROR");
     }
     if (numTokens == 0) { // No tokens on the line
