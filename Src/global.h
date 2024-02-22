@@ -9,7 +9,6 @@
 #include <stdbool.h>
 #include "lexical.h"
 #include "parser.h"
-#include "vm.h"
 #include "mc.h"
 #include "vm.h"
 #endif
