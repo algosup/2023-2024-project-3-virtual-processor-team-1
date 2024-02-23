@@ -1,5 +1,11 @@
 #include "global.h"
 
+int error = 0; // Define error variable
+
+void incrementError() {
+    error++; // Increment error count
+}
+
 int main(int argc, char *argv[]) {
 
     // Check if a file name was passed as an argument to the program
@@ -41,10 +47,22 @@ int main(int argc, char *argv[]) {
     // printTokenization(tokens, numLines * MAX_TOKENS);
 
     // printf("\n");
+
     // Build the AST
     astNode_t *root = buildAST(tokens, numLines * MAX_TOKENS);
     // printAST(root, 0);
+
     syntaxCheck(root, 0);
+
+    // If there is some errors, stop the access.
+    if (error != 0) {
+        if (error == 1) {
+            printf("1 error generated\n");
+        } else {
+            printf("%d errors generated\n", error);
+        }
+        return EXIT_FAILURE;
+    }
 
     int codeLength = 0; 
 
@@ -58,7 +76,7 @@ int main(int argc, char *argv[]) {
         printf("test line %d\n", i+1);
         printf("%s\n", programInBinary[i]);
     }
-    
+
     freeAST(root);
     return 0;
 }

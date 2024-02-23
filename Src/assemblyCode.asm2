@@ -1,4 +1,7 @@
-MOV R1, #1
-MOV R2, #2
-ADD R1, R2
-DISP R2
+.main
+MOV R1
+END
+
+JMP
+JE .main
+JNE .main
