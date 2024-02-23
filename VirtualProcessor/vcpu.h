@@ -1,91 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#define byte unsigned char 
-#define i32 int
-#define i64 unsigned long long
-#define DEFAULT 255
-
-typedef enum {
-    INSTRUCTION_NOP = 0x00, // No operation
-    INSTRUCTION_MOV1 = 0x10, // MOV register, immediate 
-    INSTRUCTION_MOV2 = 0x11, // MOV adress register, adress
-    INSTRUCTION_MOV3 = 0x12, // MOV register, register 
-
-    INSTRUCTION_ADD1 = 0x20, // Add register , register 
-    INSTRUCTION_ADD2 = 0x22, // Add register , immediate 
-    INSTRUCTION_SUB1 = 0x21, // Sub register, register
-    INSTRUCTION_SUB2 = 0x23, // Sub register , immediate
-    INSTRUCTION_MUL1 = 0x30, // Mul register, register
-    INSTRUCTION_MUL2 = 0x31, // Mul register , immediate 
-    INSTRUCTION_DIV1 = 0x40, // Div register, register 
-    INSTRUCTION_DIV2 = 0x41, // Div register , immediate 
-
-    INSTRUCTION_LABEL = 0X99,
-    INSTRUCTION_END = 0x98,
-    INSTRUCTION_RET = 0x97,
-    INSTRUCTION_CALL = 0x96,
-
-    INSTRUCTION_CMP1 = 0x50, // CMP register , register
-    INSTRUCTION_CMP2 = 0x51, // CMP register, immediate
-
-    INSTRUCTION_JMP = 0x60,
-    INSTRUCTION_JE = 0x61,
-    INSTRUCTION_JNE= 0x62,
-    INSTRUCTION_JG = 0x63,
-    INSTRUCTION_JGE = 0x64,
-    INSTRUCTION_JL = 0x65,
-    INSTRUCTION_JLE = 0x66,
-
-    INSTRUCTION_AND1 = 0x70, // AND register , register 
-    INSTRUCTION_AND2 = 0x71, // AND register , immediate
-    INSTRUCTION_XOR1 = 0x72, // XOR register , register 
-    INSTRUCTION_XOR2 = 0x73, // XOR register , immediate 
-    INSTRUCTION_OR1 = 0x74, // OR register , register 
-    INSTRUCTION_OR2 = 0x75, // OR register , immediate 
-    INSTRUCTION_DISP1 = 0x80, // DISP register
-    INSTRUCTION_DISP2 = 0x81 // DISP immediate
-
-} Instruction;
-
-
-typedef struct {
-	i64 *mem;
-	i64 max_mem;
-
-	i32 stack[100];
-
-	// registers
-	i32 pc;
-	i32 sp;
-	i32 r[4];
-	i32 ar[4];
-
-	// instruction parts
-	byte inst;
-	byte dest;
-	i32 src;
-
-
-	// flags
-	i32 zero;
-	i32 ltz;
-	i32 gtz;
-} vcpu;
-
-
-i32 labelTable[100];
-i32 addressTable[100];
-i64 program[1000];
-i64 arrayTableLenght = sizeof(labelTable) / sizeof(labelTable[0]); 
+#include "format.h"
+#include "instruction.h"
+#include "flag.h"
 
 void execute(vcpu *c);
 void fetch(vcpu *c);
 void executeFunction(vcpu *c);
-i32 littleEndianToRealValue(i32 value);
-i64 searchLabel(i32 label);
-void clear_flags(vcpu *c);
-void set_flags(vcpu *c, i32 a, i32 b);
 
 
 vcpu *new_vcpu(i64 *memory, i64 mem_size) {
@@ -292,35 +213,4 @@ void executeFunction(vcpu *c) {
 		fetch(c);
 		execute(c);
 	}
-}
-
-i32 littleEndianToRealValue(i32 value){
-    i32 result = 0;
-    result |= (value & 0x000000FF) << 24;
-    result |= (value & 0x0000FF00) << 8;
-    result |= (value & 0x00FF0000) >> 8;
-    result |= (value & 0xFF000000) >> 24;
-    return result;
-}
-i64 searchLabel(i32 label){
-	for(i64 i = 0; i < arrayTableLenght; i++){
-		i64 temp = littleEndianToRealValue(labelTable[i]);
-		if(temp == label){
-			return addressTable[i];
-		}
-	}
-	return -1;
-}
-
-void clear_flags(vcpu *c) {
-	c->zero = 0;
-	c->ltz = 0;
-	c->gtz = 0;
-}
-
-void set_flags(vcpu *c, i32 a, i32 b) {
-	i32 res = a - b;
-	c->zero = (res == 0);
-	c->ltz = (res < 0);
-	c->gtz = (res > 0);
 }
