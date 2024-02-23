@@ -156,6 +156,7 @@ void splitLine(char *lengthLine, char cleanedLines[][3][1000], int *numLines) {
             // Reset numTokens if it exceeds 3
             if (numTokens >= 4) {
                 printf("Error: Too many tokens in line %d\n", *numLines + 1);
+                incrementError();
                 return;
             }
         } else {
@@ -170,6 +171,7 @@ void splitLine(char *lengthLine, char cleanedLines[][3][1000], int *numLines) {
         // Reset tokens if the line ends with an open quote
         printf("Error: Unterminated quoted string in line %d\n", *numLines + 1);
         strcpy(cleanedLines[*numLines][2], "ERROR");
+        incrementError();
     }
     if (numTokens == 0) { // No tokens on the line
         strcpy(cleanedLines[*numLines][0], "LINE_EMPTY");
@@ -183,6 +185,7 @@ void handleString(char *source, char *destination){
     if (length > 98){
         printf("Error: String too long\n");
         strcpy(destination, "ERREUR");
+        incrementError();
         return;
     }
     int j = 0;
@@ -212,6 +215,7 @@ void handleString(char *source, char *destination){
             default:
                 printf("Error: Invalid escape sequence\n");
                 strcpy(destination, "ERREUR");
+                incrementError();
                 return;
             }
         } else {
