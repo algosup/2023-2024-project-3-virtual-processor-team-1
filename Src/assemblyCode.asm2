@@ -1,7 +1,4 @@
-.main
-MOV R1, R2
-END
-
-JMP .main
-JE .main
-JNE .main
+MOV R1, #4949
+MOV R2, #4948
+SUB R1, R2
+DISP R1

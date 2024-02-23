@@ -79,10 +79,14 @@ int main(int argc, char *argv[]) {
         programInInt[i] = strtoull(&programInBinary[i][2], NULL, 2);
     }
 
-    // Print the converted binary code as unsigned long long integers
-    for (int i = 0; i < numLines; i++) {
-        printf("%llu\n", programInInt[i]);
-    }
+    // // Print the converted binary code as unsigned long long integers
+    // for (int i = 0; i < numLines; i++) {
+    //     printf("%llu\n", programInInt[i]);
+    // }
+
+    vcpu *c = new_vcpu(programInInt, numLines);
+    run_vcpu(c);
+    free_vcpu(c);
 
     freeAST(root);
     return 0;
