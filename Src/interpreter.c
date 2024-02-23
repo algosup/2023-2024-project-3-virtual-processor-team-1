@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
 
     // Build the AST
     astNode_t *root = buildAST(tokens, numLines * MAX_TOKENS);
-    // printAST(root, 0);
+    //printAST(root, 0);
 
     syntaxCheck(root, 0);
 
@@ -71,9 +71,17 @@ int main(int argc, char *argv[]) {
 
     generateMachineCode(root, programInBinary, &codeLength);
 
-    // Print the binary code
+    unsigned long long programInInt[numLines];
+
+    // Convert each binary string to an unsigned long long and store it
     for (int i = 0; i < numLines; i++) {
-        printf("%s", programInBinary[i]);
+        // Assuming binary strings are formatted as "0bXXXX", skip the first 2 characters ("0b")
+        programInInt[i] = strtoull(&programInBinary[i][2], NULL, 2);
+    }
+
+    // Print the converted binary code as unsigned long long integers
+    for (int i = 0; i < numLines; i++) {
+        printf("%llu\n", programInInt[i]);
     }
 
     freeAST(root);

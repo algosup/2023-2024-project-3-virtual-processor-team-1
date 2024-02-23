@@ -122,7 +122,6 @@ int determineLastValue(astNode_t *node) {
 }
 
 void generateMachineCode(astNode_t *node, char program[MAX_LINES][MAX_PROGRAM_LENGTH], int *index) {
-    if (node == NULL) return;
     
     if (strcmp(node->token.type, "INSTRUCTION") == 0 && (strcmp(node->token.value, "JMP") == 0 
     || strcmp(node->token.value, "JE") == 0
@@ -212,12 +211,5 @@ void generateMachineCode(astNode_t *node, char program[MAX_LINES][MAX_PROGRAM_LE
     // Recursively process children nodes
     for (int i = 0; i < node->numChildren; i++) {
         generateMachineCode(node->children[i], program, index); 
-    }
-
-    // If this is the last line, fill it with zeros
-    if (*index == MAX_LINES - 1) {
-        memset(program[*index], '0', MAX_PROGRAM_LENGTH - 1);
-        program[*index][MAX_PROGRAM_LENGTH - 1] = '\0'; // Ensure null termination
-        (*index)++; // Move to the next line
     }
 }
