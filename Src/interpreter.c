@@ -20,6 +20,13 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    // Check if the file is in the correct format (ends with .asm2)
+    char *fileExtension = strrchr(argv[1], '.');
+    if (fileExtension == NULL || strcmp(fileExtension, ".asm2") != 0) {
+        printf("Error: File must have a .asm2 extension\n");
+        return 1;
+    }
+
     char lenghtLine[1000];
     char cleanedLines[100][3][1000];
     int numLines = 0;
@@ -34,11 +41,6 @@ int main(int argc, char *argv[]) {
     }
 
     fclose(file);
-
-    // Print out the cleaned lines
-    // for (int i = 0; i < numLines; i++) {
-    //     printf("%s \t %s \t %s \n", cleanedLines[i][0], cleanedLines[i][1], cleanedLines[i][2]);
-    // }
 
     token_t tokens[MAX_LINES * MAX_TOKENS];
     tokenizationFunction(cleanedLines, numLines, tokens);
@@ -62,7 +64,18 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    generateMachineCode(root);
+    int codeLength = 0; 
+
+    // Define programInBinary as a 2D array of characters
+    char programInBinary[numLines][MAX_PROGRAM_LENGTH];
+
+    generateMachineCode(root, programInBinary, &codeLength);
+
+    // Print the binary code
+    for (int i = 0; i < numLines; i++) {
+        printf("%s", programInBinary[i]);
+    }
+
     freeAST(root);
     return 0;
 }
