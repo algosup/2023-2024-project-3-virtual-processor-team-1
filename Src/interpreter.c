@@ -73,8 +73,7 @@ int main(int argc, char *argv[]) {
 
     // Print the binary code
     for (int i = 0; i < numLines; i++) {
-        printf("test line %d\n", i+1);
-        printf("%s\n", programInBinary[i]);
+        printf("%s", programInBinary[i]);
     }
 
     freeAST(root);

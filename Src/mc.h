@@ -152,13 +152,15 @@ void generateMachineCode(astNode_t *node, char program[MAX_LINES][MAX_PROGRAM_LE
             sprintf(program[*index], "0B0110011000000000%s\n", targetCode); // Store opcode and targetCode for JLE .label
         }
 
+        (*index)++; // Update the index after storing the instruction
         jmpLabelProcessed = 1; // Mark that we've processed a label as part of a JMP instruction
     } else if (strcmp(node->token.type, "LABEL") == 0 && !jmpLabelProcessed) {
-        // Handle label if it hasn't been processed as part of a JMP
         char targetCode[33];
         memset(targetCode, 0, sizeof(targetCode));
         labelToMachineCode(node->token.value, targetCode);
         sprintf(program[*index], "0B1001100100000000%s\n", targetCode); // Store the machine code for the label
+
+        (*index)++; // Update the index after storing the label
     } else if (strcmp(node->token.type, "INSTRUCTION") == 0) {
         char *opcode = NULL; // Will be set according to the instruction type
         char regCode[9], targetCode[33]; // For register and target (register or immediate) in binary
@@ -171,7 +173,6 @@ void generateMachineCode(astNode_t *node, char program[MAX_LINES][MAX_PROGRAM_LE
         int lastValue = determineLastValue(node);
 
         if (strcmp(node->token.value, "JMP") == 0 && node->numChildren > 0) {
-            // Special handling for JMP instruction
             char targetCode[33];
             memset(targetCode, '0', sizeof(targetCode) - 1);
             targetCode[32] = '\0'; // Ensure null termination
@@ -201,6 +202,8 @@ void generateMachineCode(astNode_t *node, char program[MAX_LINES][MAX_PROGRAM_LE
             
             sprintf(program[*index], "0B%s%s%s\n", opcode, regCode, targetCode); // Store for instructions other than DISP IMMEDIATE
         }
+
+        (*index)++; // Update the index after storing the instruction
     } else {
         // Reset the flag if the current node is not a JMP-targeted label
         jmpLabelProcessed = 0;
@@ -209,5 +212,12 @@ void generateMachineCode(astNode_t *node, char program[MAX_LINES][MAX_PROGRAM_LE
     // Recursively process children nodes
     for (int i = 0; i < node->numChildren; i++) {
         generateMachineCode(node->children[i], program, index); 
+    }
+
+    // If this is the last line, fill it with zeros
+    if (*index == MAX_LINES - 1) {
+        memset(program[*index], '0', MAX_PROGRAM_LENGTH - 1);
+        program[*index][MAX_PROGRAM_LENGTH - 1] = '\0'; // Ensure null termination
+        (*index)++; // Move to the next line
     }
 }
