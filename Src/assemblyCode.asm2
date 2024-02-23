@@ -1,7 +1,7 @@
 .main
-MOV R1, R2
+MOV R1
 END
 
-JMP .main
+JMP
 JE .main
 JNE .main
