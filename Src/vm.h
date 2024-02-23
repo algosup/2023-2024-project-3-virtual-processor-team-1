@@ -125,7 +125,7 @@ void fetch(vcpu *c) {
 }
 
 void execute(vcpu *c) {
- 	switch (c->inst) {
+	switch (c->inst) {
 		case INSTRUCTION_MOV1:
 		printf("MOV1\n");
 			c->r[c->dest] = c->src;
@@ -298,9 +298,11 @@ void execute(vcpu *c) {
 			break;
 		case INSTRUCTION_NOP:
 			break;
-		 
- 	}
- }
+		default:
+			printf("Unknown instruction: %d\n", c->inst);
+			break;
+	}
+}
 
 void executeFunction(vcpu *c) {
 	if (c->inst == INSTRUCTION_RET || c->inst == INSTRUCTION_END) {

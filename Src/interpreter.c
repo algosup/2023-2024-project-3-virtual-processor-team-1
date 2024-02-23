@@ -36,11 +36,6 @@ int main(int argc, char *argv[]) {
 
     fclose(file);
 
-    // Print out the cleaned lines
-    // for (int i = 0; i < numLines; i++) {
-    //     printf("%s \t %s \t %s \n", cleanedLines[i][0], cleanedLines[i][1], cleanedLines[i][2]);
-    // }
-
     token_t tokens[MAX_LINES * MAX_TOKENS];
     tokenizationFunction(cleanedLines, numLines, tokens);
     // printTokenization(tokens, numLines * MAX_TOKENS);
@@ -50,7 +45,20 @@ int main(int argc, char *argv[]) {
     astNode_t *root = buildAST(tokens, numLines * MAX_TOKENS);
     // printAST(root, 0);
     syntaxCheck(root, 0);
-    generateMachineCode(root);
+
+    int codeLength = 0; 
+
+    // Define programInBinary as a 2D array of characters
+    char programInBinary[numLines][MAX_PROGRAM_LENGTH];
+
+    generateMachineCode(root, programInBinary, &codeLength);
+
+    // Print the binary code
+    for (int i = 0; i < numLines; i++) {
+        printf("test line %d\n", i+1);
+        printf("%s\n", programInBinary[i]);
+    }
+    
     freeAST(root);
     return 0;
 }

@@ -121,9 +121,8 @@ int determineLastValue(astNode_t *node) {
     return 0; // In case of an unrecognized operand type
 }
 
-void generateMachineCode(astNode_t *node) {
+void generateMachineCode(astNode_t *node, char program[MAX_LINES][MAX_PROGRAM_LENGTH], int *index) {
     if (node == NULL) return;
-        if (node == NULL) return;
     
     if (strcmp(node->token.type, "INSTRUCTION") == 0 && (strcmp(node->token.value, "JMP") == 0 
     || strcmp(node->token.value, "JE") == 0
@@ -138,19 +137,19 @@ void generateMachineCode(astNode_t *node) {
 
         labelToMachineCode(node->children[0]->token.value, targetCode);
         if(strcmp(node->token.value, "JMP") == 0){
-            printf("0b0110000000000000%s\n", targetCode); // Print opcode and targetCode for JMP .label
+            sprintf(program[*index], "0B0110000000000000%s\n", targetCode);
         } else if (strcmp(node->token.value, "JE") == 0) {
-            printf("0b0110000100000000%s\n", targetCode); // Print opcode and targetCode for JE .label
+            sprintf(program[*index], "0B0110000100000000%s\n", targetCode);
         } else if(strcmp(node->token.value, "JNE") == 0) {
-            printf("0b0110001000000000%s\n", targetCode); // Print opcode and targetCode for JNE .label
+            sprintf(program[*index], "0B0110001000000000%s\n", targetCode); // Store opcode and targetCode for JNE .label
         } else if(strcmp(node->token.value, "JG") == 0) {
-            printf("0b0110001100000000%s\n", targetCode); // Print opcode and targetCode for JG .label
+            sprintf(program[*index], "0B0110001100000000%s\n", targetCode); // Store opcode and targetCode for JG .label
         } else if(strcmp(node->token.value, "JGE") == 0) {
-            printf("0b0110010000000000%s\n", targetCode); // Print opcode and targetCode for JGE .label
+            sprintf(program[*index], "0B0110010000000000%s\n", targetCode); // Store opcode and targetCode for JGE .label
         } else if(strcmp(node->token.value, "JL") == 0) {
-            printf("0b0110010100000000%s\n", targetCode); // Print opcode and targetCode for JL .label
+            sprintf(program[*index], "0B0110010100000000%s\n", targetCode); // Store opcode and targetCode for JL .label
         } else if(strcmp(node->token.value, "JLE") == 0) {
-            printf("0b0110011000000000%s\n", targetCode); // Print opcode and targetCode for JLE .label
+            sprintf(program[*index], "0B0110011000000000%s\n", targetCode); // Store opcode and targetCode for JLE .label
         }
 
         jmpLabelProcessed = 1; // Mark that we've processed a label as part of a JMP instruction
@@ -159,7 +158,7 @@ void generateMachineCode(astNode_t *node) {
         char targetCode[33];
         memset(targetCode, 0, sizeof(targetCode));
         labelToMachineCode(node->token.value, targetCode);
-        printf("0b1001100100000000%s\n", targetCode); // Print the machine code for the label
+        sprintf(program[*index], "0B1001100100000000%s\n", targetCode); // Store the machine code for the label
     } else if (strcmp(node->token.type, "INSTRUCTION") == 0) {
         char *opcode = NULL; // Will be set according to the instruction type
         char regCode[9], targetCode[33]; // For register and target (register or immediate) in binary
@@ -179,11 +178,11 @@ void generateMachineCode(astNode_t *node) {
 
             // Assume the label is in the first child of JMP instruction node
             labelToMachineCode(node->children[0]->token.value, targetCode);
-            printf("0b%s%s\n", opcode, targetCode); // Print opcode and targetCode for JMP .label
+            sprintf(program[*index], "0B%s%s\n", opcode, targetCode); // Store opcode and targetCode for JMP .label
         } else if (strcmp(node->token.value, "DISP") == 0 && strcmp(node->children[0]->token.type, "IMMEDIATE") == 0) {
             // For DISP IMMEDIATE, convert the immediate value to little endian binary directly
             intToLittleEndianBinary(lastValue, targetCode);
-            printf("0b%s%s\n", opcode, targetCode); // Print opcode and targetCode for DISP IMMEDIATE
+            sprintf(program[*index], "0B%s%s\n", opcode, targetCode); // Store opcode and targetCode for DISP IMMEDIATE
         } else {
             // For other instructions or DISP REGISTER, process normally
             if (node->numChildren > 0 && strcmp(node->children[0]->token.type, "REGISTER") == 0) {
@@ -200,7 +199,7 @@ void generateMachineCode(astNode_t *node) {
                 intToLittleEndianBinary(lastValue, targetCode); // Convert last token to little endian format
             }
             
-            printf("0b%s%s%s\n", opcode, regCode, targetCode); // Print for instructions other than DISP IMMEDIATE
+            sprintf(program[*index], "0B%s%s%s\n", opcode, regCode, targetCode); // Store for instructions other than DISP IMMEDIATE
         }
     } else {
         // Reset the flag if the current node is not a JMP-targeted label
@@ -209,6 +208,6 @@ void generateMachineCode(astNode_t *node) {
 
     // Recursively process children nodes
     for (int i = 0; i < node->numChildren; i++) {
-        generateMachineCode(node->children[i]);
+        generateMachineCode(node->children[i], program, index); 
     }
 }
