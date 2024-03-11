@@ -19,6 +19,8 @@ C standard libraries.
 
 [Test plan](https://github.com/algosup/2023-2024-project-3-virtual-processor-team-1/blob/main/Documents/TestPlan.md) by Séréna BAVAROIS
 
+[Postmortem](Documents/ManagementArtefacts/PostMortem.md) by the team
+
 ## Management
 
 The management artifacts of this project are available on our [Jira project](https://virtual-processor.atlassian.net/jira/core/projects/VPT1/summary).
